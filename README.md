@@ -21,4 +21,5 @@ and more :)
 
 ## Installation guide: 
 coming soon :)
+
 might have more in depth guide in the wiki?? (comming soon)
