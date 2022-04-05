@@ -6,6 +6,7 @@ Although thats probably bc of background bloat and KDE
 ## Todo:
 ### ZSH 
 shell script for installing oh-my-zsh with plugins and powerlevel10k (WIP)
+
 `.zshrc`
 
 ### neofetch
