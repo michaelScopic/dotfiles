@@ -19,5 +19,6 @@ neovim config
 
 and more :)
 
-## Installing guide:
+## Installation guide: 
 coming soon :)
+might have more in depth guide in the wiki?? (comming soon)
