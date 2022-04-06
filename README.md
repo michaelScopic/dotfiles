@@ -5,18 +5,18 @@ It's beautiful, but at what cost (my RAM reaching 1.5G idle).
 Although thats probably bc of background bloat and KDE 
 ## Todo:
 ### ZSH 
-shell script for installing oh-my-zsh with plugins and powerlevel10k ~~(WIP)~~
+- [x] shell script for installing oh-my-zsh with plugins and powerlevel10k ~~(WIP)~~
 
-`.zshrc`
+- [x] `.zshrc`
 
 ### neofetch
-neofetch config
+- [ ] neofetch config
 
 ### Latte-dock
-latte dock config
+- [ ] latte dock config
 
 ### Neovim
-neovim config
+- [ ] neovim config
 
 and more :)
 
