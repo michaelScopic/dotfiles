@@ -77,12 +77,12 @@ alias ls='ls -aF --color=always '
 alias nut='clear; neofetch '
 alias claer='clear '
 alias celar='clear '
-alias ssh='kitty +kitten ssh '
+alias ssh='kitty +kitten ssh ' # - [This is for using ssh in the kitty terminal] -
 # --- [End of aliases] ---
 
 # --- [Autostart] ---
 neofetch 
-echo "$(tput setaf 2) --- Welcome to [edit your .zshrc and put your distro here] ! --- $(tput sgr 0)"
+echo "$(tput setaf 2) --- Welcome to $(lsb_release -ds || cat /etc/*release || uname -om)! --- $(tput sgr 0)"
 # --- [End of autostart]
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
