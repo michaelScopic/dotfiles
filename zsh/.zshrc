@@ -82,7 +82,7 @@ alias ssh='kitty +kitten ssh '
 
 # --- [Autostart] ---
 neofetch 
-echo "$(tput setaf 2) --- Welcome to openSUSE Tumbleweed! --- $(tput sgr 0)"
+echo "$(tput setaf 2) --- Welcome to [edit your .zshrc and put your distro here] ! --- $(tput sgr 0)"
 # --- [End of autostart]
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
