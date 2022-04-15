@@ -10,13 +10,13 @@ Although thats probably bc of background bloat and KDE
 - [x] `.zshrc`
 
 ### neofetch
-- [ ] neofetch config
+- [x] neofetch config
 
 ### Latte-dock
 - [ ] latte dock config
 
 ### Neovim
-- [ ] neovim config
+- [x] neovim config
 
 and more :)
 
