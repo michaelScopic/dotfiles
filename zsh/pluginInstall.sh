@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # --- [Install oh-my-zsh] ---
+
 echo "$(tput setaf 3)
 ##################################################
 # Hello! This is a small script I made so that   #
@@ -16,7 +17,7 @@ else
 	echo "$(tput setaf 3) --- Ok, I will install oh-my-zsh for you now... ---"
 	echo "$(tput setaf 2) --- Once oh-my-zsh is installed, please re-run this script and answer "y" to the first question. --- $(tput sgr 0)"
 	sleep 1
-#	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" 
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" 
 	exit
 fi
 
@@ -36,8 +37,8 @@ then
 else
 	echo "$(tput setaf 3) --- Alright, I'll install them for you now, give me just one sec... ---"
 	sleep 0.7
-	git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+	bash git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+	bash git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 	echo "$(tput setaf 3) --- Done! Have fun! --- $(tput sgr 0)"
 	echo "$(tput setaf 1) In order for the plugins to work, please put this into your .zshrc: $(tput sgr 0)" 
 	echo "plugins=(git zsh-autosuggestions zsh-syntax-highlighting)" 
@@ -60,7 +61,7 @@ read -p "Do you want to use my .zshrc file? (recommended): " ZSHRC_FILE
 if [ "$ZSHRC_FILE" == "y" ] || [ "$ZSHRC_FILE" == " " ]
 then
 	echo "--- Ok, copying my .zshrc file to your home directory..."
-	cp .zshrc ~
+	cat .aaa.txt >> .zshrc
 	echo "--- Done! I recommend you look over at the .zshrc file and make your own changes. ---"
 else
 	echo "--- Ok, I will not copy my .zshrc file. ---"
