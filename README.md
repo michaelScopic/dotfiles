@@ -1,5 +1,5 @@
 # My Linux dotfiles
-These are my dotfiles that I use on my heavily riced Linux machine (openSUSE btw 😎).
+These are my dotfiles that I use on my heavily riced Linux machine (openSUSE btw 😎). This is heavily WIP.
 
 It's beautiful, but at what cost (my RAM reaching 1.5G idle).
 Although thats probably bc of background bloat and KDE 
