@@ -21,6 +21,8 @@ Although thats probably bc of background bloat and KDE
 and more :)
 
 ## Installation guide: 
-coming soon :)
+~~coming soon :)~~
 
-might have more in depth guide in the wiki?? (comming soon)
+~~might have more in depth guide in the wiki?? (comming soon)~~
+
+Installation guide is in the wiki tab (**heavy** WIP)
