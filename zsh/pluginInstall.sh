@@ -7,6 +7,7 @@ echo "$(tput setaf 3)
 # Hello! This is a small script I made so that   #
 # you can get up and running with oh-my-zsh!     #
 # Do you already have oh-my-zsh installed? [y/N] #
+# (note: this requires the installation of zsh)	 #
 ################################################## $(tput sgr 0) "
 read -p "Do you have oh-my-zsh already installed? [y/N]: " OMZ_INSTALLED
 
