@@ -9,20 +9,25 @@ alias ls='ls -aF --color=always '
 alias nut='clear; neofetch '
 alias claer='clear '
 alias celar='clear '
-alias ssh='kitty +kitten ssh '
+alias ssh='kitty +kitten ssh '    # <-- this is for using ssh in kitty terminal
 
 # --- [End of aliases] ---
 
 # --- [Autostart] ---
-eval $(thefuck --alias)		# you need to run `pip install thefuck` for this to work
-#neofetch --source ~/Downloads/ascii-art.txt
+# eval $(thefuck --alias)		# you need to run `pip install thefuck` for this to work
 neofetch 
 echo "$(tput setaf 2) --- Welcome to $(lsb_release -ds || cat /etc/*release || uname -om)! --- $(tput sgr 0)"
-# --- [End of autostart]
+# note: '$(lsb_release -ds || cat /etc/*release || uname -om)' doesn't always work on every computer. 
+# note: if it doesn't, replace it with your distro's name (eg: Arch, openSUSE, Ubuntu, Debian, etc...)
+# --- [End of autostart] ---
 
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+# --- [Powerlevel 10k] ---
+# note: the following is for powerlevel 10k users, I will leave this commented out by default to avoid 
+# note: problems with non p10k users
+
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
+# --- [End of p10k] ---
