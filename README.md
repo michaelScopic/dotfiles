@@ -13,10 +13,14 @@ Although thats probably bc of background bloat and KDE
 - [x] neofetch config
 
 ### Latte-dock
-- [ ] latte dock config
+- [x] latte dock config
 
 ### Neovim
 - [x] neovim config
+
+### Kitty terminal
+- [x] kitty config
+
 
 and more :)
 
