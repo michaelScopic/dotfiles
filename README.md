@@ -27,6 +27,6 @@ and more :)
 ## Installation guide: 
 ~~coming soon :)~~
 
-~~might have more in depth guide in the wiki?? (comming soon)~~
+[Look in the wiki :)](https://github.com/michaelScopic/dotfiles/wiki) (**Heavy** WIP)
 
-Installation guide is in the wiki tab (**heavy** WIP)
+
