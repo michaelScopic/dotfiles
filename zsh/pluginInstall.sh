@@ -66,7 +66,7 @@ then
 	echo "--- DM me on Discord if you need any help:$(tput setaf 3) Michael_Scopic.sh#0102 $(tput sgr 0)---"
 else
 	echo "--- Ok, I will not append my aliases and autostart. ---"
-	echo "--- If you want to look at my personal aliases, you can run: `cat .aaa.txt` and/or you can look at my entire .zshrc file with: `cat .zshrc` ---"
+	echo "--- If you want to look at my personal aliases, you can run: 'cat .aaa.txt' and/or you can look at my entire .zshrc file with: 'cat .zshrc' ---"
 	echo "--- DM me on Discord if you need any help:$(tput setaf 3) Michael_Scopic.sh#0102 $(tput sgr 0)---"
 fi
 
