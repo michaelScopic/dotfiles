@@ -19,6 +19,9 @@ These are my dotfiles that I use on my heavily riced Linux machine.
 ### Kitty terminal
 - [x] kitty config
 
+#### Starship prompt
+- [x] `starship.toml`
+
 
 and more :)
 
