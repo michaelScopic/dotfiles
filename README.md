@@ -3,7 +3,7 @@ These are my dotfiles that I use on my heavily riced Linux machine.
 
 ## Todo:
 ### ZSH 
-- [x] shell script for installing oh-my-zsh with plugins and powerlevel10k (WIP)
+- [x] script for installing plugins
 
 - [x] `.zshrc`
 
@@ -22,6 +22,9 @@ These are my dotfiles that I use on my heavily riced Linux machine.
 #### Starship prompt
 - [x] `starship.toml`
 
+### BetterDiscord 
+- [x] plugins
+- [x] themes
 
 and more :)
 
