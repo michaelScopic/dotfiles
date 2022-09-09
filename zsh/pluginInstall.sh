@@ -1,6 +1,8 @@
 #!/usr/bin/env sh 
 
+# print zsh version
 echo "$(tput setaf 3)ZSH version: $(tput sgr 0)$(zsh --version)" ; sleep 1
+
 # create the plugins directory
 echo "
 /////////////////////////////////
