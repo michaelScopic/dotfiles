@@ -24,7 +24,7 @@ read -p "Overwrite? [Y/n]: " option
 if [ "$option" != "n" ]
 then
     mv -v $HOME/.zshrc $HOME/.zshrc.bak
-    cp -v .zshrc $HOME
+    cp -v zshrc $HOME
     echo "$(tput setaf 2)Done! Reloading your shell...$(tput sgr 0)"
     sleep 1 ; exec zsh
 else

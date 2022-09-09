@@ -1,8 +1,11 @@
+# ==== This is based off the default ArchLabs zshrc because it has a lot of features ====
+# ==== Commenting out some Arch unique commands for non-Arch users :) ====
+# ==== Also commenting out some terminal unique commands (kitty) ====
 if [[ $- != *i* ]]; then
 	return
 fi
 
-# completion cache path setup
+# ==== completion cache path setup =====
 typeset -g comppath="$HOME/.cache"
 typeset -g compfile="$comppath/.zcompdump"
 
@@ -12,13 +15,14 @@ else
 	mkdir -p "$comppath"
 fi
 
-# zsh internal stuff
+# ==== zsh internal stuff ====
 SHELL=$(which zsh || echo '/bin/zsh')
 KEYTIMEOUT=1
 SAVEHIST=10000
 HISTSIZE=10000
 HISTFILE="$HOME/.cache/.zsh_history"
 
+# ==== User Aliases =====
 alias ls='ls -AF --color=always'
 alias la='ls -Ah'
 alias ll='ls -lAh'
@@ -29,7 +33,7 @@ alias kys='shutdown now'
 alias nut='clear; neofetch'
 alias ssh='kitty +kitten ssh'
 
-
+# ==== User functions ====
 cd() # cd and ls after
 {
 	builtin cd "$@" && command ls --color=auto -AF
@@ -44,7 +48,7 @@ src() # recompile completion and reload zsh
 	exec zsh
 }
 
-# less/manpager colours
+# ==== less/manpager colours ====
 export MANWIDTH=80
 export LESS='-R'
 export LESSHISTFILE=-
@@ -57,7 +61,7 @@ export LESS_TERMCAP_md=$'\e[31m'
 export LESS_TERMCAP_so=$'\e[47;30m'
 export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
 
-# completion
+# ==== completion ====
 setopt CORRECT
 setopt NO_NOMATCH
 setopt LIST_PACKED
@@ -66,7 +70,7 @@ setopt GLOB_COMPLETE
 setopt COMPLETE_ALIASES
 setopt COMPLETE_IN_WORD
 
-# builtin command behaviour
+# ==== builtin command behaviour ====
 setopt AUTO_CD
 
 # job control
