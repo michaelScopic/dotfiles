@@ -304,5 +304,5 @@ prompt fade magenta black	# If you have another prompt, comment this line out an
 =======
 # ==== plugins ====
 >>>>>>> 2e0deef1443fbbead755d207c4894df58a80ca13:zsh/zshrc
-source ~/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source ~/zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
+source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source ~/.zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
