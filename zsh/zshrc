@@ -12,7 +12,8 @@
 # Really nice distro, ty dev team for this comprehensive zshrc
 
 
-# Did my own aliases and plugins on top of this zshrc. - Michael
+# Did my own aliases and plugins on top of this zshrc. (well more like at the bottom)
+# - Michael
 
 if [[ $- != *i* ]]; then
 	return
