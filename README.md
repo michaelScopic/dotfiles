@@ -1,9 +1,13 @@
 # My Linux dotfiles
-These are my dotfiles.
+These are my dotfiles for Linux, ZSH, and BetterDiscord.
+
+# !!! NOTICE !!!
+### This repo going under a rework to be more organized and have more configs. Some areas of this repo might not work properly, or be disorganized/uncompleted. 
+\- Michael
 
 ## Todo:
 ### ZSH 
-- [x] script for installing plugins
+- [x] Plugin install script
 
 - [x] `.zshrc`
 
@@ -20,7 +24,7 @@ These are my dotfiles.
 - [x] plugins
 - [x] themes
 
-and more :)
+More coming soon... :)
 
 ## Installation guide: 
 ~~coming soon :)~~
