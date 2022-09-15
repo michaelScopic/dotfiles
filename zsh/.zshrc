@@ -1,8 +1,20 @@
+	#########################################
+	# 		MichaelScopic's zshrc.			#
+	# Based off default .zshrc in ArchLabs, #
+	# so ty ArchLabs dev team for this. :)  #
+	#########################################
+
+# Credits: ArchLabs Linux for base zshrc
+# 	Website: https://archlabslinux.com
+#	GitHub: https://github.com/ArchLabs
+#
+# Really nice distro, ty dev team for this comprehensive zshrc
+
 if [[ $- != *i* ]]; then
 	return
 fi
 
-# completion cache path setup
+# --- Completion cache path setup ---
 typeset -g comppath="$HOME/.cache"
 typeset -g compfile="$comppath/.zcompdump"
 
@@ -12,13 +24,14 @@ else
 	mkdir -p "$comppath"
 fi
 
-# zsh internal stuff
+# --- zsh internal stuff ---
 SHELL=$(which zsh || echo '/bin/zsh')
 KEYTIMEOUT=1
-SAVEHIST=10000
+SAVEHIST=10000 
 HISTSIZE=10000
 HISTFILE="$HOME/.cache/.zsh_history"
 
+# --- User aliases --- 
 alias ls='ls -AF --color=always'
 alias la='ls -Ah'
 alias ll='ls -lAh'
@@ -27,9 +40,14 @@ alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias cum='reboot'
 alias kys='shutdown now'
 alias nut='clear; neofetch'
-alias ssh='kitty +kitten ssh'
+alias rm='rm -Iv'
+alias cp='cp -Iv'
+alias mv='mv -Iv'
+#alias mirror-update='sudo reflector --verbose --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist'		# ONLY for Arch users
+#alias ssh='kitty +kitten ssh'		# ONLY for kitty-term users
 
 
+# --- User functions ---
 cd() # cd and ls after
 {
 	builtin cd "$@" && command ls --color=auto -AF
@@ -44,7 +62,7 @@ src() # recompile completion and reload zsh
 	exec zsh
 }
 
-# less/manpager colours
+# --- less/manpager colours ----
 export MANWIDTH=80
 export LESS='-R'
 export LESSHISTFILE=-
@@ -57,7 +75,7 @@ export LESS_TERMCAP_md=$'\e[31m'
 export LESS_TERMCAP_so=$'\e[47;30m'
 export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
 
-# completion
+# --- Completion ---
 setopt CORRECT
 setopt NO_NOMATCH
 setopt LIST_PACKED
@@ -66,36 +84,32 @@ setopt GLOB_COMPLETE
 setopt COMPLETE_ALIASES
 setopt COMPLETE_IN_WORD
 
-# builtin command behaviour
-setopt AUTO_CD
-
-# job control
+# --- Job control ---
 setopt AUTO_CONTINUE
 setopt LONG_LIST_JOBS
 
-# history control
+# --- History control ---
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
 setopt HIST_IGNORE_SPACE
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 
-# misc
+# --- Misc ---
 setopt EXTENDED_GLOB
 setopt TRANSIENT_RPROMPT
 setopt INTERACTIVE_COMMENTS
-
 
 autoload -U compinit     # completion
 autoload -U terminfo     # terminfo keys
 zmodload -i zsh/complist # menu completion
 autoload -U promptinit   # prompt
 
-# better history navigation, matching currently typed text
+# --- Better history navigation, matching currently typed text ---
 autoload -U up-line-or-beginning-search; zle -N up-line-or-beginning-search
 autoload -U down-line-or-beginning-search; zle -N down-line-or-beginning-search
 
-# set the terminal mode when entering or exiting zle, otherwise terminfo keys are not loaded
+# --- Set the terminal mode when entering or exiting zle, otherwise terminfo keys are not loaded ---
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 	zle-line-init() { echoti smkx; }; zle -N zle-line-init
 	zle-line-finish() { echoti rmkx; }; zle -N zle-line-finish
@@ -107,7 +121,7 @@ exp_alias() # expand aliases to the left (if any) before inserting the key press
 	zle self-insert
 }; zle -N exp_alias
 
-# bind keys not in terminfo
+# --- Bind keys not in terminfo ---
 bindkey -- ' '     exp_alias
 bindkey -- '^P'    up-history
 bindkey -- '^N'    down-history
@@ -116,7 +130,7 @@ bindkey -- '^A'    beginning-of-line
 bindkey -- '^[^M'  self-insert-unmeta # alt-enter to insert a newline/carriage return
 bindkey -- '^[05M' accept-line # fix for enter key on some systems
 
-# default shell behaviour using terminfo keys
+# --- Shell behaviour using terminfo keys ---
 [[ -n ${terminfo[kdch1]} ]] && bindkey -- "${terminfo[kdch1]}" delete-char                   # delete
 [[ -n ${terminfo[kend]}  ]] && bindkey -- "${terminfo[kend]}"  end-of-line                   # end
 [[ -n ${terminfo[kcuf1]} ]] && bindkey -- "${terminfo[kcuf1]}" forward-char                  # right arrow
@@ -128,12 +142,12 @@ bindkey -- '^[05M' accept-line # fix for enter key on some systems
 [[ -n ${terminfo[kcuu1]} ]] && bindkey -- "${terminfo[kcuu1]}" up-line-or-beginning-search   # up arrow
 [[ -n ${terminfo[kcud1]} ]] && bindkey -- "${terminfo[kcud1]}" down-line-or-beginning-search # down arrow
 
-# correction
+# --- Correction ---
 zstyle ':completion:*:correct:*' original true
 zstyle ':completion:*:correct:*' insert-unambiguous true
 zstyle ':completion:*:approximate:*' max-errors 'reply=($(( ($#PREFIX + $#SUFFIX) / 3 )) numeric)'
 
-# completion
+# --- Completion ---
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$comppath"
 zstyle ':completion:*' rehash true
@@ -151,7 +165,7 @@ zstyle ':completion:*' completer _complete _match _approximate _ignored
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
 
-# labels and categories
+# --- Labels and categories ---
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*:options' description 'yes'
@@ -163,19 +177,19 @@ zstyle ':completion:*:descriptions' format ' %F{green}->%F{yellow} %d%f'
 zstyle ':completion:*:warnings' format ' %F{green}->%F{red} no matches%f'
 zstyle ':completion:*:corrections' format ' %F{green}->%F{green} %d: %e%f'
 
-# menu colours
+# --- Menu colours ---
 eval "$(dircolors)"
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=36=0=01'
 
-# command parameters
+# --- Command parameters ---
 zstyle ':completion:*:functions' ignored-patterns '(prompt*|_*|*precmd*|*preexec*)'
 zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
 zstyle ':completion:*:(vim|nvim|vi|nano):*' ignored-patterns '*.(wav|mp3|flac|ogg|mp4|avi|mkv|iso|so|o|7z|zip|tar|gz|bz2|rar|deb|pkg|gzip|pdf|png|jpeg|jpg|gif)'
 
-# hostnames and addresses
+# --- Hostnames and addresses ---
 zstyle ':completion:*:ssh:*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
 zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hosts-ipaddr
 zstyle ':completion:*:(scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
@@ -186,13 +200,13 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<-
 zstyle -e ':completion:*:hosts' hosts 'reply=( ${=${=${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2>/dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ } ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*} ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}})'
 ttyctl -f
 
-# initialize completion
+# --- Initialize completion ---
 compinit -u -d "$compfile"
 
-# initialize prompt with a decent built-in theme
+# --- Built-in zsh prompt ---
 promptinit
-prompt fade magenta black
+prompt fade magenta black	# If you have another prompt, comment this line out and use your prompt
 
-# plugins 
+# --- Plugins --- 
 source ~/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ~/zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
