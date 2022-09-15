@@ -1,6 +1,8 @@
 #!/usr/bin/env sh 
 
+# print zsh version
 echo "$(tput setaf 3)ZSH version: $(tput sgr 0)$(zsh --version)" ; sleep 1
+
 # create the plugins directory
 echo "
 /////////////////////////////////
@@ -24,7 +26,7 @@ read -p "Overwrite? [Y/n]: " option
 if [ "$option" != "n" ]
 then
     mv -v $HOME/.zshrc $HOME/.zshrc.bak
-    cp -v .zshrc $HOME
+    cp -v zshrc $HOME
     echo "$(tput setaf 2)Done! Reloading your shell...$(tput sgr 0)"
     sleep 1 ; exec zsh
 else

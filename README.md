@@ -1,5 +1,5 @@
 # My Linux dotfiles
-These are my dotfiles that I use on my heavily riced Linux machine.
+These are my dotfiles.
 
 ## Todo:
 ### ZSH 
@@ -13,14 +13,8 @@ These are my dotfiles that I use on my heavily riced Linux machine.
 ### Latte-dock
 - [x] latte dock config
 
-### Neovim
-- [x] neovim config
-
 ### Kitty terminal
 - [x] kitty config
-
-#### Starship prompt
-- [x] `starship.toml`
 
 ### BetterDiscord 
 - [x] plugins
