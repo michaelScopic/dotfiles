@@ -7,12 +7,12 @@ echo "$(tput setaf 3)ZSH version: $(tput sgr 0)$(zsh --version)" ; sleep 1
 echo "
 /////////////////////////////////
 / $(tput setaf 2)Creating a directory for $(tput sgr 0)     /
-/ $(tput setaf 2)plugins in: $(tput setaf 1)~/zsh-plugins...$(tput sgr 0) /
-///////////////////////////////// " && mkdir ~/zsh-plugins && echo "Done. Installing plugins..."
+/ $(tput setaf 2)plugins in: $(tput setaf 1)~/.zsh-plugins...$(tput sgr 0) /
+///////////////////////////////// " && mkdir ~/.zsh-plugins && echo "Done. Installing plugins..."
 
 # clone the plugins themselves
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/zsh-plugins/zsh-autosuggestions
-git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/zsh-plugins/fsh
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh-plugins/zsh-autosuggestions
+git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.zsh-plugins/fsh
 
 # make a backup of user's .zshrc and place my .zshrc in their ~/.zshrc
 echo "
