@@ -11,24 +11,18 @@ dotfiles
 │   README.md  
 │
 └─── config
+|   |
+|   └─── starship
 │   │
 │   └─── htop
-|   |      htoprc
 |   |
 |   └─── kitty
-|   |      kitty.conf
-|   |      current-theme.conf 
 |   |
 |   └─── latte-dock
-|   |      ROUNDED_-_2.layout.latte
 |   |
 |   └─── neofetch
-│          config.conf
 |  
 └─── zsh
-|     ArchLabs_zshrc
-|     pluginInstall.sh
-|     zshrc
 |
 └─── BetterDiscord
      |
@@ -38,6 +32,11 @@ dotfiles
 ```
 
 ## TODO:
+
+### starship prompts
+- [x] `rounded.toml`
+- [x] `plain-text-symbols.toml`
+
 ### ZSH 
 - [x] Plugin install script
 - [x] `.zshrc`
