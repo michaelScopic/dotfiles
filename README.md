@@ -5,30 +5,6 @@ These are my dotfiles for Linux, ZSH, and BetterDiscord.
 ### This repo going under a rework to be more organized and have more configs. Some areas of this repo might not work properly, or be disorganized/uncompleted. 
 \- Michael
 
-# File structure:
-```
-dotfiles
-│   README.md  
-│
-└─── config
-|   |
-|   └─── starship
-│   │
-│   └─── htop
-|   |
-|   └─── kitty
-|   |
-|   └─── neofetch
-|  
-└─── zsh
-|
-└─── BetterDiscord
-     |
-     └─── plugins
-     |
-     └─── themes
-```
-
 ## TODO:
 
 ### starship prompts
