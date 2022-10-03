@@ -18,8 +18,6 @@ dotfiles
 |   |
 |   └─── kitty
 |   |
-|   └─── latte-dock
-|   |
 |   └─── neofetch
 |  
 └─── zsh
@@ -43,9 +41,6 @@ dotfiles
 
 ### neofetch
 - [x] neofetch config
-
-### latte-dock
-- [x] latte dock config
 
 ### Kitty
 - [x] kitty config
