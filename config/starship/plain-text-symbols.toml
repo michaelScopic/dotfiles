@@ -16,9 +16,6 @@ deleted = "x"
 [aws]
 symbol = "aws "
 
-[bun]
-symbol = "bun "
-
 [c]
 symbol = "C "
 
@@ -28,20 +25,11 @@ symbol = "cobol "
 [conda]
 symbol = "conda "
 
-[crystal]
-symbol = "cr "
-
 [cmake]
 symbol = "cmake "
 
-[daml]
-symbol = "daml "
-
 [dart]
 symbol = "dart "
-
-[deno]
-symbol = "deno "
 
 [dotnet]
 symbol = ".NET "
@@ -54,9 +42,6 @@ symbol = "docker "
 
 [elixir]
 symbol = "exs "
-
-[elm]
-symbol = "elm "
 
 [git_branch]
 symbol = "git "
@@ -91,9 +76,6 @@ symbol = "nim "
 [nix_shell]
 symbol = "nix "
 
-[ocaml]
-symbol = "ml "
-
 [package]
 symbol = "pkg "
 
@@ -111,9 +93,6 @@ symbol = "purs "
 
 [python]
 symbol = "py "
-
-[raku]
-symbol = "raku "
 
 [ruby]
 symbol = "rb "
@@ -135,6 +114,3 @@ symbol = "swift "
 
 [terraform]
 symbol = "terraform "
-
-[zig]
-symbol = "zig "
