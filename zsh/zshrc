@@ -218,10 +218,10 @@ alias mv='mv -iv'
 #alias ssh='kitty +kitten ssh'		# ONLY for kitty-term users
 
 # --- Built-in zsh prompt ---
-promptinit
-prompt fade magenta black	# If you have another prompt, comment this line out and use your prompt
+#promptinit
+#rompt fade magenta black	# If you have another prompt, comment this line out and use your prompt
 
-#eval "$(starship init zsh)"    # for starship prompt
+eval "$(starship init zsh)"    # for starship prompt
 # --- Plugins --- 
 source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ~/.zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
