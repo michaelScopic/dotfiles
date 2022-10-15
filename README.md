@@ -5,49 +5,42 @@ These are my dotfiles for Linux, ZSH, and BetterDiscord.
 ### This repo going under a rework to be more organized and have more configs. Some areas of this repo might not work properly, or be disorganized/uncompleted. 
 \- Michael
 
-# File structure:
-```
-dotfiles
-│   README.md  
-│
-└─── config
-|   |
-|   └─── starship
-│   │
-│   └─── htop
-|   |
-|   └─── kitty
-|   |
-|   └─── neofetch
-|  
-└─── zsh
-|
-└─── BetterDiscord
-     |
-     └─── plugins
-     |
-     └─── themes
-```
-
 ## TODO:
+### preview pics
+- [x] htop
+- [x] starship
+- [x] kitty
+- [x] neofetch
+- [ ] discord 
+
+### htop
+- [x] `htoprc`
+- [ ] `README.md` 
 
 ### starship prompts
 - [x] `rounded.toml`
 - [x] `plain-text-symbols.toml`
+- [ ] `README.md` 
 
 ### ZSH 
 - [x] Plugin install script
-- [x] `.zshrc`
+- [x] `ArchLabs_zshrc`
+- [x] `zshrc`
+- [ ] `README.md` 
 
 ### neofetch
 - [x] neofetch config
-
+- [ ] `README.md` 
 ### Kitty
 - [x] kitty config
+- [x] `darkdecay.ini`
+- [x] `decaycs.ini` 
+- [ ] `README.md` 
 
 ### BetterDiscord 
 - [x] plugins
 - [x] themes
+- [ ] `README.md` 
 
 ### Openbox (?)
 - [ ] WIP
@@ -61,8 +54,6 @@ dotfiles
 More coming soon... :)
 
 ## Installation guide: 
-~~coming soon :)~~
-
 [Look in the wiki :)](https://github.com/michaelScopic/dotfiles/wiki) (**Heavy** WIP)
 
 
