@@ -1,0 +1,18 @@
+# Prompt from https://github.com/Syndrizzle/hotfiles
+
+# Use custom format:
+format="$directory$git_branch$character"
+
+# Prompt symbols 
+[character]
+success_symbol = "[](green bold)"
+error_symbol = "[](red bold)"
+vicmd_symbol = "[](yellow 9ece6a)"
+
+[directory]
+format = "[]($style)[[ ](bg:black fg:blue)$path](bg:black fg:white)[ ]($style)"
+style = "bg:#black fg:black" 
+
+[git_branch]
+format = "[]($style)[[ ](bg:black fg:red)$branch](bg:black fg:white)[]($style)"
+style = "fg:black"
