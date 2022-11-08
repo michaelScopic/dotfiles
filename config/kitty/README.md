@@ -1,4 +1,4 @@
-#Kitty
+# Kitty
 
 Kitty is my terminal emulator of choice. GPU accelerated, plain text config (unlike alacritty), and has many built in features. 
 
