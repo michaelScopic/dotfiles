@@ -203,13 +203,13 @@ compinit -u -d "$compfile"
 # ==== START personalized tweaks ====
 
 # --- User aliases --- 
-alias ls='ls -AF --color=always'
-alias la='ls -Ah'
-alias ll='ls -lAh'
+alias ls='exa -F --color=always'
+alias la='exa -AhF'
+alias ll='exa -lAhF'
 alias grep='grep --color=auto'
 alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias cum='reboot'
-alias kys='shutdown now'
+alias cum='sudo reboot'
+alias kys='sudo shutdown now'
 alias nut='clear; neofetch'
 alias rm='rm -iv'
 alias cp='cp -iv'
@@ -218,10 +218,10 @@ alias mv='mv -iv'
 #alias ssh='kitty +kitten ssh'		# ONLY for kitty-term users
 
 # --- Built-in zsh prompt ---
+eval "$(starship init zsh)"    # for starship prompt
 #promptinit
 #rompt fade magenta black	# If you have another prompt, comment this line out and use your prompt
 
-eval "$(starship init zsh)"    # for starship prompt
 # --- Plugins --- 
 source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ~/.zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
