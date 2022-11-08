@@ -11,7 +11,6 @@ These are my dotfiles for Linux, ZSH, and BetterDiscord.
 - [x] starship
 - [x] kitty
 - [x] neofetch
-- [ ] discord 
 
 ### htop
 - [x] `htoprc`
@@ -35,11 +34,6 @@ These are my dotfiles for Linux, ZSH, and BetterDiscord.
 - [x] kitty config
 - [x] `darkdecay.ini`
 - [x] `decaycs.ini` 
-- [ ] `README.md` 
-
-### BetterDiscord 
-- [x] plugins
-- [x] themes
 - [ ] `README.md` 
 
 ### Openbox (?)
