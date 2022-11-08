@@ -9,7 +9,7 @@ These are my dotfiles for Linux, ZSH, and BetterDiscord.
 ### preview pics
 - [x] htop
 - [x] starship
-- [x] kitty
+- [ ] kitty
 - [x] neofetch
 
 ### htop
