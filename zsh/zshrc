@@ -40,7 +40,7 @@ HISTFILE="$HOME/.cache/.zsh_history"
 # --- User functions ---
 cd() # cd and ls after
 {
-	builtin cd "$@" && command ls --color=auto -AF
+	builtin cd "$@" && command lsd --color=auto -AF
 }
 
 src() # recompile completion and reload zsh
@@ -203,9 +203,10 @@ compinit -u -d "$compfile"
 # ==== START personalized tweaks ====
 
 # --- User aliases --- 
-alias ls='exa -F --color=always'
-alias la='exa -AhF'
-alias ll='exa -lAhF'
+#alias sudo='doas'
+alias ls='lsd -F --color=always'
+alias la='lsd -AF --color=always'
+alias ll='exa -lah'
 alias grep='grep --color=auto'
 alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias cum='sudo reboot'
@@ -214,16 +215,24 @@ alias nut='clear; neofetch'
 alias rm='rm -iv'
 alias cp='cp -iv'
 alias mv='mv -iv'
-#alias mirror-update='sudo reflector --verbose --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist'		# ONLY for Arch users
-#alias ssh='kitty +kitten ssh'		# ONLY for kitty-term users
+#alias mirror-update='sudo reflector --verbose --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist'		# For Arch users
+alias ssh='kitty +kitten ssh'	# For kitty users
 
-# --- Built-in zsh prompt ---
-eval "$(starship init zsh)"    # for starship prompt
-#promptinit
-#rompt fade magenta black	# If you have another prompt, comment this line out and use your prompt
+# --- Editor ---
+export EDITOR=nvim
+
+# --- ZSH prompt ---
+eval "$(starship init zsh)" 
 
 # --- Plugins --- 
 source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ~/.zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
+source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
+source ~/.zsh-plugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+source ~/.zsh-plugins/linus-rants/linus-rants.plugin.zsh
+
+# --- Autostart ---
+#neofetch  
 
 # ==== END personalized tweaks ====
+
