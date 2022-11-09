@@ -1,5 +1,5 @@
 # My Linux dotfiles
-These are my dotfiles for Linux, ZSH, and BetterDiscord.
+These are my dotfiles for Linux and ZSH
 
 # !!! NOTICE !!!
 ### This repo going under a rework to be more organized and have more configs. Some areas of this repo might not work properly, or be disorganized/uncompleted. 
