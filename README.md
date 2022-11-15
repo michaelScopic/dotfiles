@@ -48,6 +48,7 @@ These are my dotfiles for Linux and ZSH
 More coming soon... :)
 
 ## Installation guide: 
+
 [Look in the wiki :)](https://github.com/michaelScopic/dotfiles/wiki) (**Heavy** WIP)
 
 

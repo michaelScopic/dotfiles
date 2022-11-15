@@ -95,7 +95,7 @@ setopt INTERACTIVE_COMMENTS
 autoload -U compinit     # completion
 autoload -U terminfo     # terminfo keys
 zmodload -i zsh/complist # menu completion
-autoload -U promptinit   # prompt
+#autoload -U promptinit   # prompt
 
 # --- Better history navigation, matching currently typed text ---
 autoload -U up-line-or-beginning-search; zle -N up-line-or-beginning-search
@@ -219,17 +219,24 @@ alias mv='mv -iv'
 alias ssh='kitty +kitten ssh'	# For kitty users
 
 # --- Editor ---
-export EDITOR=nvim
+#export EDITOR=nvim
 
 # --- ZSH prompt ---
+# Starship prompt
 eval "$(starship init zsh)" 
 
 # --- Plugins --- 
+# Autosuggestions
 source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+
+# Syntax highlighting 
 source ~/.zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
+
+# Fuzzy tab
 source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
+
+# Interactive cd completion
 source ~/.zsh-plugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
-source ~/.zsh-plugins/linus-rants/linus-rants.plugin.zsh
 
 # --- Autostart ---
 #neofetch  

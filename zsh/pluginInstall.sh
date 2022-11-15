@@ -2,6 +2,7 @@
 
 
 . init.sh
+
 # print zsh version
 echo -e "${yellow}ZSH version:${reset} $(zsh --version)" ; sleep 1
 
@@ -74,7 +75,7 @@ echo -e "${cyan}${bold}Do you want to install the starship prompt?${reset}"
 read -p "Install starship? [Y/n]: " install_starship
 if [ "$install_starship" == "" ]  || [ "$install_starship" == "y" ]
 then
-    # if user said anything but 'n', we will install starship
+    # if user pressed enter or 'y', we will install starship
     echo -e "${green}Ok. Installing Starship prompt...${reset}"
     # offical install script from https://starship.rs , this is safe.
     curl -sS https://starship.rs/install.sh | sh

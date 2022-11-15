@@ -5,12 +5,12 @@
 echo -e " 
 +-----------------------+
 | Initalizing script... |
-+-----------------------+ "
-sleep 0.5
++-----------------------+ \n"
+sleep 0.3
 
 
 # --- Set colors ---
-echo -e " --- Setting colors... ---"
+echo -e " --- Setting colors ---"
 # Normal text
 reset='\e[0m' && echo -e "${reset}Normal text"
 
@@ -46,13 +46,12 @@ sleep 0.3
 echo -e "
 +----------------------+
 | ${green}Done setting colors! ${reset}|
-+----------------------+"
++----------------------+ \n"
 
 sleep 0.5
-echo -e ""
 
 # --- Print out basic info ---
-echo -e "---------- Basic info ----------"
+echo -e "${bold}---------- Basic info ----------${reset}"
 # Print the distro 
 echo -e "${green}${bold}Distro:${reset} $(lsb_release -d | cut -f 2- )"
 # Print kernel version
@@ -60,14 +59,13 @@ echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
 # Print shell 
 echo -e "${blue}${bold}Shell:${reset} $SHELL"
 # Print hostname
-echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname)"
+echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname || uname -n)"
 # Print current user (is user root?)
 echo -e "${cyan}${bold}User:${reset} $(whoami)"
-echo -e "--------------------------------"
-echo ""
+echo -e "${bold}-------------------------------- \n${reset}"
 
 # --- Store this directory as a variable ---
 currentDir=$(pwd)
-echo -e "${yellow}Current directory is:${reset} $currentDir \n"
+echo -e "${yellow}${bold}Current directory is:${reset} $currentDir "
 
-echo -e "${greenbg}Done initalizing.${reset}"
+echo -e "${green}${bold}Done initalizing. \n${reset}"
