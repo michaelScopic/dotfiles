@@ -1,10 +1,75 @@
 #!/bin/bash 
 
+# TODO: try to automatically install dependancies
+# TODO: 
 
+# Source init.sh
 . init.sh
 
-# print zsh version
+# Print zsh version
 echo -e "${yellow}ZSH version:${reset} $(zsh --version)" ; sleep 1
+
+# --- Install dependancies ---
+# !!! HUGE WIP !!!
+echo -e "
+###########################################
+# I am going to try to install the needed # 
+# dependancies before continuing.         #
+#                                         #
+# Supported distros:                      #
+#   Debian/Ubuntu                         #
+#   Arch Linux                            #
+#   RPM based distros, eg:                #
+#       Fedora                            #
+#       CentOS                            #
+#       RHEL                              #
+#   openSUSE TW                           #
+#   Void Linux                            #
+########################################### \n
+${redbg} !!! THIS DOES NOT WORK AS OF NOW !!!${reset} "
+
+sleep 2
+
+echo -e "
+#########################################################
+#${cyan}${bold} Dependancy list: ${reset}                                     #
+#   ${blue}kitty${reset}                                               #
+#   ${blue}neofetch${reset}                                            #
+#   ${blue}zsh${reset}                                                 #
+#   ${blue}starship ${red}*${reset}                                          #
+#   ${blue}htop${reset}                                                #
+#   ${blue}fzf${reset}                                                 #
+#   ${blue}exa${reset}                                                 #
+#   ${blue}lsd ${red}*${reset}                                               #
+#   ${blue}curl${reset}                                                #
+#   ${blue}wget${reset}                                                #
+#                                                       #
+# ${yellow}NOTE:${reset}                                                 #
+# ${red}*${reset} = ${yellow}Not available in Debian/Ubuntu's repos, will use ${reset} #
+#     ${yellow}a package/script to install it. ${reset}                  #                   
+#########################################################
+"
+
+
+echo -e "${yellow}Do you want to install the dependancies? 
+${red}Answer 'n' if you have the dependancies already installed (from my repo's wiki),
+or if you have an unsupported distro. ${reset} \n"
+
+read -p "Install dependancies? [Y\n]: " installDependancies
+
+if [ "$installDependancies" != "y" ] || [ "$installDependancies" != "" ]
+then
+    echo -e "${yellow}${bold}Ok, skipping installation of dependancies...\nYou are on your own for installing the dependancies...${reset}"
+    sleep 1
+else
+    echo -e "${green}${bold}Installing dependancies...${reset}"
+    # Install the dependancies, this is tedious
+    
+fi
+
+
+
+
 
 # --- Create the plugins directory ---
 echo -e "
@@ -70,7 +135,8 @@ fi
 sleep 1
 
 # --- Starship prompt ---
-echo -e "${cyan}${bold}Do you want to install the starship prompt?${reset}"
+echo -e "${cyan}${bold}Do you want to install the starship prompt? 
+${red}(say 'n' if you already have Starship installed)${reset}"
 
 read -p "Install starship? [Y/n]: " install_starship
 if [ "$install_starship" == "" ]  || [ "$install_starship" == "y" ]
