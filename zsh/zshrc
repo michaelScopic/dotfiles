@@ -200,46 +200,55 @@ ttyctl -f
 # --- Initialize completion ---
 compinit -u -d "$compfile"
 
+#--------------------------------------------------------------------
+
 # ==== START personalized tweaks ====
 
 # --- User aliases --- 
-#alias sudo='doas'
+# - Dont question my alias names - 
+alias please='sudo'
+#alias please='doas'
+#alias sudo='doas'		# For 'doas' users
 alias ls='lsd -F --color=always'
 alias la='lsd -AF --color=always'
 alias ll='exa -lah'
 alias grep='grep --color=auto'
 alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias cum='sudo reboot'
+#alias cum='doas reboot' 	# 'cum' with doas instead of sudo
 alias kys='sudo shutdown now'
+#alias kys='doas shutdown now'	# 'kys' with doas instead of sudo
 alias nut='clear; neofetch'
 alias rm='rm -iv'
 alias cp='cp -iv'
 alias mv='mv -iv'
 #alias mirror-update='sudo reflector --verbose --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist'		# For Arch users
 alias ssh='kitty +kitten ssh'	# For kitty users
+#-----------------------------------------
 
 # --- Editor ---
-#export EDITOR=nvim
+export EDITOR=vim
+#export EDITOR=nvim		# Uncomment this line if you're a chad and use nvim
+#-----------------------------------------
 
 # --- ZSH prompt ---
 # Starship prompt
 eval "$(starship init zsh)" 
+#-----------------------------------------
 
 # --- Plugins --- 
 # Autosuggestions
 source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-
 # Syntax highlighting 
 source ~/.zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
-
 # Fuzzy tab
 source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
-
 # Interactive cd completion
 source ~/.zsh-plugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+#-----------------------------------------
 
 # --- Autostart ---
 #neofetch  
-
+#-----------------------------------------
 # ==== END personalized tweaks ====
 
