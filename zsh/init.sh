@@ -60,7 +60,9 @@ echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
 echo -e "${blue}${bold}Shell:${reset} $SHELL"
 # Print hostname
 echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname || uname -n)"
-# Print current user (is user root?)
+# Print CPU name
+echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
+# Print current user
 echo -e "${cyan}${bold}User:${reset} $(whoami)"
 echo -e "${bold}-------------------------------- \n${reset}"
 
