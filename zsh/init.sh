@@ -64,8 +64,4 @@ echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname || uname -n)"
 echo -e "${cyan}${bold}User:${reset} $(whoami)"
 echo -e "${bold}-------------------------------- \n${reset}"
 
-# --- Store this directory as a variable ---
-currentDir=$(pwd)
-echo -e "${yellow}${bold}Current directory is:${reset} $currentDir "
-
 echo -e "${green}${bold}Done initalizing. \n${reset}"

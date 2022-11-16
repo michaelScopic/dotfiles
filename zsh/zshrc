@@ -13,7 +13,7 @@
 
 
 # Did my own aliases and plugins on top of this zshrc. (well more like at the bottom)
-# - Michael
+# User aliases, prompts, and plugins start at line ~ 205 (just go to the bottom of the file)
 
 if [[ $- != *i* ]]; then
 	return
@@ -215,9 +215,9 @@ alias ll='exa -lah'
 alias grep='grep --color=auto'
 alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias cum='sudo reboot'
-#alias cum='doas reboot' 	# 'cum' with doas instead of sudo
+#alias cum='doas reboot' 	# use doas instead of sudo
 alias kys='sudo shutdown now'
-#alias kys='doas shutdown now'	# 'kys' with doas instead of sudo
+#alias kys='doas shutdown now'	# use doas instead of sudo
 alias nut='clear; neofetch'
 alias rm='rm -iv'
 alias cp='cp -iv'
