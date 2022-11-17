@@ -35,15 +35,61 @@ else
     echo $distro
 fi
 
+# --- Distro functions ---
 debian() {
     # If $distro == debian, then run this function
     echo -e "${red}${bold}Detected Debian/Ubuntu.${reset}"
-
-    sudo apt-get install git kitty neofetch zsh curl wget htop fzf exa
-
+    sudo apt-get install -y git kitty neofetch zsh curl wget htop fzf exa
     # Installing lsd
     wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb && sudo dpkg sudo dpkg -i lsd_0.23.1_amd64.deb
-
     echo -e "${greenbg}Done installing dependancies!"
 }
 
+arch_linux() {
+    # If $distro == arch, then run this function
+    echo -e "${red}${bold}Detected Arch Linux.${reset}"
+    sudo pacman -Sy --yes starship kitty neofetch zsh curl wget git htop fzf exa lsd 
+    echo -e "${greenbg}Done installing dependancies!${reset}"
+}
+
+rpm_based() {
+    # If $distro is rpm based, then run this function
+    echo -e "${red}${bold}Detected an RPM based distro.${reset}"
+    sudo dnf install neovim kitty neofetch zsh curl wget git fzf exa lsd || \
+        sudo yum install neovim kitty neofetch zsh curl wget git fzf exa lsd 
+    echo -e "${greenbg}Done installing dependancies!${reset}"
+}
+
+opensuse() {
+    # If $distro == openSUSE, then run this function
+    echo -e "${red}${bold}Detected openSUSE.${reset}"
+    sudo zypper install neovim kitty neofetch zsh curl wget git fzf exa lsd 
+    echo -e "${greenbg}Done installing dependancies!${reset}"
+}
+
+void() {
+    # If $distro == Void Linux, then run this function
+    echo -e "${red}${bold}Detected Void Linux.${reset}"
+    sudo xbps-install -S neovim kitty neofetch zsh curl wget git fzf exa lsd 
+    echo -e "${greenbg}Done installing dependancies!${reset}"
+}
+
+
+# --- Run above functions according to $distro ---
+
+if [ "$distro" == "^debian" ]; then
+    echo "$distro -> debian "
+    debian() 
+elif [ "$distro" == "^arch" ]; then
+    echo "$distro -> arch"
+    arch_linux()
+elif [ "$distro" == "^fedora" ] || [ "$distro" == "^centos" ] || [ "$distro" == "^rhel" ]; then
+    echo "$distro -> rpm_based"
+    rpm_based()
+elif [ "$distro" == "^opensuse" ]; then
+    echo "$distro -> opensuse"
+    opensuse()
+elif [ "$distro" == "^void" ]; then
+    echo "$distro -> void"
+    void()
+fi
