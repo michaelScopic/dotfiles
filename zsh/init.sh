@@ -66,4 +66,6 @@ echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Mode
 echo -e "${cyan}${bold}User:${reset} $(whoami)"
 echo -e "${bold}-------------------------------- \n${reset}"
 
+echo -e "${red}${bold}Note: These scripts are made for x86_64 machines. It may not work correctly on other architectures. \n${reset}"
+
 echo -e "${green}${bold}Done initalizing. \n${reset}"
