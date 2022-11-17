@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # * Script to install dependancies according to user's distro/package manager
-# * REQUIRED BY: pluginInstall.sh
+# * USED IN: pluginInstall.sh
 
-# TODO: literally everything
+# TODO: Test on different distros/derivatives
 
 # --- Set colors ---
-# - not sourcing init.sh just for colors, bc it's dumb. I will manually set colors here -
+# - not sourcing init.sh just for colors bc it's dumb. I will manually set colors here -
 reset='\e[0m' 
 bold='\e[1m' 
 red='\e[31m' ; redbg='\e[41m'
@@ -23,77 +23,101 @@ thisDir=$(pwd)
 
 # --- Find user's distro and store it as a variable ---
 distroNAME="$(cat /etc/os-release | grep ^NAME | awk -F'"' '{print $2 }')"
-distroID="$(cat /etc/os-release | grep ^ID | awk -F= '{ print $2 }')"
-echo "NAME: $distroNAME | ID_LIKE:$distroID"
+#distroLIKE="$(cat /etc/os-release | grep ^ID | awk -F= '{ print $2 }')"
+distroLIKE="$(cat /etc/os-release | grep ^ID_LIKE | awk -F= '{ print $2 }')"
+echo "NAME: $distroNAME | LIKE: $distroLIKE"
 
-if [ "$distroID" == "" ]; then
-    # If $distroID has nothing, then prefer $distroNAME
+if [ "$distroLIKE" == "" ]; then
+    # If $distroLIKE has nothing, then prefer $distroNAME
+    if [ "$distroNAME" == "Debian GNU/Linux" ]; then
+        # If we pick up Debian, then just correct the variable
+        distroNAME="debian"
+    fi
     distro=$distroNAME
-    echo $distro
+    echo "Using \$distroNAME as \$distro: ($distro)"
 else
-    # If $distroID isn't empty, then prefer $distroID
-    distro=$distroID
-    echo $distro
+    # If $distroLIKE isn't empty, then prefer $distroID
+    distro=$distroLIKE
+    echo "Using \$distroLIKE as \$distro: ($distro)"
 fi
 
 # --- Distro functions ---
-debian() {
+function debian() {     # Tested on: Ubuntu, Debian (fixed),
     # If $distro == debian, then run this function
-    echo -e "${red}${bold}Detected Debian/Ubuntu.${reset}"
+    echo -e "${green}${bold}Detected Debian/Ubuntu.${reset}"
+    sleep 2
     sudo apt-get install -y git kitty neofetch zsh curl wget htop fzf exa
     # Installing lsd
-    mkdir .tmp ; cd .tmp
+    mkdir $thisDir/.tmp ; cd $thisDir.tmp
     wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb && \
-    sudo dpkg sudo dpkg -i lsd_0.23.1_amd64.deb && \
-    cd .. ; rm -rf .tmp/ 
-    echo -e "${greenbg}Done installing dependancies!"
+    sudo dpkg -i lsd_0.23.1_amd64.deb && \
+    cd $thisDir ; rm -rfv $thisDir/.tmp/ 
+    # Installing starship
+    curl -sS https://starship.rs/install.sh | sh
+    echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
-arch_linux() {
+function arch_linux() {     # Tested on Arch, Manjaro (only on ID_LIKE),
     # If $distro == arch, then run this function
-    echo -e "${red}${bold}Detected Arch Linux.${reset}"
+    echo -e "${green}${bold}Detected Arch Linux.${reset}"
+    sleep 2
     sudo pacman -Sy --noconfirm starship kitty neofetch zsh curl wget git htop fzf exa lsd 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
-rpm_based() {
+function rpm_based() {     # - Untested - 
     # If $distro is rpm based, then run this function
-    echo -e "${red}${bold}Detected an RPM based distro.${reset}"
+    echo -e "${green}${bold}Detected an RPM based distro.${reset}"
+    sleep 2
     sudo dnf install -y neovim kitty neofetch zsh curl wget git fzf exa lsd || \
-        sudo yum install neovim kitty neofetch zsh curl wget git fzf exa lsd 
+        sudo yum install -y neovim kitty neofetch zsh curl wget git fzf exa lsd 
+    # Install starship
+    curl -sS https://starship.rs/install.sh | sh
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
-opensuse() {
+function opensuse() {       # - Untested - 
     # If $distro == openSUSE, then run this function
-    echo -e "${red}${bold}Detected openSUSE.${reset}"
-    sudo zypper install -n neovim kitty neofetch zsh curl wget git fzf exa lsd 
+    echo -e "${green}${bold}Detected openSUSE.${reset}"
+    sleep 2
+    sudo zypper install -n neovim kitty neofetch zsh curl wget git fzf exa lsd starship
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
-void() {
+function void_linux() {     # - Untested -
     # If $distro == Void Linux, then run this function
-    echo -e "${red}${bold}Detected Void Linux.${reset}"
-    sudo xbps-install -Sy neovim kitty neofetch zsh curl wget git fzf exa lsd 
+    echo -e "${green}${bold}Detected Void Linux.${reset}"
+    sleep 2
+    sudo xbps-install -Sy neovim kitty neofetch zsh curl wget git fzf exa lsd starship
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
 
 # --- Run above functions according to $distro ---
 
-if [ "$distro" == "^debian" ]; then
-    echo "$distro -> debian "
-    debian() 
-elif [ "$distro" == "^arch" ]; then
+if [ "$distro" == "debian" ]; then
+    echo "$distro -> debian"
+    sleep 1
+    debian
+elif [ "$distro" == "arch" ]; then
     echo "$distro -> arch"
-    arch_linux()
-elif [ "$distro" == "^fedora" ] || [ "$distro" == "^centos" ] || [ "$distro" == "^rhel" ]; then
+    sleep 1
+    arch_linux
+elif [ "$distro" == "fedora" ]; then
     echo "$distro -> rpm_based"
-    rpm_based()
-elif [ "$distro" == "^opensuse" ]; then
+    sleep 1
+    rpm_based
+elif [ "$distro" == "opensuse" ]; then
     echo "$distro -> opensuse"
-    opensuse()
-elif [ "$distro" == "^void" ]; then
-    echo "$distro -> void"
-    void()
+    sleep 1
+    opensuse
+elif [ "$distro" == "void" ]; then
+    echo "$distro -> void_linux"
+    sleep 1
+    void_linux
+else 
+    echo -e "${redbg}Distro detected incorrectly or not supported. Skipping.${reset}"
+    echo -e "${yellow}Detected distro:${reset} $distro"
+    echo -e "${yellow}Distro Name (\$distroNAME):${reset} $distroNAME"
+    echo -e "${yellow}Distro Like (\$distroLIKE):${reset} $distroLIKE"
 fi
