@@ -6,7 +6,7 @@
 # TODO: literally everything
 
 # --- Set colors ---
-# - not sourcing init.sh just for colors, tbc its' dumb. I will manually set colors here -
+# - not sourcing init.sh just for colors, bc its' dumb. I will manually set colors here -
 reset='\e[0m' 
 bold='\e[1m' 
 red='\e[31m' ; redbg='\e[41m'
@@ -30,8 +30,8 @@ if [ "$distroID" == "" ]; then
     distro=$distroNAME
     echo $distro
 else
-    # If $distroID isn't empty, then prefer $distroID_LIKE
-    distro=$distroID_LIKE
+    # If $distroID isn't empty, then prefer $distroID
+    distro=$distroID
     echo $distro
 fi
 

@@ -53,13 +53,13 @@ sleep 0.5
 # --- Print out basic info ---
 echo -e "${bold}---------- Basic info ----------${reset}"
 # Print the distro 
-echo -e "${green}${bold}Distro:${reset} $(lsb_release -d | cut -f 2- )" 
+echo -e "${green}${bold}Distro:${reset} $(lsb_release -d | cut -f 2- &>/dev/null || $(uname -o))"
 # Print kernel version
 echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)" 
 # Print shell 
 echo -e "${blue}${bold}Shell:${reset} $SHELL"
 # Print hostname
-echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname || uname -n)"
+echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname 2>/dev/null || uname -n)"
 # Print CPU name
 echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
 # Print current user
