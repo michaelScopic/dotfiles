@@ -13,18 +13,18 @@ echo -e "${yellow}ZSH version:${reset} $(zsh --version)" ; sleep 1
 # !!! HUGE WIP !!!
 echo -e "
 ###########################################
-# I am going to try to install the needed # 
-# dependancies before continuing.         #
+#${cyan}${bold} I am going to try to install the needed ${reset}# 
+#${cyan}${bold} dependancies before continuing. ${reset}        #
 #                                         #
-# Supported distros:                      #
-#   Debian/Ubuntu                         #
-#   Arch Linux                            #
-#   RPM based distros, eg:                #
-#       Fedora                            #
-#       CentOS                            #
-#       RHEL                              #
-#   openSUSE TW                           #
-#   Void Linux                            #
+#${purple}${bold} Supported distros: ${reset}                     #
+#${blue}   Debian/Ubuntu ${reset}                        #
+#${blue}   Arch Linux ${reset}                           #
+#${blue}   RPM based distros, eg: ${reset}               #
+#${blue}       Fedora ${reset}                           #
+#${blue}       CentOS ${reset}                           #
+#${blue}       RHEL ${reset}                             #
+#${blue}   openSUSE TW ${reset}                          #
+#${blue}   Void Linux ${reset}                           #
 ########################################### \n
 ${redbg} !!! THIS DOES NOT WORK AS OF NOW !!!${reset} "
 
