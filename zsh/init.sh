@@ -53,7 +53,7 @@ sleep 0.5
 # --- Print out basic info ---
 echo -e "${bold}---------- Basic info ----------${reset}"
 # Print the distro 
-echo -e "${green}${bold}Distro:${reset} $(lsb_release -sd)" 
+echo -e "${green}${bold}Distro:${reset} $(lsb_release -d | cut -f 2- )" 
 # Print kernel version
 echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)" 
 # Print shell 
