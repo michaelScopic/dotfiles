@@ -95,7 +95,7 @@ function void_linux() {     # - Untested -
 
 # --- Run above functions according to $distro ---
 
-if [ "$distro" == "debian" ]; then
+if [ "$distro" == "debian" ] || [ "$distro" == "ubuntu" ]; then
     echo "$distro -> debian"
     sleep 1
     debian
