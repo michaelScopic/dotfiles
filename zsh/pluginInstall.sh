@@ -18,15 +18,14 @@ echo -e "
 #                                         #
 #${purple}${bold} Supported distros: ${reset}                     #
 #${blue}   Debian/Ubuntu ${reset}                        #
-#${blue}   Arch Linux ${reset}                           #
+#${blue}   Arch based distros ${reset}                   #
 #${blue}   RPM based distros, eg: ${reset}               #
 #${blue}       Fedora ${reset}                           #
 #${blue}       CentOS ${reset}                           #
-#${blue}       RHEL ${reset}                             #
 #${blue}   openSUSE TW ${reset}                          #
 #${blue}   Void Linux ${reset}                           #
 ########################################### \n
-${redbg} !!! THIS DOES NOT WORK AS OF NOW !!!${reset} "
+${redbg} !!! THIS DOES NOT FULLY WORK AS OF NOW !!!${reset} "
 
 sleep 2
 
@@ -57,13 +56,12 @@ or if you have an unsupported distro. ${reset} \n"
 
 read -p "Install dependancies? [Y\n]: " installDependancies
 
-if [ "$installDependancies" != "y" ] || [ "$installDependancies" != "" ]
-then
-    echo -e "${yellow}${bold}Ok, skipping installation of dependancies...\nYou are on your own for installing the dependancies...${reset}"
-    sleep 1
+if [ "$installDependancies" == "y" ] || [ "$installDependancies" == "" ]; then
+    echo -e "${green}${bold}Ok, installing dependancies."
+    bash -c ./dependancies.sh
 else
-    echo -e "${green}${bold}Installing dependancies...${reset}"
-    # Install the dependancies, this is tedious
+    echo -e "${yellow}${bold}Ok, SKIPPING INSTALLATION of dependancies...\nYou are on your own for installing the dependancies...${reset}"
+    sleep 1
     
 fi
 
