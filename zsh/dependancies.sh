@@ -10,14 +10,14 @@
 # ! Distros NOT WORKING (as of now):
 # ! Distros planned to be tested: Linux Mint/LMDE,  EndeavourOS,  Nobara, Aquamarine, CentOS,
 
-# * Debian working distros: Ubuntu, Debian (fixed),
-# * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS **, ArchLabs
-# * RPM working distros: Fedora,
-# * openSUSE working?: YES
-# * Void Linux working?: YES
+#* Debian working distros: Ubuntu, Debian (fixed),
+#* Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS **, ArchLabs,
+#* RPM working distros: Fedora,
+#* openSUSE working?: YES
+#* Void Linux working?: YES
 
-# * Distro compatability notes:
-# *    ** = Arco and EndeavourOS encounters a libssl error when cloning plugins in pluginInstall.sh???
+#* Distro compatability notes:
+#*    ** = Arco and EndeavourOS encounters a libssl error when cloning plugins in pluginInstall.sh???
 
 # --- Set colors ---
 # Not sourcing init.sh just for colors bc it's dumb. I will manually set colors here
