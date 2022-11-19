@@ -11,7 +11,7 @@
 # ! Distros planned to be tested: Linux Mint/LMDE,  EndeavourOS,  Nobara, Aquamarine, CentOS,
 
 # * Debian working distros: Ubuntu, Debian (fixed),
-# * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS **, ArchLabs 
+# * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS **, ArchLabs
 # * RPM working distros: Fedora,
 # * openSUSE working?: YES
 # * Void Linux working?: YES
@@ -53,8 +53,8 @@ if [ "$distroNAME" == "Debian GNU/Linux" ]; then
     distroNAME="debian"
 
 elif [ "$distroLIKE" == '"ubuntu debian"' ]; then
-    # Correct Linux Mint's $distroLIKE 
-    
+    # Correct Linux Mint's $distroLIKE
+
     distroLIKE="debian"
 
 elif [ "$distroLIKE" == '"arch"' ]; then
@@ -67,7 +67,6 @@ elif [ "$distroNAME" == "Fedora Linux" ]; then
 
     distroNAME="fedora"
 
-
 elif [ "$distroLIKE" == '"opensuse suse"' ]; then
     # Simplify openSUSE's $distroNAME
 
@@ -77,20 +76,17 @@ fi
 
 # --- Choose what var to use ---
 if [ "$distroLIKE" == "" ]; then
-
-    if [ "$distroNAME" == "Debian GNU/Linux" ]; then
-        # Workaround for pure Debian, just simplify name
-        distro="debian"
-    fi
-
     # if $distroLIKE has nothing, then perfer $distroNAME
+
     distro=$distroNAME
+
     echo -e "Using ${cyan}\$distroNAME ${reset}as {$cyan}\$distro:${reset} ($distro)"
 
 else
-
     # If $distroLIKE isn't empty, then prefer $distroID
+
     distro=$distroLIKE
+
     echo -e "Using ${purple}${bold}\$distroLIKE ${reset}as ${blue}${bold}\$distro:${reset} ($distro)"
 
 fi
@@ -186,7 +182,7 @@ if [ "$distro" == "debian" ]; then
 
     debian
 
-elif [ "$distro" == "arch" ]; then 
+elif [ "$distro" == "arch" ]; then
 
     echo -e "$distro -> ${blue}arch${reset}"
     sleep 1
@@ -214,7 +210,7 @@ elif [ "$distro" == "Void" ]; then
     void_linux
 
 else
-    # If we can't detect distro then run this section
+    # If we can't correctly detect distro then run this section
 
     echo -e "${redbg}Distro detected incorrectly or not supported. Skipping.${reset}"
     echo -e "${yellow}Detected distro:${reset} $distro"
