@@ -43,8 +43,9 @@ thisDir=$(pwd)
 distroNAME="$(cat /etc/os-release | grep ^NAME | awk -F'"' '{print $2 }')"
 distroLIKE="$(cat /etc/os-release | grep ^ID_LIKE | awk -F= '{ print $2 }')"
 #distroID="$(cat /etc/os-release | grep ^ID | awk -F= '{ print $2 }')"
+distroFallback=$(uname -o)
 # Print what we found
-echo -e "${blue}${bold}NAME:${reset} $distroNAME ${red}| ${cyan}${bold}LIKE:${reset} $distroLIKE"
+echo -e "${blue}${bold}NAME:${reset} $distroNAME ${red}| ${cyan}${bold}LIKE:${reset} $distroLIKE ${red}| ${purple}Fallback:${reset} $distroFallback"
 
 # --- Workarounds for different distros ---
 if [ "$distroNAME" == "Debian GNU/Linux" ]; then
@@ -80,7 +81,7 @@ if [ "$distroLIKE" == "" ]; then
 
     distro=$distroNAME
 
-    echo -e "Using ${cyan}\$distroNAME ${reset}as {$cyan}\$distro:${reset} ($distro)"
+    echo -e "Using ${cyan}\$distroNAME ${reset}as ${cyan}\$distro:${reset} ($distro)"
 
 else
     # If $distroLIKE isn't empty, then prefer $distroID
@@ -88,6 +89,17 @@ else
     distro=$distroLIKE
 
     echo -e "Using ${purple}${bold}\$distroLIKE ${reset}as ${blue}${bold}\$distro:${reset} ($distro)"
+
+fi
+
+if [ "$distroFallback" == "Android" ]; then
+    # If 'uname -o' gives us "Android", then use that for $distro
+
+    distro="Android"
+
+    echo -e "${yellow}${bold}Looks like ${reset}\$distroNAME ${yellow}${bold}and ${reset}\$distroLIKE ${yellow}${bold}didn't give us anything, but ${reset}\$distroFallback${yellow}${bold} indicated that you are running ${blue}Android${yellow}${bold}, so I will use that.${reset}"
+
+    sleep 4 
 
 fi
 
@@ -174,6 +186,31 @@ function void_linux() {
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
+function android() {
+    # If we pick up Android, then run this
+    
+    echo -e "${green}${bold}Detected Android.${reset}"
+    sleep 2
+
+    # Install deps
+    pkg install -y vim zsh curl wget git fzf exa lsd starship make
+
+    # Build/install pfetch (neofetch alternative)
+    mkdir ${thisDir}/.tmp
+    cd ${thisDir}/.tmp
+    git clone https://github.com/dylanaraps/pfetch &>/dev/null
+    cd pfetch
+    make &>/dev/null
+    make install
+
+    # Delete .tmp after installing pfetch
+    cd ${thisDir}
+    rm -rf ${thisDir}/.tmp
+
+    echo -e "${greenbg}Done installing dependancies!${reset}"
+
+}
+
 # --- Run above functions according to $distro ---
 if [ "$distro" == "debian" ]; then
 
@@ -209,6 +246,13 @@ elif [ "$distro" == "Void" ]; then
 
     void_linux
 
+elif [ "$distro" == "Android" ]; then
+   
+	echo -e "$distro -> ${purple}android()${reset}"
+    sleep 1
+
+	android
+    
 else
     # If we can't correctly detect distro then run this section
 
