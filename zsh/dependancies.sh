@@ -160,7 +160,7 @@ if [ "$distro" == "debian" ]; then
 
     debian
 
-elif [ "$distro" == "arch" ] || [ "$distro" == '"arch"']; then
+elif [ "$distro" == "arch" ] || [ "$distro" == '"arch"' ]; then
 
     echo -e "$distro -> ${blue}arch${reset}"
     sleep 1
