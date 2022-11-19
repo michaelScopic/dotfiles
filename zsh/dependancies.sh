@@ -68,7 +68,7 @@ elif [ "$distroNAME" == "Fedora Linux" ]; then
     distroNAME="fedora"
 
 
-elif [ "$distroLIKE" == '"opensuse suse"']; then
+elif [ "$distroLIKE" == '"opensuse suse"' ]; then
     # Simplify openSUSE's $distroNAME
 
     distroLIKE="opensuse"
