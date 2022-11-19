@@ -3,7 +3,7 @@
 # TODO: finish dependancies.sh
 
 # * NOTES:
-# *     Arch based distros encounter a libssl error when cloning the plugins (something to do with 'sudo pacman -Sy <packages>' and then running 'sudo pacman -S <whatever>')
+# *     Arco and EndeavourOS encounter a libssl error when cloning the plugins (something to do with 'sudo pacman -Sy <packages>' and then running 'sudo pacman -S <whatever>')
 
 # Source init.sh
 . init.sh
