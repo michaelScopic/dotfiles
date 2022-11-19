@@ -7,14 +7,14 @@
 # ? Add support for Gentoo???
 
 # ! Derivates NOT WORKING (as of now): Linux Mint,
-# ! Distros NOT WORKING (as of now): opensuse, Void,
+# ! Distros NOT WORKING (as of now): 
 # ! Distros planned to be tested: Linux Mint/LMDE (ubuntu and debian), EndeavourOS (arch), Arco (arch), Fedora (rpm), Nobara (rpm), Aquamarine (rpm), CentOS (rpm),
 
 # * Debian working distros: Ubuntu, Debian (fixed),
 # * Arch working distros: Arch, Manjaro (only with $distroLIKE),
 # * RPM working distros: 
-# * openSUSE working?: NO
-# * Void Linux working?: NO
+# * openSUSE working?: YES
+# * Void Linux working?: YES
 
 
 # --- Set colors ---
@@ -62,6 +62,7 @@ function debian() {
     # If we pick up a Debian or Ubuntu based distro, then run this
     echo -e "${green}${bold}Detected Debian/Ubuntu.${reset}"
     sleep 2
+    # Install deps
     sudo apt-get install -y git kitty neofetch zsh curl wget htop fzf exa
     # Installing lsd
     mkdir ${thisDir}/.tmp/ ; cd ${thisDir}/.tmp/
@@ -77,6 +78,7 @@ function arch_linux() {
     # If we pick up an Arch based distro, then run this
     echo -e "${green}${bold}Detected Arch Linux.${reset}"
     sleep 2
+    # Install deps
     sudo pacman -Sy --noconfirm starship kitty neofetch zsh curl wget git htop fzf exa lsd 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -85,7 +87,9 @@ function rpm_based() {
     # If we pick up a rpm based distro, then run this function
     echo -e "${green}${bold}Detected an RPM based distro.${reset}"
     sleep 2
+    # Install deps
     sudo dnf install -y neovim kitty neofetch zsh curl wget git fzf exa lsd || \
+        # If dnf doesn't work, then fall back to yum
         sudo yum install -y neovim kitty neofetch zsh curl wget git fzf exa lsd 
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
@@ -96,7 +100,8 @@ function opensuse() {
     # If we pick up openSUSE, then run this function
     echo -e "${green}${bold}Detected openSUSE.${reset}"
     sleep 2
-    sudo zypper install -n neovim kitty neofetch zsh curl wget git fzf exa lsd starship
+    # Install deps
+    sudo zypper -n install neovim kitty neofetch zsh curl wget git fzf exa lsd starship
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
@@ -104,6 +109,7 @@ function void_linux() {
     # If we pick up Void Linux, then run this function
     echo -e "${green}${bold}Detected Void Linux.${reset}"
     sleep 2
+    # Install deps
     sudo xbps-install -Sy neovim kitty neofetch zsh curl wget git fzf exa lsd starship
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -123,11 +129,11 @@ elif [ "$distro" == "fedora" ]; then
     echo -e "$distro -> ${yellow}rpm_based()${reset}"
     sleep 1
     rpm_based
-elif [ "$distro" == "opensuse" ]; then
+elif [ "$distro" == '"opensuse"' ]; then
     echo -e "$distro -> ${green}opensuse()${reset}"
     sleep 1
     opensuse
-elif [ "$distro" == "void" ]; then
+elif [ "$distro" == "Void" ]; then
     echo -e "$distro -> ${purple}void_linux()${reset}"
     sleep 1
     void_linux
