@@ -73,10 +73,6 @@ elif [ "$distroLIKE" == '"opensuse suse"' ]; then
 
     distroLIKE="opensuse"
 
-elif [ "$distroNAME" == "Void Linux" ]; then
-    # Simplify Void Linux's $distroNAME
-
-    distroNAME="void"
 fi
 
 # --- Choose what var to use ---
@@ -210,7 +206,7 @@ elif [ "$distro" == "opensuse" ]; then
 
     opensuse
 
-elif [ "$distro" == "void" ]; then
+elif [ "$distro" == "Void" ]; then
 
     echo -e "$distro -> ${purple}void_linux()${reset}"
     sleep 1
