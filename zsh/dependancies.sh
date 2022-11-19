@@ -103,7 +103,7 @@ function debian() {
     sleep 2
 
     # Install deps
-    sudo apt-get install -y git kitty neofetch zsh curl wget htop fzf exa
+    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa
 
     # Installing lsd
     mkdir ${thisDir}/.tmp/
@@ -132,7 +132,7 @@ function arch_linux() {
     sleep 2
 
     # Install deps
-    sudo pacman -Sy --noconfirm starship kitty neofetch zsh curl wget git htop fzf exa lsd
+    sudo pacman -Sy --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -144,9 +144,9 @@ function rpm_based() {
     sleep 2
 
     # Install deps
-    sudo dnf install -y neovim kitty neofetch zsh curl wget git fzf exa lsd || \
+    sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd || \
     # If dnf doesn't work, then fall back to yum
-    sudo yum install -y neovim kitty neofetch zsh curl wget git fzf exa lsd
+    sudo yum install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd
 
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
@@ -161,7 +161,7 @@ function opensuse() {
     sleep 2
 
     # Install deps
-    sudo zypper -n install neovim kitty neofetch zsh curl wget git fzf exa lsd starship
+    sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -173,7 +173,7 @@ function void_linux() {
     sleep 2
 
     # Install deps
-    sudo xbps-install -Sy neovim kitty neofetch zsh curl wget git fzf exa lsd starship
+    sudo xbps-install -Sy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
