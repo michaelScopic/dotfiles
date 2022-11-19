@@ -11,15 +11,16 @@
 # ! Distros planned to be tested: Linux Mint/LMDE,  EndeavourOS,  Nobara, Aquamarine, CentOS,
 
 # * Debian working distros: Ubuntu, Debian (fixed),
-# * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **,
+# * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS, ArchLabs *
 # * RPM working distros: Fedora,
 # * openSUSE working?: YES
 # * Void Linux working?: YES
 
 # * Distro compatability notes:
-# *     Arch based encounters a libssl error when cloning plugins in pluginInstall.sh???
+# *     Arco and EndeavourOS encounters a libssl error when cloning plugins in pluginInstall.sh???
 # *     Debian requires a slight workaround to work
 # *     Fedora and openSUSE requires a specfic name to work (might develop a workaround for it?)
+# *     ArchLabs requires $distro to be '"arch"'
 
 # --- Set colors ---
 # Not sourcing init.sh just for colors bc it's dumb. I will manually set colors here
@@ -159,7 +160,7 @@ if [ "$distro" == "debian" ]; then
 
     debian
 
-elif [ "$distro" == "arch" ]; then
+elif [ "$distro" == "arch" ] || [ "$distro" == '"arch"']; then
 
     echo -e "$distro -> ${blue}arch${reset}"
     sleep 1
