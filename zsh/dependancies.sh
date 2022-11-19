@@ -7,36 +7,39 @@
 # ? Add support for Gentoo???
 
 # ! Derivates NOT WORKING (as of now): Linux Mint,
-# ! Distros NOT WORKING (as of now): 
+# ! Distros NOT WORKING (as of now):
 # ! Distros planned to be tested: Linux Mint/LMDE,  EndeavourOS,  Nobara, Aquamarine, CentOS,
 
 # * Debian working distros: Ubuntu, Debian (fixed),
 # * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **,
-# * RPM working distros: Fedora, 
+# * RPM working distros: Fedora,
 # * openSUSE working?: YES
 # * Void Linux working?: YES
 
-# * Distro compatability notes: 
-# *     Arco encounters a libssl error when cloning plugins in pluginInstall.sh??? 
+# * Distro compatability notes:
+# *     Arch based encounters a libssl error when cloning plugins in pluginInstall.sh???
 # *     Debian requires a slight workaround to work
 # *     Fedora and openSUSE requires a specfic name to work (might develop a workaround for it?)
 
-
 # --- Set colors ---
 # Not sourcing init.sh just for colors bc it's dumb. I will manually set colors here
-reset='\e[0m' 
-bold='\e[1m' 
-red='\e[31m' ; redbg='\e[41m'
-green='\e[32m' ; greenbg='\e[42m' 
-yellow='\e[33m' ; yellowbg='\e[43m' 
-blue='\e[34m' ; bluebg='\e[44m' 
-purple='\e[35m' ; purplebg='\e[45m'
-cyan='\e[36m' ; cyanbg='\e[46m'
-
+reset='\e[0m'
+bold='\e[1m'
+red='\e[31m'
+redbg='\e[41m'
+green='\e[32m'
+greenbg='\e[42m'
+yellow='\e[33m'
+yellowbg='\e[43m'
+blue='\e[34m'
+bluebg='\e[44m'
+purple='\e[35m'
+purplebg='\e[45m'
+cyan='\e[36m'
+cyanbg='\e[46m'
 
 # --- Set current dir as var ---
 thisDir=$(pwd)
-
 
 # --- Find user's distro and store it as a variable ---
 distroNAME="$(cat /etc/os-release | grep ^NAME | awk -F'"' '{print $2 }')"
@@ -45,12 +48,11 @@ distroLIKE="$(cat /etc/os-release | grep ^ID_LIKE | awk -F= '{ print $2 }')"
 # Print what we found
 echo -e "${blue}${bold}NAME:${reset} $distroNAME ${red}| ${cyan}${bold}LIKE:${reset} $distroLIKE"
 
-
 # --- Choose what var to use ---
 if [ "$distroLIKE" == "" ]; then
 
     if [ "$distroNAME" == "Debian GNU/Linux" ]; then
-    # Workaround for pure Debian, just simplify name
+        # Workaround for pure Debian, just simplify name
         distro="debian"
     fi
 
@@ -66,9 +68,8 @@ else
 
 fi
 
-
 # --- Distro functions ---
-function debian() { 
+function debian() {
     # If we pick up a Debian or Ubuntu based distro, then run this
 
     echo -e "${green}${bold}Detected Debian/Ubuntu.${reset}"
@@ -78,7 +79,8 @@ function debian() {
     sudo apt-get install -y git kitty neofetch zsh curl wget htop fzf exa
 
     # Installing lsd
-    mkdir ${thisDir}/.tmp/ ; cd ${thisDir}/.tmp/
+    mkdir ${thisDir}/.tmp/
+    cd ${thisDir}/.tmp/
 
     # Get the lsd .deb file
     wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb && \
@@ -87,7 +89,8 @@ function debian() {
     sudo dpkg -i lsd_0.23.1_amd64.deb && \
 
     # Remove .tmp after installing lsd
-    cd ${thisDir}/ ; rm -rfv ${thisDir}/.tmp/ 
+    cd ${thisDir}/
+    rm -rfv ${thisDir}/.tmp/
 
     # Installing starship
     curl -sS https://starship.rs/install.sh | sh
@@ -95,14 +98,14 @@ function debian() {
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
-function arch_linux() { 
+function arch_linux() {
     # If we pick up an Arch based distro, then run this
 
     echo -e "${green}${bold}Detected Arch Linux.${reset}"
     sleep 2
 
     # Install deps
-    sudo pacman -Sy --noconfirm starship kitty neofetch zsh curl wget git htop fzf exa lsd 
+    sudo pacman -Sy --noconfirm starship kitty neofetch zsh curl wget git htop fzf exa lsd
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -115,8 +118,8 @@ function rpm_based() {
 
     # Install deps
     sudo dnf install -y neovim kitty neofetch zsh curl wget git fzf exa lsd || \
-        # If dnf doesn't work, then fall back to yum
-        sudo yum install -y neovim kitty neofetch zsh curl wget git fzf exa lsd 
+    # If dnf doesn't work, then fall back to yum
+    sudo yum install -y neovim kitty neofetch zsh curl wget git fzf exa lsd
 
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
@@ -148,7 +151,6 @@ function void_linux() {
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
 
-
 # --- Run above functions according to $distro ---
 if [ "$distro" == "debian" ]; then
 
@@ -171,7 +173,7 @@ elif [ "$distro" == "Fedora Linux" ]; then
     rpm_based
 
 elif [ "$distro" == '"opensuse"' ]; then
-    
+
     echo -e "$distro -> ${green}opensuse()${reset}"
     sleep 1
 
@@ -184,7 +186,7 @@ elif [ "$distro" == "Void" ]; then
 
     void_linux
 
-else 
+else
     # If we can't detect distro then run this section
 
     echo -e "${redbg}Distro detected incorrectly or not supported. Skipping.${reset}"

@@ -8,7 +8,6 @@ echo -e "
 +-----------------------+ \n"
 sleep 0.3
 
-
 # --- Set colors ---
 echo -e " --- Setting colors ---"
 # Normal text
@@ -17,29 +16,29 @@ reset='\e[0m' && echo -e "${reset}Normal text"
 # Bold text
 bold='\e[1m' && echo -e "${bold}Bold text ${reset}"
 
-# Red 
-red='\e[31m' && echo -e "${red}Red ${reset}"; \
-    redbg='\e[41m' && echo -e "${redbg}Red background $reset"
+# Red
+red='\e[31m' && echo -e "${red}Red ${reset}"
+redbg='\e[41m' && echo -e "${redbg}Red background $reset"
 
 # Green
-green='\e[32m' && echo -e "${green}Green ${reset}"; \
-    greenbg='\e[42m' && echo -e "${greenbg}Green background ${reset}"
-    
+green='\e[32m' && echo -e "${green}Green ${reset}"
+greenbg='\e[42m' && echo -e "${greenbg}Green background ${reset}"
+
 # Yellow
-yellow='\e[33m' && echo -e "${yellow}Yellow ${reset}"; \
-    yellowbg='\e[43m' && echo -e "${yellowbg}Yellow background ${reset}"
+yellow='\e[33m' && echo -e "${yellow}Yellow ${reset}"
+yellowbg='\e[43m' && echo -e "${yellowbg}Yellow background ${reset}"
 
 # Blue
-blue='\e[34m' && echo -e "${blue}Blue ${reset}"; \
-    bluebg='\e[44m' && echo -e "${bluebg}Blue background ${reset}"
+blue='\e[34m' && echo -e "${blue}Blue ${reset}"
+bluebg='\e[44m' && echo -e "${bluebg}Blue background ${reset}"
 
 # Purple
-purple='\e[35m' && echo -e "${purple}Purple ${reset}"; \
-    purplebg='\e[45m' && echo -e "${purplebg}Purple background ${reset}"
-    
+purple='\e[35m' && echo -e "${purple}Purple ${reset}"
+purplebg='\e[45m' && echo -e "${purplebg}Purple background ${reset}"
+
 # Cyan
-cyan='\e[36m' && echo -e "${cyan}Cyan ${reset}"; \
-    cyanbg='\e[46m' && echo -e "${cyanbg}Cyan background ${reset}"
+cyan='\e[36m' && echo -e "${cyan}Cyan ${reset}"
+cyanbg='\e[46m' && echo -e "${cyanbg}Cyan background ${reset}"
 
 sleep 0.3
 
@@ -52,11 +51,11 @@ sleep 0.5
 
 # --- Print out basic info ---
 echo -e "${bold}---------- Basic info ----------${reset}"
-# Print the distro 
+# Print the distro
 echo -e "${green}${bold}Distro:${reset} $(lsb_release -d | cut -f 2-)"
 # Print kernel version
-echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)" 
-# Print shell 
+echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
+# Print shell
 echo -e "${blue}${bold}Shell:${reset} $SHELL"
 # Print hostname
 echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname 2>/dev/null || uname -n)"
