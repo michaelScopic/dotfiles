@@ -11,16 +11,13 @@
 # ! Distros planned to be tested: Linux Mint/LMDE,  EndeavourOS,  Nobara, Aquamarine, CentOS,
 
 # * Debian working distros: Ubuntu, Debian (fixed),
-# * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS, ArchLabs *
+# * Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS **, ArchLabs 
 # * RPM working distros: Fedora,
 # * openSUSE working?: YES
 # * Void Linux working?: YES
 
 # * Distro compatability notes:
-# *     Arco and EndeavourOS encounters a libssl error when cloning plugins in pluginInstall.sh???
-# *     Debian requires a slight workaround to work
-# *     Fedora and openSUSE requires a specfic name to work (might develop a workaround for it?)
-# *     ArchLabs requires $distro to be '"arch"'
+# *    ** = Arco and EndeavourOS encounters a libssl error when cloning plugins in pluginInstall.sh???
 
 # --- Set colors ---
 # Not sourcing init.sh just for colors bc it's dumb. I will manually set colors here
@@ -48,6 +45,39 @@ distroLIKE="$(cat /etc/os-release | grep ^ID_LIKE | awk -F= '{ print $2 }')"
 #distroID="$(cat /etc/os-release | grep ^ID | awk -F= '{ print $2 }')"
 # Print what we found
 echo -e "${blue}${bold}NAME:${reset} $distroNAME ${red}| ${cyan}${bold}LIKE:${reset} $distroLIKE"
+
+# --- Workarounds for different distros ---
+if [ "$distroNAME" == "Debian GNU/Linux" ]; then
+    # Simplify pure Debian's $distroNAME
+
+    distroNAME="debian"
+
+elif [ "$distroLIKE" == '"ubuntu debian"' ]; then
+    # Correct Linux Mint's $distroLIKE 
+    
+    distroLIKE="debian"
+
+elif [ "$distroLIKE" == '"arch"' ]; then
+    # Correct Arch based distro's $distroLIKE
+
+    distroLIKE="arch"
+
+elif [ "$distroNAME" == "Fedora Linux" ]; then
+    # Simplify Fedora's $distroNAME
+
+    distroNAME="fedora"
+
+
+elif [ "$distroLIKE" == '"opensuse suse"']; then
+    # Simplify openSUSE's $distroNAME
+
+    distroLIKE="opensuse"
+
+elif [ "$distroNAME" == "Void Linux" ]; then
+    # Simplify Void Linux's $distroNAME
+
+    distroNAME="void"
+fi
 
 # --- Choose what var to use ---
 if [ "$distroLIKE" == "" ]; then
@@ -160,27 +190,27 @@ if [ "$distro" == "debian" ]; then
 
     debian
 
-elif [ "$distro" == "arch" ] || [ "$distro" == '"arch"' ]; then
+elif [ "$distro" == "arch" ]; then 
 
     echo -e "$distro -> ${blue}arch${reset}"
     sleep 1
     arch_linux
 
-elif [ "$distro" == "Fedora Linux" ]; then
+elif [ "$distro" == "fedora" ]; then
 
     echo -e "$distro -> ${yellow}rpm_based()${reset}"
     sleep 1
 
     rpm_based
 
-elif [ "$distro" == '"opensuse"' ]; then
+elif [ "$distro" == "opensuse" ]; then
 
     echo -e "$distro -> ${green}opensuse()${reset}"
     sleep 1
 
     opensuse
 
-elif [ "$distro" == "Void" ]; then
+elif [ "$distro" == "void" ]; then
 
     echo -e "$distro -> ${purple}void_linux()${reset}"
     sleep 1
