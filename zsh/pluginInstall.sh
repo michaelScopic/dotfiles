@@ -8,6 +8,8 @@
 # Source init.sh
 . init.sh
 
+sleep 3
+
 # Print zsh version
 echo -e "${yellow}ZSH version:${reset} $(zsh --version)"
 sleep 1
@@ -59,7 +61,7 @@ or if you have an unsupported distro. ${reset} \n"
 read -p "Install dependancies? [Y\n]: " installDependancies
 
 if [ "$installDependancies" == "y" ] || [ "$installDependancies" == "" ]; then
-    echo -e "${green}${bold}Ok, installing dependancies."
+    echo -e "${green}${bold}Ok, installing dependancies.${reset}"
     bash -c ./dependancies.sh
 else
     echo -e "${yellow}${bold}Ok, SKIPPING INSTALLATION of dependancies...\nYou are on your own for installing the dependancies...${reset}"
