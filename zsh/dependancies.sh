@@ -8,7 +8,7 @@
 
 # ! Derivates NOT WORKING (as of now): Linux Mint,
 # ! Distros NOT WORKING (as of now):
-# ! Distros planned to be tested: Linux Mint/LMDE,  EndeavourOS,  Nobara, Aquamarine, CentOS,
+# ! Distros planned to be tested: Linux Mint/LMDE, EndeavourOS,  Nobara, Aquamarine, CentOS,
 
 #* Debian working distros: Ubuntu, Debian (fixed),
 #* Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS **, ArchLabs,
@@ -128,7 +128,7 @@ function arch_linux() {
     sleep 2
 
     # Install deps
-    sudo pacman -Sy --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd
+    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
