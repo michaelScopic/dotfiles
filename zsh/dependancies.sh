@@ -17,7 +17,7 @@
 #* Void Linux working?: YES
 
 #* Distro compatability notes:
-#*    ** = Arco and EndeavourOS encounters a libssl error when cloning plugins in pluginInstall.sh???
+#*  ** = Fixed issue with libssl on Arch based systems, see [https://bbs.archlinux.org/viewtopic.php?pid=740383#p740383]
 
 # --- Set colors ---
 # Not sourcing init.sh just for colors bc it's dumb. I will manually set colors here
