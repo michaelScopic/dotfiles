@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# TODO: finish dependancies.sh
-
-# * NOTES:
-# *     Arco and EndeavourOS encounter a libssl error when cloning the plugins (something to do with 'sudo pacman -Sy <packages>' and then running 'sudo pacman -S <whatever>')
 
 # Source init.sh
 . init.sh
@@ -18,7 +14,7 @@ sleep 1
 # !!! HUGE WIP !!!
 echo -e "
 ###########################################
-#${cyan}${bold} I am going to try to install the needed ${reset}# 
+#${cyan}${bold} I can try to install the needed ${reset}        # 
 #${cyan}${bold} dependancies before continuing. ${reset}        #
 #                                         #
 #${purple}${bold} Supported distros: ${reset}                     #
@@ -29,36 +25,33 @@ echo -e "
 #${blue}       CentOS ${reset}                           #
 #${blue}   openSUSE TW ${reset}                          #
 #${blue}   Void Linux ${reset}                           #
-########################################### \n
-${redbg} !!! THIS DOES NOT FULLY WORK AS OF NOW !!!${reset} "
+#${blue}   Android ${reset}                              #
+########################################### \n"
 
 sleep 2
 
 echo -e "
-#########################################################
-#${cyan}${bold} Dependancy list: ${reset}                                     #
-#   ${blue}kitty${reset}                                               #
-#   ${blue}neofetch${reset}                                            #
-#   ${blue}zsh${reset}                                                 #
-#   ${blue}starship ${red}*${reset}                                          #
-#   ${blue}htop${reset}                                                #
-#   ${blue}fzf${reset}                                                 #
-#   ${blue}exa${reset}                                                 #
-#   ${blue}lsd ${red}*${reset}                                               #
-#   ${blue}curl${reset}                                                #
-#   ${blue}wget${reset}                                                #
-#                                                       #
-# ${yellow}NOTE:${reset}                                                 #
-# ${red}*${reset} = ${yellow}Not available in Debian/Ubuntu's repos, will use ${reset} #
-#     ${yellow}a package/script to install it. ${reset}                  #                   
-#########################################################
+####################
+#${purple}${bold} Dependancy list:${reset} #
+#                  #
+#${blue}   kitty         ${reset} #
+#${blue}   neofetch      ${reset} #
+#${blue}   zsh           ${reset} #
+#${blue}   starship      ${reset} #
+#${blue}   htop          ${reset} #
+#${blue}   fzf           ${reset} #
+#${blue}   exa           ${reset} #
+#${blue}   lsd           ${reset} #
+#${blue}   curl          ${reset} #
+#${blue}   wget          ${reset} #
+#################### \n
 "
 
 echo -e "${yellow}Do you want to install the dependancies? 
 ${red}Answer 'n' if you have the dependancies already installed (from my repo's wiki),
 or if you have an unsupported distro. ${reset} \n"
 
-read -p "Install dependancies? [Y\n]: " installDependancies
+read -rp "Install dependancies? [Y\n]: " installDependancies
 
 if [ "$installDependancies" == "y" ] || [ "$installDependancies" == "" ]; then
     echo -e "${green}${bold}Ok, installing dependancies.${reset}"
@@ -116,15 +109,15 @@ echo -e "
 # ${cyan}I will make a backup of your current ${reset}#
 # ${cyan}one called${purple} '~/.zshrc.bak' ${reset}           #
 ########################################"
-read -p "Overwrite? [Y/n]: " zsh_overwrite
+read -rp "Overwrite? [Y/n]: " zsh_overwrite
 
 if [ "$zsh_overwrite" != "n" ]; then
     # make a copy of user's zshrc and rename it as '.zshrc.bak'
 
-    mv -v $HOME/.zshrc $HOME/.zshrc.bak 2>/dev/null
+    mv -v "$HOME"/.zshrc "$HOME"/.zshrc.bak 2>/dev/null
     # copy the zshrc from this directory to home as '.zshrc'
 
-    cp -v zshrc $HOME/.zshrc
+    cp -v zshrc "$HOME"/.zshrc
 
     echo -e "${greenbg}Done!${reset}"
 
@@ -141,7 +134,7 @@ sleep 1
 echo -e "${cyan}${bold}Do you want to install the starship prompt? 
 ${red}(say 'n' if you already have Starship installed)${reset}"
 
-read -p "Install starship? [Y/n]: " install_starship
+read -rp "Install starship? [Y/n]: " install_starship
 
 if [ "$install_starship" == "" ] || [ "$install_starship" == "y" ]; then
     # if user pressed enter or 'y', we will install starship
@@ -160,4 +153,4 @@ fi
 echo -e "${greenbg}Done with everything! Reloading your shell for you! Enjoy!${reset}"
 exec zsh
 
-exit 0
+exit

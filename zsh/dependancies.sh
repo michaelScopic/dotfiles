@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# * Script to install dependancies according to user's distro/package manager
-# * USED IN: pluginInstall.sh
+#* Script to install dependancies according to user's distro/package manager
+#* USED IN: pluginInstall.sh
 
 # TODO: Test on different distros/derivatives
 # ? Add support for Gentoo???
 
-# ! Derivates NOT WORKING (as of now): Linux Mint,
-# ! Distros NOT WORKING (as of now):
-# ! Distros planned to be tested: Linux Mint/LMDE, EndeavourOS,  Nobara, Aquamarine, CentOS,
+# ! Distros NOT WORKING (as of now): Linux Mint, EndeavourOS, Arco, 
+# ! Distros planned to be tested: LMDE, EndeavourOS, Nobara, Aquamarine, CentOS,
 
 #* Debian working distros: Ubuntu, Debian (fixed),
 #* Arch working distros: Arch, Manjaro (only with $distroLIKE), Arco **, EndeavourOS **, ArchLabs,
@@ -114,8 +113,8 @@ function debian() {
     sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa
 
     # Installing lsd
-    mkdir ${thisDir}/.tmp/
-    cd ${thisDir}/.tmp/
+    mkdir "${thisDir}"/.tmp/
+    cd "${thisDir}"/.tmp/ || exit
 
     # Get the lsd .deb file
     wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb && \
@@ -124,8 +123,8 @@ function debian() {
     sudo dpkg -i lsd_0.23.1_amd64.deb && \
 
     # Remove .tmp after installing lsd
-    cd ${thisDir}/
-    rm -rfv ${thisDir}/.tmp/
+    cd "${thisDir}"/ || exit
+    rm -rfv "${thisDir}"/.tmp/
 
     # Installing starship
     curl -sS https://starship.rs/install.sh | sh
@@ -196,16 +195,16 @@ function android() {
     pkg install -y vim zsh curl wget git fzf exa lsd starship make
 
     # Build/install pfetch (neofetch alternative)
-    mkdir ${thisDir}/.tmp
-    cd ${thisDir}/.tmp
+    mkdir "${thisDir}"/.tmp
+    cd "${thisDir}"/.tmp || exit 1
     git clone https://github.com/dylanaraps/pfetch &>/dev/null
-    cd pfetch
+    cd pfetch || echo -e "${red}Couldn\'t cd into 'pfetch/'. Aborting.${reset}"; exit 1
     make &>/dev/null
     make install
 
     # Delete .tmp after installing pfetch
-    cd ${thisDir}
-    rm -rf ${thisDir}/.tmp
+    cd "${thisDir}" || exit 1
+    rm -rf "${thisDir}"/.tmp
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 
