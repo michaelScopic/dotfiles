@@ -1,0 +1,35 @@
+# I am going to attempt to make my own starship prompt
+# But heres the twist: I have absolutely no clue what I'm doing.
+# I'm just gonna do a "monke see, monke do" and bullshit my entire way thru this
+
+
+# Format
+format = "$path $git_branch $character "
+
+# Prompt symbols
+[character]
+success_symbol = "[ ](green)[>](bold red)[>](bold blue)[>](bold purple) "
+error_symbol = "[ ](red)[>>>](bold red) "
+
+
+# Directory
+[directory]
+format = "At: [$path]($style) | "
+home_symbol = "Home sweet home. "
+read_only = " "
+read_only_style = "red"
+style = "green"
+
+# Git
+[git_branch]
+format = "[ ](fg:red)$branch "
+
+
+# Right prompt
+[right_format]
+right_format = ""
+
+# Command time
+[cmd_duration]
+min_time = 500
+format = "Took: [$duration](bold yellow)"
