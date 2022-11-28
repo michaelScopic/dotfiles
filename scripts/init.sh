@@ -8,6 +8,17 @@ echo -e "
 +-----------------------+ \n"
 sleep 0.3
 
+# --- Define a countdown function ---
+function countdown() {
+    seconds="$*"
+    start="$(($(date +%s) + $seconds))"
+    while [ "$start" -ge `date +%s` ]; do
+        time="$(( start - `date +%s` ))"
+        printf '%s\r' "$(date -u -d "@$time" +%S) seconds left... (Press 'ctrl+c' to abort)"
+done
+}
+
+
 # --- Set colors ---
 echo -e " --- Setting colors ---"
 # Normal text
@@ -65,7 +76,9 @@ echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Mode
 echo -e "${cyan}${bold}User:${reset} $(whoami)"
 echo -e "${bold}-------------------------------- \n${reset}"
 
-echo -e "${red}${bold}Note: These scripts are made for x86_64 machines. \nIt may not work correctly on other architectures. \n${reset}"
+thisDir=$(pwd)
+
+echo -e "${green}${bold}Current directory: ${reset}$thisDir \n"
 
 echo -e "${green}${bold}Done initalizing. \n${reset}"
 

@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #* Script to install dependancies according to user's distro/package manager
-#* USED IN: pluginInstall.sh
+#* USED IN: deploy.sh -> pluginInstall.sh -> dependencies.sh
+#* Can be used standalone (you can this script by itself)
 
 # TODO: Test on different distros/derivatives
 # ? Add support for Gentoo???
@@ -20,20 +21,20 @@
 
 # --- Set colors ---
 # Not sourcing init.sh just for colors bc it's dumb. I will manually set colors here
-reset='\e[0m'
-bold='\e[1m'
-red='\e[31m'
-redbg='\e[41m'
-green='\e[32m'
-greenbg='\e[42m'
-yellow='\e[33m'
-yellowbg='\e[43m'
-blue='\e[34m'
-bluebg='\e[44m'
-purple='\e[35m'
-purplebg='\e[45m'
-cyan='\e[36m'
-cyanbg='\e[46m'
+#reset='\e[0m'
+#bold='\e[1m'
+#red='\e[31m'
+#redbg='\e[41m'
+#green='\e[32m'
+#greenbg='\e[42m'
+#yellow='\e[33m'
+#yellowbg='\e[43m'
+#blue='\e[34m'
+#bluebg='\e[44m'
+#purple='\e[35m'
+#purplebg='\e[45m'
+#cyan='\e[36m'
+#cyanbg='\e[46m'
 
 # --- Set current dir as var ---
 thisDir=$(pwd)
@@ -111,7 +112,7 @@ function debian() {
     sleep 2
 
     # Install deps
-    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa
+    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa rsync
 
     # Installing lsd
     mkdir "${thisDir}"/.tmp/
@@ -140,7 +141,7 @@ function arch_linux() {
     sleep 2
 
     # Install deps
-    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd
+    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -152,9 +153,9 @@ function rpm_based() {
     sleep 2
 
     # Install deps
-    sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd || \
+    sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync || \
     # If dnf doesn't work, then fall back to yum
-    sudo yum install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd
+    sudo yum install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync 
 
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
@@ -169,7 +170,7 @@ function opensuse() {
     sleep 2
 
     # Install deps
-    sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship
+    sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -181,7 +182,7 @@ function void_linux() {
     sleep 2
 
     # Install deps
-    sudo xbps-install -Sy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship
+    sudo xbps-install -Sy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -193,14 +194,14 @@ function android() {
     sleep 2
 
     # Install deps
-    pkg install -y vim zsh curl wget git fzf exa lsd starship make
+    pkg install -y vim zsh curl wget git fzf exa lsd starship make rsync
 
     # Build/install pfetch (neofetch alternative)
     mkdir "${thisDir}"/.tmp
     cd "${thisDir}"/.tmp || exit 1
     git clone https://github.com/dylanaraps/pfetch &>/dev/null
-    cd pfetch || echo -e "${red}Couldn\'t cd into 'pfetch/'. Aborting.${reset}"; exit 1
-    make &>/dev/null
+    cd pfetch || echo -e "${red}Couldn't cd into 'pfetch/'. Aborting.${reset}"; exit 1
+    make &>/dev/null && \
     make install
 
     # Delete .tmp after installing pfetch
@@ -247,7 +248,7 @@ elif [ "$distro" == "Void" ]; then
     void_linux
 
 elif [ "$distro" == "Android" ]; then
-   
+    
 	echo -e "$distro -> ${purple}android()${reset}"
     sleep 1
 

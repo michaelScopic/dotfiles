@@ -1,19 +1,21 @@
 #!/bin/bash
 
+#* Script to install ZSH plugins and then optionally backup and overwrite user's zshrc with the one here.
 
-# Source init.sh
-# . init.sh
+# --- Source init.sh ---
+## Not needed anymore
+#. init.sh
 
 #sleep 3
 
-# Print zsh version
+# --- Print zsh version ---
 echo -e "${yellow}ZSH version:${reset} $(zsh --version)"
 sleep 1
 
-# --- Install dependancies ---
+# --- Install dependencies ---
 echo -e "
 ####################
-#${purple}${bold} Dependancy list:${reset} #
+#${purple}${bold} Dependency list:${reset} #
 #                  #
 #${blue}   kitty         ${reset} #
 #${blue}   neofetch      ${reset} #
@@ -30,7 +32,7 @@ echo -e "
 echo -e "
 ###################################
 #${cyan}${bold} I can try to install the needed ${reset}# 
-#${cyan}${bold} dependancies before continuing. ${reset}#
+#${cyan}${bold} dependencies before continuing. ${reset}#
 #                                 #
 #${purple}${bold} Supported distros: ${reset}             #
 #${blue}   Debian/Ubuntu distros ${reset}        #
@@ -41,17 +43,17 @@ echo -e "
 #${blue}   Android ${red}* ${reset}                    #
 ################################### 
 
-${red}*${reset} = ${yellow}This script is made for x86_64 machines, but does works on Android. You're welcome :) ${reset} \n"
+${red}*${reset} = ${yellow}This script is made for x86_64 machines, but can work on Android. You're welcome :) ${reset} \n"
 
 sleep 2
 
 echo -e "${yellow}Do you want to install the dependancies? 
 ${red}Answer 'n' if you have the dependancies already installed (from my repo's wiki),
-or if you have an unsupported distro. ${reset} \n"
+${bold}or if you have an unsupported distro. ${reset} \n"
 
 read -rp "Install dependancies? [Y\n]: " installDependancies
 
-if [ "$installDependancies" == "y" ] || [ "$installDependancies" == "" ]; then
+if [ "${installDependancies,,}" = "y" ] || [ "${installDependancies,,}" == "" ]; then
 
     echo -e "${green}${bold}Ok, installing dependencies.${reset}"
     bash -c ./dependencies.sh
@@ -71,7 +73,7 @@ echo -e "
 # ${blue}plugins in:${red} ~/.zsh-plugins...${reset} #
 #################################"
 
-mkdir ~/.zsh-plugins 
+mkdir -v "$HOME"/.zsh-plugins 
 echo -e "${greenbg}Done. Going to install plugins...${reset}"
 
 # --- Install plugins ---
@@ -111,9 +113,9 @@ echo -e "
 # ${cyan}I will make a backup of your current ${reset}#
 # ${cyan}one called${purple} '~/.zshrc.bak' ${reset}           #
 ########################################"
-read -rp "Overwrite? [Y/n]: " zsh_overwrite
+read -rp "Overwrite? [Y/n]: " zshOverwrite
 
-if [ "$zsh_overwrite" != "n" ]; then
+if [ "$zshOverwrite,," == "y" ] || [ "$zshOverwrite,," == "" ]; then
     # make a copy of user's zshrc and rename it as '.zshrc.bak'
 
     mv -v "$HOME"/.zshrc "$HOME"/.zshrc.bak 2>/dev/null
@@ -138,7 +140,7 @@ ${red}(say 'n' if you already have Starship installed)${reset}"
 
 read -rp "Install starship? [Y/n]: " install_starship
 
-if [ "$install_starship" == "" ] || [ "$install_starship" == "y" ]; then
+if [ "$install_starship,," == "" ] || [ "$install_starship,," == "y" ]; then
     # if user pressed enter or 'y', we will install starship
 
     echo -e "${green}Ok. Installing Starship prompt...${reset}"
@@ -148,11 +150,9 @@ if [ "$install_starship" == "" ] || [ "$install_starship" == "y" ]; then
 
 else
 
-    echo -e "${red}Ok. ${bold}not${reset}${red} installing Starship."
+    echo -e "${red}Ok. ${bold}Not${reset}${red} installing Starship. \n ${reset}"
 
 fi
 
-echo -e "${greenbg}Done with everything! Reloading your shell for you! Enjoy!${reset}"
-exec zsh
-
-exit
+#echo -e "${greenbg}Done with everything! Reloading your shell for you! Enjoy!${reset}"
+#exec zsh
