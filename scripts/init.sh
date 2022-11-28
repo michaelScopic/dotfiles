@@ -11,34 +11,34 @@ sleep 0.3
 # --- Set colors ---
 echo -e " --- Setting colors ---"
 # Normal text
-reset='\e[0m' && echo -e "${reset}Normal text"
+export reset='\e[0m' && echo -e "${reset}Normal text"
 
 # Bold text
-bold='\e[1m' && echo -e "${bold}Bold text ${reset}"
+export bold='\e[1m' && echo -e "${bold}Bold text ${reset}"
 
 # Red
-red='\e[31m' && echo -e "${red}Red ${reset}"
-redbg='\e[41m' && echo -e "${redbg}Red background $reset"
+export red='\e[31m' && echo -e "${red}Red ${reset}"
+export redbg='\e[41m' && echo -e "${redbg}Red background $reset"
 
 # Green
-green='\e[32m' && echo -e "${green}Green ${reset}"
-greenbg='\e[42m' && echo -e "${greenbg}Green background ${reset}"
+export green='\e[32m' && echo -e "${green}Green ${reset}"
+export greenbg='\e[42m' && echo -e "${greenbg}Green background ${reset}"
 
 # Yellow
-yellow='\e[33m' && echo -e "${yellow}Yellow ${reset}"
-yellowbg='\e[43m' && echo -e "${yellowbg}Yellow background ${reset}"
+export yellow='\e[33m' && echo -e "${yellow}Yellow ${reset}"
+export yellowbg='\e[43m' && echo -e "${yellowbg}Yellow background ${reset}"
 
 # Blue
-blue='\e[34m' && echo -e "${blue}Blue ${reset}"
-bluebg='\e[44m' && echo -e "${bluebg}Blue background ${reset}"
+export blue='\e[34m' && echo -e "${blue}Blue ${reset}"
+export bluebg='\e[44m' && echo -e "${bluebg}Blue background ${reset}"
 
 # Purple
-purple='\e[35m' && echo -e "${purple}Purple ${reset}"
-purplebg='\e[45m' && echo -e "${purplebg}Purple background ${reset}"
+export purple='\e[35m' && echo -e "${purple}Purple ${reset}"
+export purplebg='\e[45m' && echo -e "${purplebg}Purple background ${reset}"
 
 # Cyan
-cyan='\e[36m' && echo -e "${cyan}Cyan ${reset}"
-cyanbg='\e[46m' && echo -e "${cyanbg}Cyan background ${reset}"
+export cyan='\e[36m' && echo -e "${cyan}Cyan ${reset}"
+export cyanbg='\e[46m' && echo -e "${cyanbg}Cyan background ${reset}"
 
 sleep 0.3
 
@@ -68,3 +68,5 @@ echo -e "${bold}-------------------------------- \n${reset}"
 echo -e "${red}${bold}Note: These scripts are made for x86_64 machines. \nIt may not work correctly on other architectures. \n${reset}"
 
 echo -e "${green}${bold}Done initalizing. \n${reset}"
+
+sleep 3

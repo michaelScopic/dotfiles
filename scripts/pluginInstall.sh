@@ -2,34 +2,15 @@
 
 
 # Source init.sh
-. init.sh
+# . init.sh
 
-sleep 3
+#sleep 3
 
 # Print zsh version
 echo -e "${yellow}ZSH version:${reset} $(zsh --version)"
 sleep 1
 
 # --- Install dependancies ---
-# !!! HUGE WIP !!!
-echo -e "
-###########################################
-#${cyan}${bold} I can try to install the needed ${reset}        # 
-#${cyan}${bold} dependancies before continuing. ${reset}        #
-#                                         #
-#${purple}${bold} Supported distros: ${reset}                     #
-#${blue}   Debian/Ubuntu ${reset}                        #
-#${blue}   Arch based distros ${reset}                   #
-#${blue}   RPM based distros, eg: ${reset}               #
-#${blue}       Fedora ${reset}                           #
-#${blue}       CentOS ${reset}                           #
-#${blue}   openSUSE TW ${reset}                          #
-#${blue}   Void Linux ${reset}                           #
-#${blue}   Android ${reset}                              #
-########################################### \n"
-
-sleep 2
-
 echo -e "
 ####################
 #${purple}${bold} Dependancy list:${reset} #
@@ -44,8 +25,25 @@ echo -e "
 #${blue}   lsd           ${reset} #
 #${blue}   curl          ${reset} #
 #${blue}   wget          ${reset} #
-#################### \n
-"
+####################"
+
+echo -e "
+###################################
+#${cyan}${bold} I can try to install the needed ${reset}# 
+#${cyan}${bold} dependancies before continuing. ${reset}#
+#                                 #
+#${purple}${bold} Supported distros: ${reset}             #
+#${blue}   Debian/Ubuntu distros ${reset}        #
+#${blue}   Arch distros ${reset}                 #
+#${blue}   Fedora ${reset}                       #
+#${blue}   openSUSE TW ${reset}                  #
+#${blue}   Void Linux ${reset}                   #
+#${blue}   Android ${red}* ${reset}                    #
+################################### 
+
+${red}*${reset} = ${yellow}This script is made for x86_64 machines, but does works on Android. You're welcome :) ${reset} \n"
+
+sleep 2
 
 echo -e "${yellow}Do you want to install the dependancies? 
 ${red}Answer 'n' if you have the dependancies already installed (from my repo's wiki),
@@ -54,10 +52,14 @@ or if you have an unsupported distro. ${reset} \n"
 read -rp "Install dependancies? [Y\n]: " installDependancies
 
 if [ "$installDependancies" == "y" ] || [ "$installDependancies" == "" ]; then
-    echo -e "${green}${bold}Ok, installing dependancies.${reset}"
-    bash -c ./dependancies.sh
+
+    echo -e "${green}${bold}Ok, installing dependencies.${reset}"
+    bash -c ./dependencies.sh
+
 else
-    echo -e "${yellow}${bold}Ok, SKIPPING INSTALLATION of dependancies...\nYou are on your own for installing the dependancies...${reset}"
+
+    echo -e "${yellow}${bold}Ok, SKIPPING INSTALLATION of dependencies...\nYou are on your own for that...\n${reset}"
+    echo -e "${cyan}Message me on Discord (${purple}Michael_Scopic.zsh#0102${cyan}) if you want me to add support for another distro.${reset}"
     sleep 1
 
 fi
@@ -69,7 +71,7 @@ echo -e "
 # ${blue}plugins in:${red} ~/.zsh-plugins...${reset} #
 #################################"
 
-mkdir ~/.zsh-plugins 2>/dev/null
+mkdir ~/.zsh-plugins 
 echo -e "${greenbg}Done. Going to install plugins...${reset}"
 
 # --- Install plugins ---
@@ -117,7 +119,7 @@ if [ "$zsh_overwrite" != "n" ]; then
     mv -v "$HOME"/.zshrc "$HOME"/.zshrc.bak 2>/dev/null
     # copy the zshrc from this directory to home as '.zshrc'
 
-    cp -v zshrc "$HOME"/.zshrc
+    cp -v ../zsh/zshrc "$HOME"/.zshrc
 
     echo -e "${greenbg}Done!${reset}"
 

@@ -43,6 +43,7 @@ distroNAME="$(cat /etc/os-release | grep ^NAME | awk -F'"' '{print $2 }')"
 distroLIKE="$(cat /etc/os-release | grep ^ID_LIKE | awk -F= '{ print $2 }')"
 #distroID="$(cat /etc/os-release | grep ^ID | awk -F= '{ print $2 }')"
 distroFallback=$(uname -o)
+
 # Print what we found
 echo -e "${blue}${bold}NAME:${reset} $distroNAME ${red}| ${cyan}${bold}LIKE:${reset} $distroLIKE ${red}| ${purple}Fallback:${reset} $distroFallback"
 
@@ -57,10 +58,10 @@ elif [ "$distroLIKE" == '"ubuntu debian"' ]; then
 
     distroLIKE="debian"
 
-elif [ "$distroLIKE" == '"arch"' ]; then
+elif [ "$distroLIKE" == '"arch"' ] || [ "$distroNAME" == "Arch Linux" ]; then
     # Correct Arch based distro's $distroLIKE
 
-    distroLIKE="arch"
+    distroLIKE="Arch"
 
 elif [ "$distroNAME" == "Fedora Linux" ]; then
     # Simplify Fedora's $distroNAME
@@ -218,7 +219,7 @@ if [ "$distro" == "debian" ]; then
 
     debian
 
-elif [ "$distro" == "arch" ]; then
+elif [ "$distro" == "Arch" ]; then
 
     echo -e "$distro -> ${blue}arch${reset}"
     sleep 1
