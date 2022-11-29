@@ -24,10 +24,11 @@ function backup() {
     if [ -d "$HOME"/.config/htop ]; then 
     ## If htop config dir exists, back it up (no not that kind of "back it up" smh)
 
-        cp -v "$HOME"/.config/htop/htoprc "$HOME"/.config/htop/htoprc.bak   ## Backup file is in the same dir but ends in '.bak'
+        cp -v "$HOME"/.config/htop/htoprc "$HOME"/.config/htop/htoprc.bak
 
         echo -e "${green}Success! A backup of your current htoprc is in:${reset} '~/.config/htop/htoprc.bak' \n"
         sleep 1
+
     else 
         ## If htop config dir isn't found, skip the backup
 
@@ -42,12 +43,12 @@ function backup() {
     if [ -d "$HOME/.config/kitty/" ]; then
         ## Backup if kitty config dir exists; some people might not have kitty already installed
 
-        mkdir -v "$HOME"/.config/kitty/backups  ## Backups are in the kitty config dir
+        mkdir -v "$HOME"/.config/kitty/backups
 
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -v "$HOME"/.config/kitty "$HOME"/.config/kitty/backups && \
         rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME"/.config/kitty/backups && \
-
+        
         echo -e "${green}Success! Your current Kitty configs are in:${reset} '~/.config/kitty/backups' \n"
         sleep 1
 
@@ -65,7 +66,7 @@ function backup() {
 
     if [ -d "$HOME"/.config/neofetch ]; then
         ## If neofetch config dir exists, make a backup
-        mkdir -v "$HOME"/.config/neofetch/backups   ## Backups are in the neofetch config dir
+        mkdir -v "$HOME"/.config/neofetch/backups
     
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -rv "$HOME/.config/neofetch" ~/.config/neofetch/backups/ && \
@@ -97,7 +98,6 @@ function backup() {
     echo -e "${greenbg}Finished backing up everything that I could find!${reset} \n"
     sleep 1
 }
-
 
 # -- Overwrite user's configs with the dotfiles' configs ---
 function overwrite() {
@@ -138,17 +138,17 @@ function overwrite() {
             default)
                 echo -e "${blue}Using the default prompt... \n ${reset}"
                 rm "$HOME"/.config/starship.toml 
-                ;;
+            ;;
         
             rounded)
                 echo -e "${blue}Using 'rounded.toml' as the prompt... \n ${reset}"
                 cp starship/rounded.toml "$HOME"/.config/starship.toml
-                ;;
+            ;;
 
             plain)
                 echo -e "${blue}Using the plain text prompt... \n ${reset}"
                 cp starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
-                ;;
+            ;;
         esac 
 
     else 
@@ -180,29 +180,29 @@ case $1 in
         backup
         overwrite
         exit
-        ;;
+    ;;
 
     plugins) ## Just run the plugin installer
         source scripts/./init.sh
         
         exit
-        ;; 
+    ;; 
 
     backup) ## Just backup configs
         source scripts/./init.sh
         backup
         exit
-        ;;
+    ;;
 
     overwrite) ## Just overwrite configs
         source scripts/./init.sh
         overwrite
         exit
-        ;;
+    ;;
 
     *)  ## Any other agrument pass just runs the usage/help function       
         usage
         exit 1
-        ;;
+    ;;
 esac
 
