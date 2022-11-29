@@ -4,69 +4,126 @@ These are my dotfiles for my Linux configs and ZSH.
 
 I hope you enjoy!
 
-## NOTICE
+## Why?
 
-Parts of this repo (usually in the `zsh/` directory) is under development and some stuff might not work correctly. Sorry if it inconveniences you.
+I wanted to showcase my configs in hopes that someone else can enjoy my work (and stealing from other ppl's dots lmao).
 
-\- Michael
+This was also a perfect oppurtunity to learn Bash/Shell scripting.
+
+## Disclamer
+
+I'm somewhat experienced in Bash/Shell scripting, but I am still learning how to do stuff, so my code probably won't be the cleanest or most efficient.
+
+## Features
+
+Shell script features:
+
+* *Lots* of colors
+* Interactive
+* Automation for deploying dotfiles
+  * Installs needed dependencies (on supported distros)
+  * Installs ZSH plugins and then backup and overwrite user's zshrc
+  * Backs up user's current configs (in case they want to rollback)
+  * Overwrites user's configs with the ones in this repo
 
 ## TODO
 
-### preview pics
+### Scripts
 
-- [x] htop
-- [x] starship
-- [ ] kitty
-- [x] neofetch
+* [x] `init.sh` *<- Initalizer script*
+* [x] `pluginInstall.sh` *<- Installs ZSH plugins, optionally calls `dependencies.sh`*
+* [x] `dependencies.sh` *<- Installs dependencies (on supported distros)*
+* [ ] `deploy.sh` *<- Automates everything, calls the above scripts*
 
-### htop
+### Preview pics
 
-- [x] `htoprc`
-- [x] `README.md`
+* [x] htop
+* [x] starship
+* [ ] kitty
+* [x] neofetch
 
-### starship prompts
+### `config/htop`
 
-- [x] `rounded.toml`
-- [x] `plain-text-symbols.toml`
-- [ ]  My own prompt????
-- [x] `README.md`
+* [x] `htoprc`
+* [x] `README.md`
 
-### ZSH
+### `config/starship`
 
-- [x] Plugin install script
-- [x] `ArchLabs_zshrc`
-- [x] `zshrc`
-- [ ] `README.md`
+* [x] `rounded.toml`
+* [x] `plain-text-symbols.toml`
+* [ ]  My own prompt *<- (it's a skid at best, I have no clue what I'm doing)*
+* [x] `README.md`
 
-### neofetch
+### `zsh/`
 
-- [x] neofetch config
-- [x] `README.md`
+* [x] `ArchLabs_zshrc`
+* [x] `zshrc`
 
-### Kitty
+### `config/neofetch`
 
-- [x] kitty config
-- [x] `darkdecay.ini`
-- [x] `decaycs.ini`
-- [x] `README.md`
+* [x] `config.conf` *<- Neofetch config*
+* [x] `README.md`
 
-### Openbox: (?)
+### `config/kitty`
 
-- [ ] WIP
+* [x] `kitty.conf` *<- Kitty config*
+* [ ]  `themes/` *<- Folder to contain color themes*
+  * [x] `darkdecay.ini`
+  * [x] `decaycs.ini`
+* [x] `README.md`
 
-### i3: (?)
+More coming soon...hopefully.
 
-- [ ] WIP
+### What am I working on right now?
 
-### rofi: (?)
+As of this commit (on 11.29.22), I am trying to finish/fix `deploy.sh` and some other issues in the other scripts.
 
-- [ ] WIP
+I am also going to upload a themes directory for kitty.
 
-More coming soon... :)
+## Installation guide (WIP)
 
-## Installation guide
+### Install using the wiki
 
-[Look in the wiki :)](https://github.com/michaelScopic/dotfiles/wiki) (**Heavy** WIP)
+First, clone the repository:
+
+```sh
+# Clone the repo
+git clone https://github.com/michaelScopic/dotfiles ~/Documents
+
+cd ~/Documents/dotfiles
+```
+
+Then look at the [wiki](https://github.com/michaelScopic/dotfiles/wiki) for copying configs.
+
+* Note: The wiki is partially WIP, but the important parts are finished.
+
+### Install using the provided script (WIP)
+
+**! DISCLAIMER: `deploy.sh` is not in a usable state as of now, please refer to the repo's wiki !**
+
+**-- Finishing and fixing this script is my #1 priority right now. --**
+
+```sh
+# Clone the repo
+git clone https://github.com/michaelScopic/dotfiles ~/Documents
+
+cd ~/Documents/dotfiles
+```
+
+Look at the possible agruments to use in the script by running:
+
+```sh
+# cd into the dotfiles directory if you aren't already there
+./deploy.sh help
+```
+
+You can use these following arguments with that script: `all`, `plugins`, `backup`, `overwrite`.
+
+So if you want to run all of them, just do:
+
+```sh
+./deploy.sh all
+```
 
 ## Contributing
 
@@ -76,27 +133,27 @@ Maybe you're smarter than me or know more about Linux. If you think you can clea
 
 ### Contributing guidelines
 
-### ABSOLUTELY NO MALICIOUS CODE
+ABSOLUTELY NO MALICIOUS CODE
 
 Any form of malicious code is **not accepted under any curcumstances**, and any PR containing malicious code will just be rejected. I won't even argue with you if you have a malicious PR. Just fuck off.
 
 **Comments:**
 
-- Put comments breifly explaining what parts of your code does. Why? Because I want to know what you're doing so that (a) I can learn from it and (b) so that I can make sure it's not malicious.
+* Put comments breifly explaining what parts of your code does. Why? Because I want to know what you're doing so that (a) I can learn from it and (b) so that I can make sure it's not malicious.
 
-- **If you do not put comments, I will not accept the PR.**
+* **If you do not put comments, I will not accept the PR.**
 
 **Confusing/messy code:**
 
-- Please please please don't make your code messy. It makes it much harder to read thru, and makes me not want to trust you.
+* Please please please don't make your code messy. It makes it much harder to read thru, and makes me not want to trust you.
 
-- I understand if you aren't the most well versed in shell scripting, but ffs don't be a caveman when you submit code.
+* I understand if you aren't the most well versed in shell scripting, but ffs don't be a caveman when you submit code.
 
-- If I get sensory overload from trying to read your code then I will most likely question both mine and your existance and then reject the PR.
+* If I get sensory overload from trying to read your code then I will most likely question both mine and your existance and then reject the PR.
 
 **Test your code:**
 
-- I've spent enough time testing my own code and I really don't want to test to see if your code works. So please test your own code and verify that it works.
+* I've spent enough time testing my own code and I really don't want to test to see if your code works. So please test your own code and verify that it works.
 
 ## How to contribute
 
