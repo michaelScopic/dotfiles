@@ -11,10 +11,10 @@ sleep 0.3
 # --- Define a countdown function ---
 function countdown() {
     seconds="$*"
-    start="$(($(date +%s) + $seconds))"
-    while [ "$start" -ge `date +%s` ]; do
-        time="$(( start - `date +%s` ))"
-        printf '%s\r' "$(date -u -d "@$time" +%S) seconds left... (Press 'ctrl+c' to abort)"
+    start="$(($(date +%s) + seconds))"
+    while [ "$start" -ge "$(date +%s)" ]; do
+        time="$(( start - $(date +%s) ))"
+        printf '%s\r' "$(date -u -d "@$time" +%S) seconds left... (Press [ctrl+c] to abort)"
 done
 }
 
