@@ -9,51 +9,10 @@
 # TODO: Make help section
 # ? try to add options (ex: for skipping installing zsh plugins or skip configs)??
 
-# --- Read arguments passed ---
-case $1 in
-    all)    ## Run all functions (plugins -> backups -> overwrite)
-        source scripts/./init.sh
-        bash -c scripts/./pluginInstall.sh
-        backup
-        overwrite
-        exit $?
-        ;;
-
-    plugin) ## Just run the plugin installer
-        source scripts/./init.sh
-        bash -c scripts/./pluginInstall.sh
-        exit $?
-        ;; 
-       
-    backup) ## Just backup configs
-        source scripts/./init.sh
-        backup
-        exit $?
-        ;;
-
-    overwrite) ## Just overwrite configs
-        source scripts/./init.sh
-        overwrite
-        exit $?
-        ;;
-
-    *)  ## Any other agrument pass just runs the usage/help function       
-        usage
-        exit 1
-        ;;
-esac
-
-# --- Run initalizer ---
-#source scripts/./init.sh
-#---------------------------------------------#
-
-
-
-# -- Run the zsh plugin installer --
-#bash -c scripts/./pluginInstall.sh
-## ^ This script will try to handle the dependencies with 'dependencies.sh', so no need to run that here.
-
-
+# --- Define plugin install function ---
+function plugins() {
+    bash -c scripts/./pluginInstall
+}
 
 # --- Backup user's config files first ---
 function backup() {
@@ -153,14 +112,14 @@ function overwrite() {
     #${blue}  kitty ${reset}                 #
     #${blue}  starship ${reset}              #
     ########################### \n"
-    read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " configOverwrite
+    read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " config_overwrite
 
-    if [ "$configOverwrite,," = "y" ] || [ "$configOverwrite" == "" ];then
-        #cd ../config/ || \
-        #    echo -e "${red}Couldn't cd into the config directory! Aborting! 
-        #   Maybe you're not in the correct directory when you ran this script?${reset}"; exit 1
+    if [ "${config_overwrite,,}" == "y" ] || [ "$config_overwrite" == "" ]; then
         cd config/ || \
-        echo -e ""; exit 1
+        echo -e "${red}Uh oh, I couldn't cd into my config directory! Aborting! :(
+        ${yellow}Maybe you're not in the correct directory when you ran this script?${reset}
+        ${purple}${bold}Command that failed:${reset} 'cd config/'"; exit 1
+
         # Copy htoprc
         cp -v htop/htoprc "$HOME"/.config/htop/
     
@@ -171,10 +130,11 @@ function overwrite() {
         cp -v neofetch/config.conf "$HOME"/.config/neofetch/
 
         # Copy starship 
-        echo -e "${cyan}You have a few choices here, do you want to use the ${blue}default prompt${cyan}, ${purple}rounded prompt${cyan}, or the ${green}plain text prompt?${reset}"
+        echo -e "${cyan}You have a few choices here, do you want to use the ${blue}default prompt${cyan}, ${purple}rounded prompt${cyan}, or the ${green}plain text prompt?${reset}
+        ${yellow}(Note: for the ${blue}default prompt ${yellow}and ${purple}rounded prompt${yellow}, you will need a patched nerd font.)${reset}"
         read -rp "What starship prompt do you want to use? [default\rounded\plain]: " starshipPrompt
 
-        case $starshipPrompt in
+        case ${starshipPrompt,,} in
             default)
                 echo -e "${blue}Using the default prompt... \n ${reset}"
                 rm "$HOME"/.config/starship.toml 
@@ -192,7 +152,7 @@ function overwrite() {
         esac 
 
     else 
-        echo -e "${red}Skipping copying starship configs... \n ${reset}"
+        echo -e "${red}Skipping overwritting configs... \n ${reset}"
     fi
 }
 
@@ -201,15 +161,48 @@ function usage() {
     ## Prints usage for script
     echo -e "Usage: './deploy.sh [all|plugins|backup|overwrite|help]' \n"
     
-    echo "Agruments: "
-    echo "all       ->     Run all functions: (plugins -> backup -> overwrite)"
-    echo "plugins   ->     Just install ZSH plugins and dependencies"
-    echo "backup    ->     Just backup user's current configs (htop, kitty, neofetch, starship prompt)"
-    echo "overwrite ->     Just overwrite user's current configs with the ones in this repo"
-    echo "help      ->     Print this menu"
+    echo -e "Agruments: "
+    echo -e "all       ->     Run all functions: 
+                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)"
+    echo -e "plugins   ->     Just install ZSH plugins and dependencies"
+    echo -e "backup    ->     Just backup user's current configs (htop, kitty, neofetch, starship prompt)"
+    echo -e "overwrite ->     Just overwrite user's current configs with the ones in this repo"
+    echo -e "help      ->     Print this menu"
+
 
 }
 
+# --- Read arguments passed ---
+case $1 in
+    all)    ## Run all functions (plugins -> backups -> overwrite)
+        source scripts/./init.sh
+        bash -c scripts/./pluginInstall.sh
+        backup
+        overwrite
+        exit
+        ;;
 
+    plugins) ## Just run the plugin installer
+        source scripts/./init.sh
+        
+        exit
+        ;; 
 
+    backup) ## Just backup configs
+        source scripts/./init.sh
+        backup
+        exit
+        ;;
+
+    overwrite) ## Just overwrite configs
+        source scripts/./init.sh
+        overwrite
+        exit
+        ;;
+
+    *)  ## Any other agrument pass just runs the usage/help function       
+        usage
+        exit 1
+        ;;
+esac
 

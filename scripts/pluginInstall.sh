@@ -56,7 +56,7 @@ read -rp "Install dependancies? [Y\n]: " installDependancies
 if [ "${installDependancies,,}" = "y" ] || [ "${installDependancies,,}" == "" ]; then
 
     echo -e "${green}${bold}Ok, installing dependencies.${reset}"
-    bash -c ./dependencies.sh
+    bash -c scripts/./dependencies.sh
 
 else
 
@@ -115,13 +115,13 @@ echo -e "
 ########################################"
 read -rp "Overwrite? [Y/n]: " zshOverwrite
 
-if [ "$zshOverwrite,," == "y" ] || [ "$zshOverwrite,," == "" ]; then
+if [ "${zshOverwrite,,}" == "y" ] || [ "$zshOverwrite" == "" ]; then
     # make a copy of user's zshrc and rename it as '.zshrc.bak'
 
     mv -v "$HOME"/.zshrc "$HOME"/.zshrc.bak 2>/dev/null
     # copy the zshrc from this directory to home as '.zshrc'
 
-    cp -v ../zsh/zshrc "$HOME"/.zshrc
+    cp -v zsh/zshrc "$HOME"/.zshrc
 
     echo -e "${greenbg}Done!${reset}"
 

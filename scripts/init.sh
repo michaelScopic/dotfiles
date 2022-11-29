@@ -82,4 +82,4 @@ echo -e "${green}${bold}Current directory: ${reset}$thisDir \n"
 
 echo -e "${green}${bold}Done initalizing. \n${reset}"
 
-sleep 3
+sleep 2
