@@ -78,6 +78,8 @@ thisDir=$(pwd)
 
 echo -e "${green}${bold}Current directory: ${reset}$thisDir \n"
 
+echo -e "Script directory: $0"
+
 echo -e "${green}${bold}Done initalizing. \n${reset}"
 
 sleep 2

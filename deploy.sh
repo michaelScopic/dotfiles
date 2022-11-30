@@ -4,14 +4,20 @@
 
 #! This is a huge WIP, not usable right now.
 
-# TODO: Make all major steps a function 
-# TODO: Add options 
-# TODO: Make help section
-# ? try to add options (ex: for skipping installing zsh plugins or skip configs)??
+# TODO: Fix the dotfilesLoc var
+
+
+# --- Store the dotfiles dir location as a var ---
+
+dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev )"
+echo -e "Dotfiles location: $dotfilesLoc \n"
 
 # --- Define plugin install function ---
 function plugins() {
-    bash -c scripts/./pluginInstall
+    bash -c scripts/./pluginInstall.sh
+    ## 'pluginInstall.sh' will then call 'dependencies.sh', so no need to include it here
+
+    return
 }
 
 # --- Backup user's config files first ---
@@ -97,6 +103,8 @@ function backup() {
 
     echo -e "${greenbg}Finished backing up everything that I could find!${reset} \n"
     sleep 1
+
+    return
 }
 
 # -- Overwrite user's configs with the dotfiles' configs ---
@@ -112,16 +120,15 @@ function overwrite() {
     #${blue}  kitty ${reset}                 #
     #${blue}  starship ${reset}              #
     ########################### \n"
+
     read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " config_overwrite
 
-    if [ "${config_overwrite,,}" == "y" ] || [ "$config_overwrite" == "" ]; then
-        cd config/ || \
-        echo -e "${red}Uh oh, I couldn't cd into my config directory! Aborting! :(
-        ${yellow}Maybe you're not in the correct directory when you ran this script?${reset}
-        ${purple}${bold}Command that failed:${reset} 'cd config/'"; exit 1
+    if [ "${config_overwrite,,}" = "y" ] || [ "$config_overwrite" = "" ]; then
+
+        cd "$dotfilesLoc"/config/ || exit 1
 
         # Copy htoprc
-        cp -v htop/htoprc "$HOME"/.config/htop/
+        cp -v htop/htoprc "$HOME"/.config/htop/htoprc 
     
         # Copy kitty config
         cp -v kitty/{*.ini,kitty.conf} "$HOME"/.config/kitty/
@@ -130,14 +137,15 @@ function overwrite() {
         cp -v neofetch/config.conf "$HOME"/.config/neofetch/
 
         # Copy starship 
-        echo -e "${cyan}You have a few choices here, do you want to use the ${blue}default prompt${cyan}, ${purple}rounded prompt${cyan}, or the ${green}plain text prompt?${reset}
-        ${yellow}(Note: for the ${blue}default prompt ${yellow}and ${purple}rounded prompt${yellow}, you will need a patched nerd font.)${reset}"
+        echo -e "${red}About to copy over a Starship prompt."
+        echo -e "${cyan}You have a few choices here - do you want to use the ${red}default ${cyan}prompt, ${purple}rounded ${cyan}prompt, or the ${green}plain text ${cyan}prompt?${reset}"
+        echo -e "${yellow}(Note: for the ${blue}default ${yellow}and ${purple}rounded ${yellow}prompts, you will need a patched nerd font.)${reset}"
         read -rp "What starship prompt do you want to use? [default\rounded\plain]: " starshipPrompt
 
         case ${starshipPrompt,,} in
             default)
                 echo -e "${blue}Using the default prompt... \n ${reset}"
-                rm "$HOME"/.config/starship.toml 
+                rm "$HOME"/.config/starship.toml 2>/dev/null 
             ;;
         
             rounded)
@@ -152,57 +160,65 @@ function overwrite() {
         esac 
 
     else 
+
         echo -e "${red}Skipping overwritting configs... \n ${reset}"
+        return 0
+
     fi
+    
+    return
 }
 
 # --- Usage/help function
 function usage() {
     ## Prints usage for script
-    echo -e "Usage: './deploy.sh [all|plugins|backup|overwrite|help]' \n"
-    
-    echo -e "Agruments: "
-    echo -e "all       ->     Run all functions: 
-                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)"
-    echo -e "plugins   ->     Just install ZSH plugins and dependencies"
-    echo -e "backup    ->     Just backup user's current configs (htop, kitty, neofetch, starship prompt)"
-    echo -e "overwrite ->     Just overwrite user's current configs with the ones in this repo"
-    echo -e "help      ->     Print this menu"
 
+    echo -e "Bad argument: '$*' "
+    echo -e "Usage: './deploy.sh <agruments>' \n"
+    
+    echo "Possible agruments:"
+    echo "all       ->     Run all functions:"
+    echo "                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)"
+    echo "plugins   ->     Just install ZSH plugins and dependencies"
+    echo "backup    ->     Just backup user's current configs (htop, kitty, neofetch, starship prompt)"
+    echo "overwrite ->     Just overwrite user's current configs with the ones in this repo"
+    echo "help      ->     Print this menu"
+
+    return 1
 
 }
 
 # --- Read arguments passed ---
 case $1 in
-    all)    ## Run all functions (plugins -> backups -> overwrite)
-        source scripts/./init.sh
-        bash -c scripts/./pluginInstall.sh
+    all)    ## Call all functions (plugins -> backups -> overwrite)
+        source "$dotfilesLoc"/scripts/init.sh
+        bash -c "$dotfilesLoc"/scripts/pluginInstall.sh
         backup
         overwrite
         exit
     ;;
 
-    plugins) ## Just run the plugin installer
-        source scripts/./init.sh
+    plugins) ## Just call the plugin funct
+        source "$dotfilesLoc"/scripts/init.sh
         
         exit
     ;; 
 
-    backup) ## Just backup configs
-        source scripts/./init.sh
+    backup) ## Just call the backup funct
+        source "$dotfilesLoc"/scripts/init.sh
         backup
         exit
     ;;
 
-    overwrite) ## Just overwrite configs
-        source scripts/./init.sh
+    overwrite) ## Call the overwrite funct
+        source "$dotfilesLoc"/scripts/init.sh
         overwrite
         exit
     ;;
 
-    *)  ## Any other agrument pass just runs the usage/help function       
-        usage
-        exit 1
+    *)  ## Any other agrument pass just runs the help funct       
+        usage "$@"
+        exit 
     ;;
 esac
 

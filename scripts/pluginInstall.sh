@@ -4,7 +4,7 @@
 
 # --- Source init.sh ---
 ## Not needed anymore
-#. init.sh
+. init.sh
 
 #sleep 3
 
