@@ -9,10 +9,16 @@
 
 # --- Store the dotfiles dir location as a var ---
 
-dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev )"
+export dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev )"
 echo -e "Dotfiles location: $dotfilesLoc \n"
 
-# --- Define plugin install function ---
+# --- Make the initalization a function ---
+function init_script() {
+    source "$dotfilesLoc"/scripts/init.sh
+    return
+}
+
+# --- Make the plugin and dependency installation as a function ---
 function plugins() {
     bash -c scripts/./pluginInstall.sh
     ## 'pluginInstall.sh' will then call 'dependencies.sh', so no need to include it here
@@ -20,7 +26,7 @@ function plugins() {
     return
 }
 
-# --- Backup user's config files first ---
+# --- Backup function ---
 function backup() {
 
     # -- Backup htop config --
@@ -128,13 +134,19 @@ function overwrite() {
         cd "$dotfilesLoc"/config/ || exit 1
 
         # Copy htoprc
-        cp -v htop/htoprc "$HOME"/.config/htop/htoprc 
-    
+        cp -v htop/htoprc "$HOME"/.config/htop/htoprc || \
+        echo -e "${yellow}Couldn't copy '${reset}htoprc${yellow}', does '${reset}~/.config/htop/${yellow}' directory exist?${reset}\n"
+        sleep 1
+
         # Copy kitty config
-        cp -v kitty/{*.ini,kitty.conf} "$HOME"/.config/kitty/
+        cp -v kitty/{*.ini,kitty.conf} "$HOME"/.config/kitty/ || \
+        echo -e "${yellow}Couldn't copy kitty configs, does '${reset}~/.config/kitty/${yellow}' directory exist?${reset}\n"
+        sleep 1
 
         # Copy neofetch
-        cp -v neofetch/config.conf "$HOME"/.config/neofetch/
+        cp -v neofetch/config.conf "$HOME"/.config/neofetch/ || \
+        echo -e "${yellow}Couldn't copy neofetch configs, does '${reset}~/.config/neofetch/${yellow}' directory exist?${reset}\n"
+        sleep 1
 
         # Copy starship 
         echo -e "${red}About to copy over a Starship prompt."
@@ -159,6 +171,8 @@ function overwrite() {
             ;;
         esac 
 
+        echo -e "${green}Done overwriting configs!${reset} \n"
+
     else 
 
         echo -e "${red}Skipping overwritting configs... \n ${reset}"
@@ -174,7 +188,7 @@ function usage() {
     ## Prints usage for script
 
     echo -e "Bad argument: '$*' "
-    echo -e "Usage: './deploy.sh <agruments>' \n"
+    echo -e "Usage: './deploy.sh AGRUMENTS' \n"
     
     echo "Possible agruments:"
     echo "all       ->     Run all functions:"
@@ -191,28 +205,37 @@ function usage() {
 # --- Read arguments passed ---
 case $1 in
     all)    ## Call all functions (plugins -> backups -> overwrite)
-        source "$dotfilesLoc"/scripts/init.sh
-        bash -c "$dotfilesLoc"/scripts/pluginInstall.sh
+        init_script
+        bash -c "$dotfilesLoc"/scripts/info.sh
+        plugins
         backup
         overwrite
         exit
     ;;
 
     plugins) ## Just call the plugin funct
-        source "$dotfilesLoc"/scripts/init.sh
-        
+        init_script
+        bash -c "$dotfilesLoc"/scripts/info.sh
+        plugins
         exit
     ;; 
 
     backup) ## Just call the backup funct
-        source "$dotfilesLoc"/scripts/init.sh
+        init_script
+        source "$dotfilesLoc"/scripts/info.sh
         backup
         exit
     ;;
 
     overwrite) ## Call the overwrite funct
-        source "$dotfilesLoc"/scripts/init.sh
+        init_script
+        source "$dotfilesLoc"/scripts/info.sh
         overwrite
+        exit
+    ;;
+
+    help) 
+        usage
         exit
     ;;
 

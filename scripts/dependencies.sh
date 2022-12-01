@@ -43,6 +43,7 @@ thisDir=$(pwd)
 distroNAME="$(cat /etc/os-release | grep ^NAME | awk -F'"' '{print $2 }')"
 distroLIKE="$(cat /etc/os-release | grep ^ID_LIKE | awk -F= '{ print $2 }')"
 #distroID="$(cat /etc/os-release | grep ^ID | awk -F= '{ print $2 }')"
+
 distroFallback=$(uname -o)
 
 # Print what we found
@@ -119,7 +120,7 @@ function debian() {
     cd "${thisDir}"/.tmp/ || exit
 
     # Get the lsd .deb file
-    wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb && \
+    wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null && \
 
     # Install the .deb file
     sudo dpkg -i lsd_0.23.1_amd64.deb && \

@@ -4,7 +4,7 @@
 
 # --- Source init.sh ---
 ## Not needed anymore
-. init.sh
+#. init.sh
 
 #sleep 3
 
@@ -29,6 +29,8 @@ echo -e "
 #${blue}   wget          ${reset} #
 ####################"
 
+sleep 2
+
 echo -e "
 ###################################
 #${cyan}${bold} I can try to install the needed ${reset}# 
@@ -45,22 +47,21 @@ echo -e "
 
 ${red}*${reset} = ${yellow}This script is made for x86_64 machines, but can work on Android. You're welcome :) ${reset} \n"
 
-sleep 2
 
-echo -e "${yellow}Do you want to install the dependancies? 
-${red}Answer 'n' if you have the dependancies already installed (from my repo's wiki),
+echo -e "${yellow}Do you want to install the dependencies? 
+${red}Answer 'n' if you have the dependencies already installed (from my repo's wiki),
 ${bold}or if you have an unsupported distro. ${reset} \n"
 
-read -rp "Install dependancies? [Y\n]: " installDependancies
+read -rp "Install dependencies? [Y\n]: " installDependencies
 
-if [ "${installDependancies,,}" = "y" ] || [ "${installDependancies,,}" == "" ]; then
+if [ "${installDependencies,,}" = "y" ] || [ "${installdependencies,,}" == "" ]; then
 
     echo -e "${green}${bold}Ok, installing dependencies.${reset}"
     bash -c scripts/./dependencies.sh
 
 else
 
-    echo -e "${yellow}${bold}Ok, SKIPPING INSTALLATION of dependencies...\nYou are on your own for that...\n${reset}"
+    echo -e "${yellow}${bold}SKIPPING INSTALLATION of dependencies...\nYou are on your own for that...\n${reset}"
     echo -e "${cyan}Message me on Discord (${purple}Michael_Scopic.zsh#0102${cyan}) if you want me to add support for another distro.${reset}"
     sleep 1
 
