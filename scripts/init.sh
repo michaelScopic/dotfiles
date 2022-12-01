@@ -2,11 +2,10 @@
 
 # * Initalizer script
 
-echo -e " 
-+-----------------------+
-| Initalizing script... |
-+-----------------------+ \n"
-sleep 0.3
+echo -e "
+##########################
+# Initallizing script... #
+##########################\n"
 
 # --- Define a countdown function ---
 function countdown() {
@@ -20,7 +19,7 @@ done
 
 
 # --- Set colors ---
-echo -e " --- Setting colors ---"
+echo -e "- Setting colors... - \n"
 # Normal text
 export reset='\e[0m' #&& echo -e "${reset}Normal text"
 
@@ -51,35 +50,16 @@ export purplebg='\e[45m' #&& echo -e "${purplebg}Purple background ${reset}"
 export cyan='\e[36m' #&& echo -e "${cyan}Cyan ${reset}"
 export cyanbg='\e[46m' #&& echo -e "${cyanbg}Cyan background ${reset}"
 
-#sleep 0.3
+echo -e "${cyan}- Done setting colors -${reset}\n"
 
-echo -e "
-+----------------------+
-| ${green}Done setting colors! ${reset}|
-+----------------------+ \n"
-
-# --- Print out basic info ---
-echo -e "${bold}---------- Basic info ----------${reset}"
-# Print the distro
-echo -e "${green}${bold}Distro:${reset} $(lsb_release -d | cut -f 2-)"
-# Print kernel version
-echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
-# Print shell
-echo -e "${blue}${bold}Shell:${reset} $SHELL"
-# Print hostname
-echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname 2>/dev/null || uname -n)"
-# Print CPU name
-echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
-# Print current user
-echo -e "${cyan}${bold}User:${reset} $(whoami)"
-echo -e "${bold}-------------------------------- \n${reset}"
+# --- Store user's current dir as a var ---
 
 thisDir=$(pwd)
 
-echo -e "${green}${bold}Current directory: ${reset}$thisDir \n"
+echo -e "${purple}${bold}Current directory: ${reset}$thisDir \n"
 
-echo -e "Script directory: $0"
-
-echo -e "${green}${bold}Done initalizing. \n${reset}"
-
-sleep 2
+# --- Finish up ---
+echo -e "
+#####################
+# ${green}${bold}Done initalizing.${reset} #
+#####################\n"
