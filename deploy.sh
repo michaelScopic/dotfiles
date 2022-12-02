@@ -9,12 +9,13 @@
 
 # --- Store the dotfiles dir location as a var ---
 
-export dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev )"
+dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev )"
 echo -e "Dotfiles location: $dotfilesLoc \n"
 
 # --- Make the initalization a function ---
 function init_script() {
-    source "$dotfilesLoc"/scripts/init.sh
+    source "$dotfilesLoc"/scripts/init.sh && \
+    echo -e "--- Done installing dependencies and plugins! ---\n"
     return
 }
 
@@ -133,26 +134,29 @@ function overwrite() {
 
         cd "$dotfilesLoc"/config/ || exit 1
 
-        # Copy htoprc
-        cp -v htop/htoprc "$HOME"/.config/htop/htoprc || \
-        echo -e "${yellow}Couldn't copy '${reset}htoprc${yellow}', does '${reset}~/.config/htop/${yellow}' directory exist?${reset}\n"
+        ## Copy htoprc
+        mkdir "$HOME"/.config/htop/ 2>/dev/null
+        cp -v htop/htoprc "$HOME"/.config/htop/htoprc && \
+        echo -e "${green}Copied htoprc config!${reset}"
         sleep 1
 
-        # Copy kitty config
-        cp -v kitty/{*.ini,kitty.conf} "$HOME"/.config/kitty/ || \
-        echo -e "${yellow}Couldn't copy kitty configs, does '${reset}~/.config/kitty/${yellow}' directory exist?${reset}\n"
+        ## Copy kitty config
+        mkdir "$HOME"/.config/kitty/ 2>/dev/null
+        cp -rv kitty/* "$HOME"/.config/kitty/ && \
+        echo -e "${green}Copied kitty configs!${reset}"
         sleep 1
 
-        # Copy neofetch
-        cp -v neofetch/config.conf "$HOME"/.config/neofetch/ || \
-        echo -e "${yellow}Couldn't copy neofetch configs, does '${reset}~/.config/neofetch/${yellow}' directory exist?${reset}\n"
+        ## Copy neofetch
+        mkdir "$HOME"/.config/neofetch/ 2>/dev/null
+        cp -v neofetch/config.conf "$HOME"/.config/neofetch/ && \
+        echo -e "${green}Copied neofetch configs!${reset}"
         sleep 1
 
-        # Copy starship 
+        ## Copy starship 
         echo -e "${red}About to copy over a Starship prompt."
         echo -e "${cyan}You have a few choices here - do you want to use the ${red}default ${cyan}prompt, ${purple}rounded ${cyan}prompt, or the ${green}plain text ${cyan}prompt?${reset}"
         echo -e "${yellow}(Note: for the ${blue}default ${yellow}and ${purple}rounded ${yellow}prompts, you will need a patched nerd font.)${reset}"
-        read -rp "What starship prompt do you want to use? [default\rounded\plain]: " starshipPrompt
+        read -rp "What starship prompt do you want to use? [default/rounded/plain/none]: " starshipPrompt
 
         case ${starshipPrompt,,} in
             default)
@@ -169,6 +173,15 @@ function overwrite() {
                 echo -e "${blue}Using the plain text prompt... \n ${reset}"
                 cp starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
             ;;
+
+            none)
+                echo -e "${red}Not going to copy a starship prompt...\n ${reset}"
+            ;;
+
+            *)
+                echo -e "${red}Not going to copy a starship prompt...\n ${reset}"
+            ;;
+
         esac 
 
         echo -e "${green}Done overwriting configs!${reset} \n"
@@ -183,7 +196,7 @@ function overwrite() {
     return
 }
 
-# --- Usage/help function
+# --- Usage/help function ---
 function usage() {
     ## Prints usage for script
 
@@ -203,6 +216,7 @@ function usage() {
 }
 
 # --- Read arguments passed ---
+## Iterate thru the arguments passed in the script 
 case $1 in
     all)    ## Call all functions (plugins -> backups -> overwrite)
         init_script
@@ -234,12 +248,12 @@ case $1 in
         exit
     ;;
 
-    help) 
+    help)   ## Print the help section 
         usage
         exit
     ;;
 
-    *)  ## Any other agrument pass just runs the help funct       
+    *)  ## Any other agrument just runs the help section
         usage "$@"
         exit 
     ;;

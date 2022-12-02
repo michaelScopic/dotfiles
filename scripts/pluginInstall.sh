@@ -37,15 +37,15 @@ echo -e "
 #${cyan}${bold} dependencies before continuing. ${reset}#
 #                                 #
 #${purple}${bold} Supported distros: ${reset}             #
-#${blue}   Debian/Ubuntu distros ${reset}        #
-#${blue}   Arch distros ${reset}                 #
-#${blue}   Fedora ${reset}                       #
-#${blue}   openSUSE TW ${reset}                  #
-#${blue}   Void Linux ${reset}                   #
-#${blue}   Android ${red}* ${reset}                    #
+#${blue}   Debian/Ubuntu distros ${reset} *      #
+#${blue}   Arch distros ${reset} *               #
+#${blue}   Fedora ${reset} *                     #
+#${blue}   openSUSE TW ${reset} *                #
+#${blue}   Void Linux ${reset} *                 #
+#${blue}   Android ${reset}                      #
 ################################### 
 
-${red}*${reset} = ${yellow}This script is made for x86_64 machines, but can work on Android. You're welcome :) ${reset} \n"
+* = ${yellow}Only works on x86_64 machines. (Except for Android) ${reset} \n"
 
 
 echo -e "${yellow}Do you want to install the dependencies? 

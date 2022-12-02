@@ -100,11 +100,13 @@ function debian() {
     sleep 2
 
     # Install deps
-    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa rsync
+    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa 
+    # - 'rsync' isn't installing when put in the above line, installing it seperately
+    sudo apt-get install -y rsync
 
     # Installing lsd
     mkdir "${thisDir}"/.tmp/
-    cd "${thisDir}"/.tmp/ || exit
+    cd "${thisDir}"/.tmp/ || exit 1
 
 
 
