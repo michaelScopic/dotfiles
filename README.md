@@ -4,6 +4,18 @@ These are my dotfiles for my Linux configs and ZSH.
 
 I hope you enjoy!
 
+## Table of contents
+* [Why?](https://github.com/michaelScopic/dotfiles/edit/main/README.md#why)
+* [Disclamer](https://github.com/michaelScopic/dotfiles/edit/main/README.md#disclamer)
+* [Features](https://github.com/michaelScopic/dotfiles/edit/main/README.md#features)
+* [Todo](https://github.com/michaelScopic/dotfiles/edit/main/README.md#todo)
+* [Installation](https://github.com/michaelScopic/dotfiles/edit/main/README.md#installation-guide)
+   * [Install using the wiki](https://github.com/michaelScopic/dotfiles/edit/main/README.md#install-using-the-wiki)
+   * [Install using scripts](https://github.com/michaelScopic/dotfiles/edit/main/README.md#install-using-the-provided-script)
+* [Contributing](https://github.com/michaelScopic/dotfiles/edit/main/README.md#contributing)
+   * [Guidelines](https://github.com/michaelScopic/dotfiles/edit/main/README.md#contributing-guidelines)
+ 
+
 ## Why?
 
 I wanted to showcase my configs in hopes that someone else can enjoy my work (and stealing from other ppl's dots lmao).
@@ -47,24 +59,20 @@ Shell script features:
 * [x] `htoprc`
 * [x] `README.md`
 
-### `config/starship`
+### `starship`
 
-* [x] `rounded.toml`
-* [x] `plain-text-symbols.toml`
+* [x] `config/starship/rounded.toml`
+* [x] `config/starship/plain-text-symbols.toml`
 * [ ]  My own prompt *<- (it's a skid at best, I have no clue what I'm doing)*
 * [x] `README.md`
 
-### `zsh/`
 
-* [x] `ArchLabs_zshrc`
-* [x] `zshrc`
-
-### `config/neofetch`
+### `config/neofetch/`
 
 * [x] `config.conf` *<- Neofetch config*
 * [x] `README.md`
 
-### `config/kitty`
+### `config/kitty/`
 
 * [x] `kitty.conf` *<- Kitty config*
 * [ ]  `themes/` *<- Folder to contain color themes*
@@ -72,15 +80,14 @@ Shell script features:
   * [x] `decaycs.ini`
 * [x] `README.md`
 
+### `zsh/`
+
+* [x] `ArchLabs_zshrc`
+* [x] `zshrc`
+
 More coming soon...hopefully.
 
-### What am I working on right now?
-
-As of this commit (on 11.29.22), I am trying to finish/fix `deploy.sh` and some other issues in the other scripts.
-
-I am also going to upload a themes directory for kitty.
-
-## Installation guide (WIP)
+## Installation guide
 
 ### Install using the wiki
 
@@ -97,11 +104,7 @@ Then look at the [wiki](https://github.com/michaelScopic/dotfiles/wiki) for copy
 
 * Note: The wiki is partially WIP, but the important parts are finished.
 
-### Install using the provided script (WIP)
-
-**! DISCLAIMER: `deploy.sh` is not in a usable state as of now, please refer to the repo's wiki !**
-
-**-- Finishing and fixing this script is my #1 priority right now. --**
+### Install using the provided script
 
 ```sh
 # Clone the repo
@@ -124,6 +127,8 @@ So if you want to run all of them, just do:
 ```sh
 ./deploy.sh all
 ```
+
+If you don't want to run this script and only copy what you want, then just browse `config/` and/or `zsh/` and do what you want from there.
 
 ## Contributing
 
