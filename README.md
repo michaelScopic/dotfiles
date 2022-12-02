@@ -12,7 +12,7 @@ This was also a perfect oppurtunity to learn Bash/Shell scripting.
 
 ## Disclamer
 
-I'm somewhat experienced in Bash/Shell scripting, but I am still learning how to do stuff, so my code probably won't be the cleanest or most efficient.
+I'm *kinda* experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient.
 
 ## Features
 
@@ -117,7 +117,7 @@ Look at the possible agruments to use in the script by running:
 ./deploy.sh help
 ```
 
-You can use these following arguments with that script: `all`, `plugins`, `backup`, `overwrite`.
+You can use these following arguments with this script: `all`, `plugins`, `backup`, or `overwrite`.
 
 So if you want to run all of them, just do:
 
