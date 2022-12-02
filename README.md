@@ -29,10 +29,10 @@ Shell script features:
 ## TODO
 
 ### Scripts
-
-* [x] `init.sh` *<- Initalizer script*
-* [x] `pluginInstall.sh` *<- Installs ZSH plugins, optionally calls `dependencies.sh`*
-* [x] `dependencies.sh` *<- Installs dependencies (on supported distros)*
+* [x] `scripts/info.sh` *<- Prints info about the system it's running on*
+* [x] `scripts/init.sh` *<- Initalizer script*
+* [x] `scripts/pluginInstall.sh` *<- Installs ZSH plugins, optionally calls `dependencies.sh`*
+* [x] `scripts/dependencies.sh` *<- Installs dependencies (on supported distros)*
 * [ ] `deploy.sh` *<- Automates everything, calls the above scripts*
 
 ### Preview pics
