@@ -19,22 +19,9 @@
 #* Distro compatability notes:
 #*  ** = Fixed issue with libssl on Arch based systems, see [https://bbs.archlinux.org/viewtopic.php?pid=740383#p740383]
 
-# --- Set colors ---
-# Not sourcing init.sh just for colors bc it's dumb. I will manually set colors here
-#reset='\e[0m'
-#bold='\e[1m'
-#red='\e[31m'
-#redbg='\e[41m'
-#green='\e[32m'
-#greenbg='\e[42m'
-#yellow='\e[33m'
-#yellowbg='\e[43m'
-#blue='\e[34m'
-#bluebg='\e[44m'
-#purple='\e[35m'
-#purplebg='\e[45m'
-#cyan='\e[36m'
-#cyanbg='\e[46m'
+# --- Ask for sudo passwd ---
+echo -e "${red}Testing ${reset}sudo ${red}access..."
+sudo echo "Echoed this with sudo!"
 
 # --- Set current dir as var ---
 thisDir=$(pwd)
@@ -118,6 +105,8 @@ function debian() {
     # Installing lsd
     mkdir "${thisDir}"/.tmp/
     cd "${thisDir}"/.tmp/ || exit
+
+
 
     # Get the lsd .deb file
     wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null && \
