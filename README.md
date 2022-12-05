@@ -95,9 +95,9 @@ First, clone the repository:
 
 ```sh
 # Clone the repo
-git clone https://github.com/michaelScopic/dotfiles ~/Documents
+git clone https://github.com/michaelScopic/dotfiles 
 
-cd ~/Documents/dotfiles
+cd dotfiles
 ```
 
 Then look at the [wiki](https://github.com/michaelScopic/dotfiles/wiki) for copying configs.
@@ -106,17 +106,18 @@ Then look at the [wiki](https://github.com/michaelScopic/dotfiles/wiki) for copy
 
 ### Install using the provided script
 
-```sh
-# Clone the repo
-git clone https://github.com/michaelScopic/dotfiles ~/Documents
+Clone the repo:
 
-cd ~/Documents/dotfiles
+```sh
+git clone https://github.com/michaelScopic/dotfiles
+
+cd dotfiles
 ```
 
 Look at the possible agruments to use in the script by running:
 
+* (cd into the dotfiles directory if you aren't already there)
 ```sh
-# cd into the dotfiles directory if you aren't already there
 ./deploy.sh help
 ```
 
