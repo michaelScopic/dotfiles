@@ -102,7 +102,7 @@ cd ~/Documents/dotfiles
 
 Then look at the [wiki](https://github.com/michaelScopic/dotfiles/wiki) for copying configs.
 
-* Note: The wiki is partially WIP, but the important parts are finished.
+* Note: The wiki is really really out of date, sorry.
 
 ### Install using the provided script
 
