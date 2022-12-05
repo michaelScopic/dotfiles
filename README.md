@@ -5,15 +5,15 @@ These are my dotfiles for my Linux configs and ZSH.
 I hope you enjoy!
 
 ## Table of contents
-* [Why?](https://github.com/michaelScopic/dotfiles/edit/main/README.md#why)
-* [Disclamer](https://github.com/michaelScopic/dotfiles/edit/main/README.md#disclamer)
-* [Features](https://github.com/michaelScopic/dotfiles/edit/main/README.md#features)
-* [Todo](https://github.com/michaelScopic/dotfiles/edit/main/README.md#todo)
-* [Installation](https://github.com/michaelScopic/dotfiles/edit/main/README.md#installation-guide)
-   * [Install using the wiki](https://github.com/michaelScopic/dotfiles/edit/main/README.md#install-using-the-wiki)
-   * [Install using scripts](https://github.com/michaelScopic/dotfiles/edit/main/README.md#install-using-the-provided-script)
-* [Contributing](https://github.com/michaelScopic/dotfiles/edit/main/README.md#contributing)
-   * [Guidelines](https://github.com/michaelScopic/dotfiles/edit/main/README.md#contributing-guidelines)
+* [Why?](https://github.com/michaelScopic/dotfiles#why)
+* [Disclamer](https://github.com/michaelScopic/dotfiles#disclamer)
+* [Features](https://github.com/michaelScopic/dotfiles#features)
+* [Todo](https://github.com/michaelScopic/dotfiles#todo)
+* [Installation](https://github.com/michaelScopic/dotfiles#installation-guide)
+   * [Install using the wiki](https://github.com/michaelScopic/dotfiles#install-using-the-wiki)
+   * [Install using scripts](https://github.com/michaelScopic/dotfiles#install-using-the-provided-script)
+* [Contributing](https://github.com/michaelScopic/dotfiles#contributing)
+   * [Guidelines](https://github.com/michaelScopic/dotfiles#contributing-guidelines)
  
 
 ## Why?
