@@ -15,7 +15,7 @@ echo -e "Dotfiles location: $dotfilesLoc \n"
 # --- Make the initalization a function ---
 function init_script() {
     source "$dotfilesLoc"/scripts/init.sh && \
-    echo -e "--- Done installing dependencies and plugins! ---\n"
+    #echo -e "--- Done installing dependencies and plugins! ---\n"
     return
 }
 
@@ -200,16 +200,16 @@ function overwrite() {
 function usage() {
     ## Prints usage for script
 
-    echo -e "Bad argument: '$*' "
-    echo -e "Usage: './deploy.sh AGRUMENTS' \n"
+    echo -e "${red}${bold}Bad argument: ${reset}'$*' "
+    echo -e "${yellow}Usage: ${reset}'./deploy.sh ${blue}AGRUMENTS${reset}' \n"
     
-    echo "Possible agruments:"
-    echo "all       ->     Run all functions:"
-    echo "                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)"
-    echo "plugins   ->     Just install ZSH plugins and dependencies"
-    echo "backup    ->     Just backup user's current configs (htop, kitty, neofetch, starship prompt)"
-    echo "overwrite ->     Just overwrite user's current configs with the ones in this repo"
-    echo "help      ->     Print this menu"
+    echo -e "${bold}Possible agruments:${reset}"
+    echo -e "${blue}${bold}all${reset}       ->     ${cyan}Run all functions:"
+    echo -e "                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)${reset}"
+    echo -e "${blue}${bold}plugins${reset}   ->     ${cyan}Just install ZSH plugins and dependencies${reset}"
+    echo -e "${blue}${bold}backup${reset}    ->     ${cyan}Just backup user's current configs (htop, kitty, neofetch, starship prompt)${reset}"
+    echo -e "${blue}${bold}overwrite${reset} ->     ${cyan}Just overwrite user's current configs with the ones in this repo${reset}"
+    echo -e "${blue}${bold}help${reset}      ->     ${cyan}Print this menu${reset}"
 
     return 1
 
@@ -249,11 +249,13 @@ case $1 in
     ;;
 
     help)   ## Print the help section 
+        init_script &>/dev/null
         usage
         exit
     ;;
 
     *)  ## Any other agrument just runs the help section
+        init_script &>/dev/null
         usage "$@"
         exit 
     ;;
