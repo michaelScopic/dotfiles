@@ -5,16 +5,16 @@ These are my dotfiles for my Linux configs and ZSH.
 I hope you enjoy!
 
 ## Table of contents
-* [Why?](https://github.com/michaelScopic/dotfiles#why)
-* [Disclamer](https://github.com/michaelScopic/dotfiles#disclamer)
-* [Features](https://github.com/michaelScopic/dotfiles#features)
-* [Todo](https://github.com/michaelScopic/dotfiles#todo)
-* [Installation](https://github.com/michaelScopic/dotfiles#installation-guide)
-   * [Install using the wiki](https://github.com/michaelScopic/dotfiles#install-using-the-wiki)
-   * [Install using scripts](https://github.com/michaelScopic/dotfiles#install-using-the-provided-script)
-* [Contributing](https://github.com/michaelScopic/dotfiles#contributing)
-   * [Guidelines](https://github.com/michaelScopic/dotfiles#contributing-guidelines)
- 
+
+- [Why?](https://github.com/michaelScopic/dotfiles#why)
+- [Disclamer](https://github.com/michaelScopic/dotfiles#disclamer)
+- [Features](https://github.com/michaelScopic/dotfiles#features)
+- [Todo](https://github.com/michaelScopic/dotfiles#todo)
+- [Installation](https://github.com/michaelScopic/dotfiles#installation-guide)
+  - [Install using the wiki](https://github.com/michaelScopic/dotfiles#install-using-the-wiki)
+  - [Install using scripts](https://github.com/michaelScopic/dotfiles#install-using-the-provided-script)
+- [Contributing](https://github.com/michaelScopic/dotfiles#contributing)
+  - [Guidelines](https://github.com/michaelScopic/dotfiles#contributing-guidelines)
 
 ## Why?
 
@@ -24,66 +24,66 @@ This was also a perfect oppurtunity to learn Bash/Shell scripting.
 
 ## Disclamer
 
-I'm *kinda* experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient.
+I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient.
 
 ## Features
 
 Shell script features:
 
-* *Lots* of colors
-* Interactive
-* Automation for deploying dotfiles
-  * Installs needed dependencies (on supported distros)
-  * Installs ZSH plugins and then backup and overwrite user's zshrc
-  * Backs up user's current configs (in case they want to rollback)
-  * Overwrites user's configs with the ones in this repo
+- _Lots_ of colors
+- Interactive
+- Automation for deploying dotfiles
+  - Installs needed dependencies (on supported distros)
+  - Installs ZSH plugins and then backup and overwrite user's zshrc
+  - Backs up user's current configs (in case they want to rollback)
+  - Overwrites user's configs with the ones in this repo
 
 ## TODO
 
 ### Scripts
-* [x] `scripts/info.sh` *<- Prints info about the system it's running on*
-* [x] `scripts/init.sh` *<- Initalizer script*
-* [x] `scripts/pluginInstall.sh` *<- Installs ZSH plugins, optionally calls `dependencies.sh`*
-* [x] `scripts/dependencies.sh` *<- Installs dependencies (on supported distros)*
-* [ ] `deploy.sh` *<- Automates everything, calls the above scripts*
+
+- [x] `scripts/info.sh` _<- Prints info about the system it's running on_
+- [x] `scripts/init.sh` _<- Initalizer script_
+- [x] `scripts/pluginInstall.sh` _<- Installs ZSH plugins, optionally calls `dependencies.sh`_
+- [x] `scripts/dependencies.sh` _<- Installs dependencies (on supported distros)_
+- [ ] `deploy.sh` _<- Automates everything, calls the above scripts_
 
 ### Preview pics
 
-* [x] htop
-* [x] starship
-* [ ] kitty
-* [x] neofetch
+- [x] htop
+- [x] starship
+- [ ] kitty
+- [x] neofetch
 
 ### `config/htop`
 
-* [x] `htoprc`
-* [x] `README.md`
+- [x] `htoprc`
+- [x] `README.md`
 
 ### `starship`
 
-* [x] `config/starship/rounded.toml`
-* [x] `config/starship/plain-text-symbols.toml`
-* [ ]  My own prompt *<- (it's a skid at best, I have no clue what I'm doing)*
-* [x] `README.md`
-
+- [x] `config/starship/rounded.toml`
+- [x] `config/starship/plain-text-symbols.toml`
+- [ ] My own prompt _<- (it's a skid at best, I have no clue what I'm doing)_
+- [x] `README.md`
 
 ### `config/neofetch/`
 
-* [x] `config.conf` *<- Neofetch config*
-* [x] `README.md`
+- [x] `config.conf` _<- Neofetch config_
+- [x] `README.md`
 
 ### `config/kitty/`
 
-* [x] `kitty.conf` *<- Kitty config*
-* [ ]  `themes/` *<- Folder to contain color themes*
-  * [x] `darkdecay.ini`
-  * [x] `decaycs.ini`
-* [x] `README.md`
+- [x] `kitty.conf` _<- Kitty config_
+- [ ] `themes/` _<- Folder to contain color themes_
+  - [x] `darkdecay.ini`
+  - [x] `decaycs.ini`
+- [x] `README.md`
 
 ### `zsh/`
 
-* [x] `ArchLabs_zshrc`
-* [x] `zshrc`
+- [x] `ArchLabs_zshrc`
+- [x] `zshrc`
 
 More coming soon...hopefully.
 
@@ -95,14 +95,14 @@ First, clone the repository:
 
 ```sh
 # Clone the repo
-git clone https://github.com/michaelScopic/dotfiles 
+git clone https://github.com/michaelScopic/dotfiles
 
 cd dotfiles
 ```
 
 Then look at the [wiki](https://github.com/michaelScopic/dotfiles/wiki) for copying configs.
 
-* Note: The wiki is really really out of date, sorry.
+- Note: The wiki is really really out of date, sorry.
 
 ### Install using the provided script
 
@@ -116,7 +116,8 @@ cd dotfiles
 
 Look at the possible agruments to use in the script by running:
 
-* (cd into the dotfiles directory if you aren't already there)
+- (cd into the dotfiles directory if you aren't already there)
+
 ```sh
 ./deploy.sh help
 ```
@@ -145,21 +146,21 @@ Any form of malicious code is **not accepted under any curcumstances**, and any 
 
 **Comments:**
 
-* Put comments breifly explaining what parts of your code does. Why? Because I want to know what you're doing so that (a) I can learn from it and (b) so that I can make sure it's not malicious.
+- Put comments breifly explaining what parts of your code does. Why? Because I want to know what you're doing so that (a) I can learn from it and (b) so that I can make sure it's not malicious.
 
-* **If you do not put comments, I will not accept the PR.**
+- **If you do not put comments, I will not accept the PR.**
 
 **Confusing/messy code:**
 
-* Please please please don't make your code messy. It makes it much harder to read thru, and makes me not want to trust you.
+- Please please please don't make your code messy. It makes it much harder to read thru, and makes me not want to trust you.
 
-* I understand if you aren't the most well versed in shell scripting, but ffs don't be a caveman when you submit code.
+- I understand if you aren't the most well versed in shell scripting, but ffs don't be a caveman when you submit code.
 
-* If I get sensory overload from trying to read your code then I will most likely question both mine and your existance and then reject the PR.
+- If I get sensory overload from trying to read your code then I will most likely question both mine and your existance and then reject the PR.
 
 **Test your code:**
 
-* I've spent enough time testing my own code and I really don't want to test to see if your code works. So please test your own code and verify that it works.
+- I've spent enough time testing my own code and I really don't want to test to see if your code works. So please test your own code and verify that it works.
 
 ## How to contribute
 
