@@ -7,7 +7,7 @@
 # TODO: Test on different distros/derivatives
 # ? Add support for Gentoo???
 
-# ! Distros NOT WORKING (as of now): Linux Mint, EndeavourOS, Arco, 
+# ! Distros NOT WORKING (as of now): Linux Mint, EndeavourOS, Arco,
 # ! Distros planned to be tested: LMDE, EndeavourOS, Nobara, Aquamarine, CentOS,
 
 #* Debian working distros: Ubuntu, Debian (fixed),
@@ -88,7 +88,7 @@ if [ "$distroFallback" == "Android" ]; then
 
     echo -e "${yellow}${bold}Looks like ${reset}\$distroNAME ${yellow}${bold}and ${reset}\$distroLIKE ${yellow}${bold}didn't give us anything, but ${reset}\$distroFallback${yellow}${bold} indicated that you are running ${blue}Android${yellow}${bold}, so I will use that.${reset}"
 
-    sleep 4 
+    sleep 4
 
 fi
 
@@ -100,7 +100,7 @@ function debian() {
     sleep 2
 
     # Install deps
-    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa 
+    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa
     # - 'rsync' isn't installing when put in the above line, installing it seperately
     sudo apt-get install -y rsync
 
@@ -108,16 +108,14 @@ function debian() {
     mkdir "${thisDir}"/.tmp/
     cd "${thisDir}"/.tmp/ || exit 1
 
-
-
     # Get the lsd .deb file
-    wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null && \
+    wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null &&
 
-    # Install the .deb file
-    sudo dpkg -i lsd_0.23.1_amd64.deb && \
+        # Install the .deb file
+        sudo dpkg -i lsd_0.23.1_amd64.deb &&
 
-    # Remove .tmp after installing lsd
-    cd "${thisDir}"/ || exit
+        # Remove .tmp after installing lsd
+        cd "${thisDir}"/ || exit
     rm -rfv "${thisDir}"/.tmp/
 
     # Installing starship
@@ -145,9 +143,9 @@ function rpm_based() {
     sleep 2
 
     # Install deps
-    sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync || \
-    # If dnf doesn't work, then fall back to yum
-    sudo yum install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync 
+    sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync ||
+        # If dnf doesn't work, then fall back to yum
+        sudo yum install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync
 
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
@@ -181,7 +179,7 @@ function void_linux() {
 
 function android() {
     # If we pick up Android, then run this
-    
+
     echo -e "${green}${bold}Detected Android.${reset}"
     sleep 2
 
@@ -192,9 +190,10 @@ function android() {
     mkdir "${thisDir}"/.tmp
     cd "${thisDir}"/.tmp || exit 1
     git clone https://github.com/dylanaraps/pfetch &>/dev/null
-    cd pfetch || echo -e "${red}Couldn't cd into 'pfetch/'. Aborting.${reset}"; exit 1
-    make &>/dev/null && \
-    make install
+    cd pfetch || echo -e "${red}Couldn't cd into 'pfetch/'. Aborting.${reset}"
+    exit 1
+    make &>/dev/null &&
+        make install
 
     # Delete .tmp after installing pfetch
     cd "${thisDir}" || exit 1
@@ -240,12 +239,12 @@ elif [ "$distro" == "Void" ]; then
     void_linux
 
 elif [ "$distro" == "Android" ]; then
-    
-	echo -e "$distro -> ${purple}android()${reset}"
+
+    echo -e "$distro -> ${purple}android()${reset}"
     sleep 1
 
-	android
-    
+    android
+
 else
     # If we can't correctly detect distro then run this section
 

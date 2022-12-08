@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#* Script to print basic info about the machine it's running on 
+#* Script to print basic info about the machine it's running on
 #* Needs `init.sh` for color functionality
 
 # --- Print out basic info ---
@@ -20,4 +20,3 @@ echo -e "${cyan}${bold}User:${reset} $(whoami)"
 echo -e "${bold}-------------------------------- \n${reset}"
 
 sleep 2
-

@@ -47,7 +47,6 @@ echo -e "
 
 * = ${yellow}Only works on x86_64 machines. (Except for Android) ${reset} \n"
 
-
 echo -e "${yellow}Do you want to install the dependencies? 
 ${red}Answer 'n' if you have the dependencies already installed (from my repo's wiki),
 ${bold}or if you have an unsupported distro. ${reset} \n"
@@ -74,7 +73,7 @@ echo -e "
 # ${blue}plugins in:${red} ~/.zsh-plugins...${reset} #
 #################################"
 
-mkdir -v "$HOME"/.zsh-plugins 
+mkdir -v "$HOME"/.zsh-plugins
 echo -e "${greenbg}Done. Going to install plugins...${reset}"
 
 # --- Install plugins ---
