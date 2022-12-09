@@ -133,28 +133,46 @@ function overwrite() {
         cd "$dotfilesLoc"/config/ || exit 1
 
         ## Copy htoprc
-        mkdir "$HOME"/.config/htop/ 2>/dev/null
-        cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
-            echo -e "${green}Copied htoprc config!${reset}"
-        sleep 1
+        prompt -rp "Do you want to overwrite htop config? [Y/n]" htopOverwrite
+
+        if [ "${htopOverwrite,,}" = "y" ]; then
+            mkdir "$HOME"/.config/htop/ 2>/dev/null
+            cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
+                echo -e "${green}Copied htoprc config!${reset}"
+            sleep 1
+        else
+            echo "${red}Not overwritting htop...${reset}"
+        fi
 
         ## Copy kitty config
-        mkdir "$HOME"/.config/kitty/ 2>/dev/null
-        cp -rv kitty/* "$HOME"/.config/kitty/ &&
-            echo -e "${green}Copied kitty configs!${reset}"
-        sleep 1
+        prompt -rp "Do you want to overwrite kitty config? [Y/n]" kittyOverwrite
+
+        if [ "${kittyOverwrite,,}" = "y" ]; then
+            mkdir "$HOME"/.config/kitty/ 2>/dev/null
+            cp -rv kitty/* "$HOME"/.config/kitty/ &&
+                echo -e "${green}Copied kitty configs!${reset}"
+            sleep 1
+        else
+            echo "${red}Not overwritting kitty...${reset}"
+        fi
 
         ## Copy neofetch
-        mkdir "$HOME"/.config/neofetch/ 2>/dev/null
-        cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
-            echo -e "${green}Copied neofetch configs!${reset}"
-        sleep 1
+        prompt -rp "Do you want to overwrite neofetch config? [Y/n]" neofetchOverwrite
+
+        if [ "${neofetchOverwrite,,}" = "y" ]; then
+            mkdir "$HOME"/.config/neofetch/ 2>/dev/null
+            cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
+                echo -e "${green}Copied neofetch configs!${reset}"
+            sleep 1
+        else
+            echo "${red}Not overwritting neofetch...${reset}"
+        fi
 
         ## Copy starship
         echo -e "${red}About to copy over a Starship prompt."
         echo -e "${cyan}You have a few choices here - do you want to use the ${red}default ${cyan}prompt, ${purple}rounded ${cyan}prompt, or the ${green}plain text ${cyan}prompt?${reset}"
         echo -e "${yellow}(Note: for the ${blue}default ${yellow}and ${purple}rounded ${yellow}prompts, you will need a patched nerd font.)${reset}"
-        read -rp "What starship prompt do you want to use? [default/rounded/plain/none]: " starshipPrompt
+        read -rp "What starship prompt do you want to use? [default/rounded/plain/skip]: " starshipPrompt
 
         case ${starshipPrompt,,} in
         default)
