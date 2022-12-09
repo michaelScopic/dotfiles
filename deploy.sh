@@ -2,8 +2,6 @@
 
 #* This is a script to automate deploying these dotfiles onto the user's machine
 
-#! This is a huge WIP, not usable right now.
-
 # --- Store the dotfiles dir location as a var ---
 
 dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
@@ -280,3 +278,4 @@ help) ## Print the help section
     exit
     ;;
 esac
+
