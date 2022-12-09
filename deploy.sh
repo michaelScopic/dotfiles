@@ -141,7 +141,7 @@ function overwrite() {
                 echo -e "${green}Copied htoprc config!${reset}"
             sleep 1
         else
-            echo "${red}Not overwritting htop...${reset}"
+            echo -e "${red}Not overwritting htop...${reset}"
         fi
 
         ## Copy kitty config
@@ -153,7 +153,7 @@ function overwrite() {
                 echo -e "${green}Copied kitty configs!${reset}"
             sleep 1
         else
-            echo "${red}Not overwritting kitty...${reset}"
+            echo -e "${red}Not overwritting kitty...${reset}"
         fi
 
         ## Copy neofetch
@@ -165,7 +165,7 @@ function overwrite() {
                 echo -e "${green}Copied neofetch configs!${reset}"
             sleep 1
         else
-            echo "${red}Not overwritting neofetch...${reset}"
+            echo -e "${red}Not overwritting neofetch...${reset}"
         fi
 
         ## Copy starship
