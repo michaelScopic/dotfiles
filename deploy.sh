@@ -185,11 +185,7 @@ function overwrite() {
             cp starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
             ;;
 
-        none)
-            echo -e "${red}Not going to copy a starship prompt...\n ${reset}"
-            ;;
-
-        *)
+        skip|*)
             echo -e "${red}Not going to copy a starship prompt...\n ${reset}"
             ;;
 
@@ -266,16 +262,11 @@ info)
     exit
     ;;
 
-help) ## Print the help section
-    init_script &>/dev/null
-    usage
-    exit
-    ;;
-
-*) ## Any other agrument just runs the help section
+help|*) ## Print the help section
     init_script &>/dev/null
     usage "$@"
     exit
     ;;
+
 esac
 
