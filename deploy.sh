@@ -133,7 +133,7 @@ function overwrite() {
         cd "$dotfilesLoc"/config/ || exit 1
 
         ## Copy htoprc
-        prompt -rp "Do you want to overwrite htop config? [Y/n]" htopOverwrite
+        read -rp "Do you want to overwrite htop config? [Y/n]" htopOverwrite
 
         if [ "${htopOverwrite,,}" = "y" ]; then
             mkdir "$HOME"/.config/htop/ 2>/dev/null
@@ -145,7 +145,7 @@ function overwrite() {
         fi
 
         ## Copy kitty config
-        prompt -rp "Do you want to overwrite kitty config? [Y/n]" kittyOverwrite
+        read -rp "Do you want to overwrite kitty config? [Y/n]" kittyOverwrite
 
         if [ "${kittyOverwrite,,}" = "y" ]; then
             mkdir "$HOME"/.config/kitty/ 2>/dev/null
@@ -157,7 +157,7 @@ function overwrite() {
         fi
 
         ## Copy neofetch
-        prompt -rp "Do you want to overwrite neofetch config? [Y/n]" neofetchOverwrite
+        read -rp "Do you want to overwrite neofetch config? [Y/n]" neofetchOverwrite
 
         if [ "${neofetchOverwrite,,}" = "y" ]; then
             mkdir "$HOME"/.config/neofetch/ 2>/dev/null
