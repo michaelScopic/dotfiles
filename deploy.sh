@@ -4,8 +4,6 @@
 
 #! This is a huge WIP, not usable right now.
 
-# TODO: Fix the dotfilesLoc var
-
 # --- Store the dotfiles dir location as a var ---
 
 dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
@@ -14,8 +12,8 @@ echo -e "Dotfiles location: $dotfilesLoc \n"
 # --- Make the initalization a function ---
 function init_script() {
     source "$dotfilesLoc"/scripts/init.sh &&
-        #echo -e "--- Done installing dependencies and plugins! ---\n"
-        return
+
+    return
 }
 
 # --- Make the plugin and dependency installation as a function ---
@@ -28,7 +26,6 @@ function plugins() {
 
 # --- Backup function ---
 function backup() {
-
     # -- Backup htop config --
     echo -e "${blue}${bold}Attempting to backup htop... \n ${reset}"
     sleep 1
