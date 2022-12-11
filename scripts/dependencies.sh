@@ -2,7 +2,7 @@
 
 #* Script to install dependancies according to user's distro/package manager
 #* USED IN: deploy.sh -> pluginInstall.sh -> dependencies.sh
-#* Can be used standalone (you can this script by itself)
+#* Can be used standalone (you can run this script by itself)
 
 # TODO: Test on different distros/derivatives
 # ? Add support for Gentoo???
