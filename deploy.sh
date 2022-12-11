@@ -2,10 +2,6 @@
 
 #* This is a script to automate deploying these dotfiles onto the user's machine
 
-#! This is a huge WIP, not usable right now.
-
-# TODO: Fix the dotfilesLoc var
-
 # --- Store the dotfiles dir location as a var ---
 
 dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
@@ -14,8 +10,8 @@ echo -e "Dotfiles location: $dotfilesLoc \n"
 # --- Make the initalization a function ---
 function init_script() {
     source "$dotfilesLoc"/scripts/init.sh &&
-        #echo -e "--- Done installing dependencies and plugins! ---\n"
-        return
+
+    return
 }
 
 # --- Make the plugin and dependency installation as a function ---
@@ -28,7 +24,6 @@ function plugins() {
 
 # --- Backup function ---
 function backup() {
-
     # -- Backup htop config --
     echo -e "${blue}${bold}Attempting to backup htop... \n ${reset}"
     sleep 1
@@ -133,28 +128,46 @@ function overwrite() {
         cd "$dotfilesLoc"/config/ || exit 1
 
         ## Copy htoprc
-        mkdir "$HOME"/.config/htop/ 2>/dev/null
-        cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
-            echo -e "${green}Copied htoprc config!${reset}"
-        sleep 1
+        read -rp "Do you want to overwrite htop config? [Y/n] " htopOverwrite
+
+        if [ "${htopOverwrite,,}" = "y" ]; then
+            mkdir "$HOME"/.config/htop/ 2>/dev/null
+            cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
+                echo -e "${green}Copied htoprc config!${reset}"
+            sleep 1
+        else
+            echo -e "${red}Not overwritting htop...${reset}"
+        fi
 
         ## Copy kitty config
-        mkdir "$HOME"/.config/kitty/ 2>/dev/null
-        cp -rv kitty/* "$HOME"/.config/kitty/ &&
-            echo -e "${green}Copied kitty configs!${reset}"
-        sleep 1
+        read -rp "Do you want to overwrite kitty config? [Y/n] " kittyOverwrite
+
+        if [ "${kittyOverwrite,,}" = "y" ]; then
+            mkdir "$HOME"/.config/kitty/ 2>/dev/null
+            cp -rv kitty/* "$HOME"/.config/kitty/ &&
+                echo -e "${green}Copied kitty configs!${reset}"
+            sleep 1
+        else
+            echo -e "${red}Not overwritting kitty...${reset}"
+        fi
 
         ## Copy neofetch
-        mkdir "$HOME"/.config/neofetch/ 2>/dev/null
-        cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
-            echo -e "${green}Copied neofetch configs!${reset}"
-        sleep 1
+        read -rp "Do you want to overwrite neofetch config? [Y/n] " neofetchOverwrite
+
+        if [ "${neofetchOverwrite,,}" = "y" ]; then
+            mkdir "$HOME"/.config/neofetch/ 2>/dev/null
+            cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
+                echo -e "${green}Copied neofetch configs!${reset}"
+            sleep 1
+        else
+            echo -e "${red}Not overwritting neofetch...${reset}"
+        fi
 
         ## Copy starship
         echo -e "${red}About to copy over a Starship prompt."
         echo -e "${cyan}You have a few choices here - do you want to use the ${red}default ${cyan}prompt, ${purple}rounded ${cyan}prompt, or the ${green}plain text ${cyan}prompt?${reset}"
         echo -e "${yellow}(Note: for the ${blue}default ${yellow}and ${purple}rounded ${yellow}prompts, you will need a patched nerd font.)${reset}"
-        read -rp "What starship prompt do you want to use? [default/rounded/plain/none]: " starshipPrompt
+        read -rp "What starship prompt do you want to use? [default/rounded/plain/skip]: " starshipPrompt
 
         case ${starshipPrompt,,} in
         default)
@@ -172,11 +185,7 @@ function overwrite() {
             cp starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
             ;;
 
-        none)
-            echo -e "${red}Not going to copy a starship prompt...\n ${reset}"
-            ;;
-
-        *)
+        skip|*)
             echo -e "${red}Not going to copy a starship prompt...\n ${reset}"
             ;;
 
@@ -253,15 +262,11 @@ info)
     exit
     ;;
 
-help) ## Print the help section
-    init_script &>/dev/null
-    usage
-    exit
-    ;;
-
-*) ## Any other agrument just runs the help section
+help|*) ## Print the help section
     init_script &>/dev/null
     usage "$@"
     exit
     ;;
+
 esac
+

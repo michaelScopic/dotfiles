@@ -8,6 +8,7 @@ echo -e "
 ##########################\n"
 
 # --- Define a countdown function ---
+## Currently unused :|
 function countdown() {
     seconds="$*"
     start="$(($(date +%s) + seconds))"
