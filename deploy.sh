@@ -2,16 +2,20 @@
 
 #* This is a script to automate deploying these dotfiles onto the user's machine
 
+
+
 # --- Store the dotfiles dir location as a var ---
 
 dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
 echo -e "Dotfiles location: $dotfilesLoc \n"
 
+# --- Setup a directive for ShellCheck ---
+# shellcheck source=${dotfilesLoc}/scripts/init.sh
+
 # --- Make the initalization a function ---
 function init_script() {
     source "$dotfilesLoc"/scripts/init.sh &&
-
-    return
+        return
 }
 
 # --- Make the plugin and dependency installation as a function ---
@@ -185,7 +189,7 @@ function overwrite() {
             cp starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
             ;;
 
-        skip|*)
+        skip | *)
             echo -e "${red}Not going to copy a starship prompt...\n ${reset}"
             ;;
 
@@ -262,11 +266,10 @@ info)
     exit
     ;;
 
-help|*) ## Print the help section
+help | *) ## Print the help section
     init_script &>/dev/null
     usage "$@"
     exit
     ;;
 
 esac
-
