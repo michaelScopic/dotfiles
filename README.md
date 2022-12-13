@@ -149,7 +149,7 @@ If you need help or something does not work as expected, please contact me on Di
 
 I am almost _always_ online, and if I'm not online, I usually respond extremely quickly.
 
-* NOTE: If you do contact me, tell me that you found me from GitHub and need help. I am extremely paranoid of who messages me, especially people I don't know.
+- NOTE: If you do contact me, tell me that you found me from GitHub and need help. I am extremely paranoid of who messages me, especially people I don't know.
 
 ## Contributing
 
