@@ -10,6 +10,7 @@ I hope you enjoy!
 - [Disclamer](https://github.com/michaelScopic/dotfiles#disclamer)
 - [Features](https://github.com/michaelScopic/dotfiles#features)
 - [Todo](https://github.com/michaelScopic/dotfiles#todo)
+- [Progress](https://github.com/michaelScopic/dotfiles#progress)
 - [Installation](https://github.com/michaelScopic/dotfiles#installation-guide)
   - [Install using the wiki](https://github.com/michaelScopic/dotfiles#install-using-the-wiki)
   - [Install using scripts](https://github.com/michaelScopic/dotfiles#install-using-the-provided-script)
@@ -40,6 +41,12 @@ Shell script features:
 
 ## TODO
 
+- [ ] MacOS support _<- I won't be able to do this as I don't use a Mac, so a PR is appreciated_
+  - [ ] Add MacOS support/dependencies in `scripts/dependencies.sh`
+- [x] Make overwriting function in `deploy.sh` interactive
+
+## Progress
+
 ### Scripts
 
 - [x] `scripts/info.sh` _<- Prints info about the system it's running on_
@@ -52,7 +59,7 @@ Shell script features:
 
 - [x] htop
 - [x] starship
-- [ ] kitty
+- [x] kitty
 - [x] neofetch
 
 ### `config/htop`
