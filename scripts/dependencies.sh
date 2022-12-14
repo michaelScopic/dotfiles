@@ -19,6 +19,8 @@
 #* Distro compatability notes:
 #*  ** = Fixed issue with libssl on Arch based systems, see [https://bbs.archlinux.org/viewtopic.php?pid=740383#p740383]
 
+# shellcheck disable=SC2154
+
 # --- Ask for sudo passwd ---
 echo -e "${red}Testing ${reset}sudo ${red}access..."
 sudo echo "Echoed this with sudo!"
@@ -172,7 +174,7 @@ function void_linux() {
     sleep 2
 
     # Install deps
-    sudo xbps-install -Sy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync
+    sudo xbps-install -Suy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }

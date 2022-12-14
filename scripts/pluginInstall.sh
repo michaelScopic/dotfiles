@@ -2,11 +2,7 @@
 
 #* Script to install ZSH plugins and then optionally backup and overwrite user's zshrc with the one here.
 
-# --- Source init.sh ---
-## Not needed anymore
-#. init.sh
-
-#sleep 3
+# shellcheck disable=SC2154
 
 # --- Print zsh version ---
 echo -e "${yellow}ZSH version:${reset} $(zsh --version)"
@@ -53,7 +49,7 @@ ${bold}or if you have an unsupported distro. ${reset} \n"
 
 read -rp "Install dependencies? [Y\n]: " installDependencies
 
-if [ "${installDependencies,,}" = "y" ] || [ "${installdependencies,,}" == "" ]; then
+if [ "${installDependencies,,}" == "y" ] || [ "${installDependencies}" = "" ]; then
 
     echo -e "${green}${bold}Ok, installing dependencies.${reset}"
     bash -c scripts/./dependencies.sh
@@ -140,7 +136,7 @@ ${red}(say 'n' if you already have Starship installed)${reset}"
 
 read -rp "Install starship? [Y/n]: " install_starship
 
-if [ "$install_starship,," == "" ] || [ "$install_starship,," == "y" ]; then
+if [ "${install_starship}" == "" ] || [ "${install_starship,,}" == "y" ]; then
     # if user pressed enter or 'y', we will install starship
 
     echo -e "${green}Ok. Installing Starship prompt...${reset}"

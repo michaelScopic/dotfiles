@@ -3,6 +3,8 @@
 #* Script to print basic info about the machine it's running on
 #* Needs `init.sh` for color functionality
 
+# shellcheck disable=SC2154
+
 # --- Print out basic info ---
 echo -e "${bold}---------- Basic info ----------${reset}"
 # Print the distro

@@ -2,19 +2,15 @@
 
 #* This is a script to automate deploying these dotfiles onto the user's machine
 
-
-
 # --- Store the dotfiles dir location as a var ---
 
 dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
 echo -e "Dotfiles location: $dotfilesLoc \n"
 
-# --- Setup a directive for ShellCheck ---
-# shellcheck source=${dotfilesLoc}/scripts/init.sh
-
 # --- Make the initalization a function ---
 function init_script() {
-    source "$dotfilesLoc"/scripts/init.sh &&
+    # shellcheck source=scripts/init.sh
+    . "$dotfilesLoc/scripts/init.sh" &&
         return
 }
 
@@ -127,15 +123,15 @@ function overwrite() {
 
     read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " config_overwrite
 
-    if [ "${config_overwrite,,}" = "y" ] || [ "$config_overwrite" = "" ]; then
+    if [ "${config_overwrite,,}" == "y" ] || [ "${config_overwrite}" = "" ]; then
 
-        cd "$dotfilesLoc"/config/ || exit 1
+        cd "$dotfilesLoc"/config/ || return 1
 
         ## Copy htoprc
-        read -rp "Do you want to overwrite htop config? [Y/n] " htopOverwrite
+        read -rp "Do you want to overwrite htop config? [Y/n]: " htopOverwrite
 
-        if [ "${htopOverwrite,,}" = "y" ]; then
-            mkdir "$HOME"/.config/htop/ 2>/dev/null
+        if [ "${htopOverwrite,,}" == "y" ] || [ "${htopOverwrite}" = "" ]; then
+            mkdir "$HOME"/.config/htop/ 2> /dev/null
             cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
                 echo -e "${green}Copied htoprc config!${reset}"
             sleep 1
@@ -144,10 +140,10 @@ function overwrite() {
         fi
 
         ## Copy kitty config
-        read -rp "Do you want to overwrite kitty config? [Y/n] " kittyOverwrite
+        read -rp "Do you want to overwrite kitty config? [Y/n]: " kittyOverwrite
 
-        if [ "${kittyOverwrite,,}" = "y" ]; then
-            mkdir "$HOME"/.config/kitty/ 2>/dev/null
+        if [ "${kittyOverwrite,,}" == "y" ] || [ "${kittyOverwrite}" = "" ]; then
+            mkdir "$HOME"/.config/kitty/ 2> /dev/null
             cp -rv kitty/* "$HOME"/.config/kitty/ &&
                 echo -e "${green}Copied kitty configs!${reset}"
             sleep 1
@@ -156,10 +152,10 @@ function overwrite() {
         fi
 
         ## Copy neofetch
-        read -rp "Do you want to overwrite neofetch config? [Y/n] " neofetchOverwrite
+        read -rp "Do you want to overwrite neofetch config? [Y/n]: " neofetchOverwrite
 
-        if [ "${neofetchOverwrite,,}" = "y" ]; then
-            mkdir "$HOME"/.config/neofetch/ 2>/dev/null
+        if [ "${neofetchOverwrite,,}" == "y" ] || [ "${neofetchOverwrite}" = "" ]; then
+            mkdir "$HOME"/.config/neofetch/ 2> /dev/null
             cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
                 echo -e "${green}Copied neofetch configs!${reset}"
             sleep 1
@@ -171,12 +167,12 @@ function overwrite() {
         echo -e "${red}About to copy over a Starship prompt."
         echo -e "${cyan}You have a few choices here - do you want to use the ${red}default ${cyan}prompt, ${purple}rounded ${cyan}prompt, or the ${green}plain text ${cyan}prompt?${reset}"
         echo -e "${yellow}(Note: for the ${blue}default ${yellow}and ${purple}rounded ${yellow}prompts, you will need a patched nerd font.)${reset}"
-        read -rp "What starship prompt do you want to use? [default/rounded/plain/skip]: " starshipPrompt
+        read -rp "What starship prompt do you want to use? [default/rounded/plain/skip] (skip): " starshipPrompt
 
         case ${starshipPrompt,,} in
         default)
             echo -e "${blue}Using the default prompt... \n ${reset}"
-            rm "$HOME"/.config/starship.toml 2>/dev/null
+            rm "$HOME"/.config/starship.toml 2> /dev/null
             ;;
 
         rounded)
