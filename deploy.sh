@@ -5,18 +5,19 @@
 # --- Store the dotfiles dir location as a var ---
 
 dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
+export dotfilesLoc
 echo -e "Dotfiles location: $dotfilesLoc \n"
 
 # --- Make the initalization a function ---
 function init_script() {
-    # shellcheck source=scripts/init.sh
-    . "$dotfilesLoc/scripts/init.sh" &&
-        return
+    . "$dotfilesLoc/scripts/init.sh"
+
+    return
 }
 
 # --- Make the plugin and dependency installation as a function ---
 function plugins() {
-    bash -c scripts/./pluginInstall.sh
+    bash -c "$dotfilesLoc"/scripts/pluginInstall.sh
     ## 'pluginInstall.sh' will then call 'dependencies.sh', so no need to include it here
 
     return
@@ -39,7 +40,7 @@ function backup() {
     else
         ## If htop config dir isn't found, skip the backup
 
-        echo -e "${yellow}${bold}Hmmm, I couldn't find ${reset}'~/.config/htop/'${yellow}${bold}. Skipping backup. \n ${reset}"
+        echo -e "${red}${bold}Hmmm, I couldn't find ${reset}'~/.config/htop/'${red}${bold}. Skipping backup. \n ${reset}"
         sleep 1
     fi
 
@@ -55,13 +56,16 @@ function backup() {
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -v "$HOME"/.config/kitty "$HOME"/.config/kitty/backups && \
         rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME"/.config/kitty/backups &&
-            echo -e "${green}Success! Your current Kitty configs are in:${reset} '~/.config/kitty/backups' \n"
+            echo -e "${green}Success! Your current Kitty configs are in:${reset} '~/.config/kitty/backups' \n" 
+
         sleep 1
 
     else
         ## If kitty config dir isn't found, skip the backup
+        
+        echo -e "${red}${bold}Hmmm, I couldn't find ${reset}'~/.config/kitty/'${red}${bold}. Skipping backup.${reset}"
 
-        echo -e "${yellow}${bold}Hmmm, I couldn't find ${reset}'~/.config/kitty/'${yellow}${bold}. Skipping backup. \n ${reset}"
+        echo -e "${yellow}Note: I need 'rsync' to be able to do this backup!${reset} \n"
         sleep 1
 
     fi
@@ -82,7 +86,9 @@ function backup() {
         sleep 1
     else
         ## If neofetch config dir doesn't exist, skip it
-        echo -e "${yellow}${bold}Hmmm, I couldn't find ${reset}'~/.config/neofetch/'${yellow}${bold}. Skipping backup. \n ${reset}"
+        echo -e "${yellow}Exit code:${reset} $?"
+        echo -e "${red}${bold}Hmmm, I couldn't find ${reset}'~/.config/neofetch/'${red}${bold}. Skipping backup.${reset}"
+        echo -e "${yellow}Note: I need 'rsync' to be able to do this backup!${reset} \n"
         sleep 1
     fi
 
@@ -97,7 +103,7 @@ function backup() {
         sleep 1
     else
         ## If 'starship.toml' doesn't exist, skip it
-        echo -e "${yellow}${bold}Hmmm, I couldn't find ${reset}'~/.config/starship.toml'${yellow}${bold}. Skipping backup. \n ${reset}"
+        echo -e "${red}${bold}Hmmm, I couldn't find ${reset}'~/.config/starship.toml'${red}${bold}. Skipping backup. \n ${reset}"
         sleep 1
     fi
 
@@ -107,7 +113,7 @@ function backup() {
     return
 }
 
-# -- Overwrite user's configs with the dotfiles' configs ---
+# --- Overwrite user's configs with the dotfiles' configs ---
 function overwrite() {
     echo -e "
     ###########################
@@ -131,7 +137,7 @@ function overwrite() {
         read -rp "Do you want to overwrite htop config? [Y/n]: " htopOverwrite
 
         if [ "${htopOverwrite,,}" == "y" ] || [ "${htopOverwrite}" = "" ]; then
-            mkdir "$HOME"/.config/htop/ 2> /dev/null
+            mkdir "$HOME"/.config/htop/ 2>/dev/null
             cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
                 echo -e "${green}Copied htoprc config!${reset}"
             sleep 1
@@ -143,7 +149,7 @@ function overwrite() {
         read -rp "Do you want to overwrite kitty config? [Y/n]: " kittyOverwrite
 
         if [ "${kittyOverwrite,,}" == "y" ] || [ "${kittyOverwrite}" = "" ]; then
-            mkdir "$HOME"/.config/kitty/ 2> /dev/null
+            mkdir "$HOME"/.config/kitty/ 2>/dev/null
             cp -rv kitty/* "$HOME"/.config/kitty/ &&
                 echo -e "${green}Copied kitty configs!${reset}"
             sleep 1
@@ -155,7 +161,7 @@ function overwrite() {
         read -rp "Do you want to overwrite neofetch config? [Y/n]: " neofetchOverwrite
 
         if [ "${neofetchOverwrite,,}" == "y" ] || [ "${neofetchOverwrite}" = "" ]; then
-            mkdir "$HOME"/.config/neofetch/ 2> /dev/null
+            mkdir "$HOME"/.config/neofetch/ 2>/dev/null
             cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
                 echo -e "${green}Copied neofetch configs!${reset}"
             sleep 1
@@ -172,7 +178,7 @@ function overwrite() {
         case ${starshipPrompt,,} in
         default)
             echo -e "${blue}Using the default prompt... \n ${reset}"
-            rm "$HOME"/.config/starship.toml 2> /dev/null
+            rm "$HOME"/.config/starship.toml 2>/dev/null
             ;;
 
         rounded)
@@ -203,6 +209,12 @@ function overwrite() {
     return
 }
 
+# --- Call 'scripts/fonts.sh' for installing fonts ---
+function fonts() {
+    bash -c "$dotfilesLoc"/scripts/fonts.sh
+
+}
+
 # --- Usage/help function ---
 function usage() {
     ## Prints usage for script
@@ -219,7 +231,7 @@ function usage() {
     echo -e "${blue}${bold}info${reset}      ->     ${cyan}Print some basic info of this machine${reset}"
     echo -e "${blue}${bold}help${reset}      ->     ${cyan}Print this menu${reset}"
 
-    return 1
+    return 255
 
 }
 
@@ -253,6 +265,12 @@ overwrite) ## Call the overwrite funct
     init_script
     bash -c "$dotfilesLoc"/scripts/info.sh
     overwrite
+    exit
+    ;;
+
+fonts)
+    init_script
+    fonts
     exit
     ;;
 

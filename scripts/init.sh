@@ -2,10 +2,7 @@
 
 # * Initalizer script
 
-echo -e "
-##########################
-# Initallizing script... #
-##########################\n"
+echo -e "--- Initalizing... ---"
 
 # --- Define a countdown function ---
 ## Currently unused :|
@@ -19,7 +16,7 @@ function countdown() {
 }
 
 # --- Set colors ---
-echo -e "- Setting colors... - \n"
+echo -e "- Setting colors... - "
 # Normal text
 export reset='\e[0m' #&& echo -e "${reset}Normal text"
 
@@ -50,16 +47,13 @@ export purplebg='\e[45m' #&& echo -e "${purplebg}Purple background ${reset}"
 export cyan='\e[36m'   #&& echo -e "${cyan}Cyan ${reset}"
 export cyanbg='\e[46m' #&& echo -e "${cyanbg}Cyan background ${reset}"
 
-echo -e "${cyan}- Done setting colors -${reset}\n"
+echo -e "${cyan}- Done setting colors -${reset}"
 
 # --- Store user's current dir as a var ---
 
 thisDir=$(pwd)
 
-echo -e "${purple}${bold}Current directory: ${reset}$thisDir \n"
+echo -e "${purple}${bold}Current directory: ${reset}$thisDir"
 
 # --- Finish up ---
-echo -e "
-#####################
-# ${green}${bold}Done initalizing.${reset} #
-#####################\n"
+echo -e "${green}${bold}--- Done initalizing. ---${reset} \n"

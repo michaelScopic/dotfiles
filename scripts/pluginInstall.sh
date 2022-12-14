@@ -80,7 +80,9 @@ echo -e "
 #${blue}  zsh-autosuggestions ${reset}           #
 #${blue}  fzf-tab ${reset}                       #
 #${blue}  zsh-interactive-cd ${reset}            #
-###################################" && sleep 2
+###################################"
+
+sleep 2
 
 # -- Clone plugin repos --
 
@@ -109,9 +111,10 @@ echo -e "
 # ${cyan}I will make a backup of your current ${reset}#
 # ${cyan}one called${purple} '~/.zshrc.bak' ${reset}           #
 ########################################"
+
 read -rp "Overwrite? [Y/n]: " zshOverwrite
 
-if [ "${zshOverwrite,,}" == "y" ] || [ "$zshOverwrite" == "" ]; then
+if [ "${zshOverwrite,,}" == "y" ] || [ "${zshOverwrite}" = "" ]; then
     # make a copy of user's zshrc and rename it as '.zshrc.bak'
 
     mv -v "$HOME"/.zshrc "$HOME"/.zshrc.bak 2>/dev/null
@@ -136,7 +139,7 @@ ${red}(say 'n' if you already have Starship installed)${reset}"
 
 read -rp "Install starship? [Y/n]: " install_starship
 
-if [ "${install_starship}" == "" ] || [ "${install_starship,,}" == "y" ]; then
+if [ "${install_starship,,}" == "y" ] || [ "${install_starship}" == "" ]; then
     # if user pressed enter or 'y', we will install starship
 
     echo -e "${green}Ok. Installing Starship prompt...${reset}"
@@ -149,6 +152,3 @@ else
     echo -e "${red}Ok. ${bold}Not${reset}${red} installing Starship. \n ${reset}"
 
 fi
-
-#echo -e "${greenbg}Done with everything! Reloading your shell for you! Enjoy!${reset}"
-#exec zsh

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #* Script to install dependancies according to user's distro/package manager
-#* USED IN: deploy.sh -> pluginInstall.sh -> dependencies.sh
+#* USED IN: deploy.sh -> plugins() -> pluginInstall.sh -> dependencies.sh
 #* Can be used standalone (you can run this script by itself)
 
 # TODO: Test on different distros/derivatives
-# ? Add support for Gentoo???
+# TODO: Find a different method for setting $distro (sourcing /etc/os-release and then running some checks)
 
 # ! Distros NOT WORKING (as of now): Linux Mint, EndeavourOS, Arco,
 # ! Distros planned to be tested: LMDE, EndeavourOS, Nobara, Aquamarine, CentOS,
@@ -102,7 +102,7 @@ function debian() {
     sleep 2
 
     # Install deps
-    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa
+    sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa unzip
     # - 'rsync' isn't installing when put in the above line, installing it seperately
     sudo apt-get install -y rsync
 
@@ -133,7 +133,7 @@ function arch_linux() {
     sleep 2
 
     # Install deps
-    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync
+    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync unzip
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -145,9 +145,9 @@ function rpm_based() {
     sleep 2
 
     # Install deps
-    sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync ||
+    sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip ||
         # If dnf doesn't work, then fall back to yum
-        sudo yum install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync
+        sudo yum install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip
 
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
@@ -162,7 +162,7 @@ function opensuse() {
     sleep 2
 
     # Install deps
-    sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync
+    sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -174,7 +174,7 @@ function void_linux() {
     sleep 2
 
     # Install deps
-    sudo xbps-install -Suy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync
+    sudo xbps-install -Suy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
 }
@@ -190,15 +190,15 @@ function android() {
 
     # Build/install pfetch (neofetch alternative)
     mkdir "${thisDir}"/.tmp
-    cd "${thisDir}"/.tmp || exit 1
+    cd "${thisDir}"/.tmp || return 1
     git clone https://github.com/dylanaraps/pfetch &>/dev/null
-    cd pfetch || echo -e "${red}Couldn't cd into 'pfetch/'. Aborting.${reset}"
-    exit 1
+    cd pfetch || echo -e "${red}Couldn't cd into 'pfetch/'. Aborting.${reset}" &&
+        return 1
     make &>/dev/null &&
         make install
 
     # Delete .tmp after installing pfetch
-    cd "${thisDir}" || exit 1
+    cd "${thisDir}" || return 1
     rm -rf "${thisDir}"/.tmp
 
     echo -e "${greenbg}Done installing dependancies!${reset}"
@@ -254,5 +254,8 @@ else
     echo -e "${yellow}Detected distro:${reset} $distro"
     echo -e "${yellow}Distro Name (\$distroNAME):${reset} $distroNAME"
     echo -e "${yellow}Distro Like (\$distroLIKE):${reset} $distroLIKE"
+
+    echo -e "${cyan}Extra info:${reset}"
+    bash -c "$dotfilesLoc"/scripts/info.sh
 
 fi
