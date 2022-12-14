@@ -33,7 +33,7 @@ Shell script features:
 
 - _Lots_ of colors
 - Interactive
-- Automation for deploying dotfiles
+- Automation for deploying dotfiles:
   - Installs needed dependencies (on supported distros)
   - Installs ZSH plugins and then backup and overwrite user's zshrc
   - Backs up user's current configs (in case they want to rollback)
@@ -44,6 +44,8 @@ Shell script features:
 - [ ] MacOS support _<- I won't be able to do this as I don't use a Mac, so a PR is appreciated_
   - [ ] Add MacOS support/dependencies in `scripts/dependencies.sh`
 - [x] Make overwriting function in `deploy.sh` interactive
+- [ ] Add fonts
+  - [ ] Auotmate installing fonts in `deploy.sh`
 
 ## Progress
 
@@ -138,6 +140,16 @@ So if you want to run all of them, just do:
 ```
 
 If you don't want to run this script and only copy what you want, then just browse `config/` and/or `zsh/` and do what you want from there.
+
+## Getting help
+
+**Discord: `Michael_Scopic.zsh#0102`**
+
+If you need help or something does not work as expected, please contact me on Discord.
+
+I am almost _always_ online, and if I'm not online, I usually respond extremely quickly.
+
+- NOTE: If you do contact me, tell me that you found me from GitHub and need help. I am extremely paranoid of who messages me, especially people I don't know.
 
 ## Contributing
 
