@@ -3,7 +3,7 @@
 #* Script to download needed fonts and install them
 
 #* Fonts that will be downloaded:
-#*  CaskaydiaCove NF, JetBrainsMono NF, FiraCode NF
+#*  CaskaydiaCove NF, JetBrainsMono NF, FiraCode NF, Emoji Noto
 
 #* These fonts are used in Kitty as part of 'kitty.conf'
 
