@@ -51,6 +51,7 @@ Shell script features:
 
 ### Scripts
 
+- [ ] `scripts/fonts.sh` _<- Installs fonts_
 - [x] `scripts/info.sh` _<- Prints info about the system it's running on_
 - [x] `scripts/init.sh` _<- Initalizer script_
 - [x] `scripts/pluginInstall.sh` _<- Installs ZSH plugins, optionally calls `dependencies.sh`_
@@ -83,10 +84,11 @@ Shell script features:
 
 ### `config/kitty/`
 
-- [x] `kitty.conf` _<- Kitty config_
-- [ ] `themes/` _<- Folder to contain color themes_
+- [x] `kitty.conf`
+- [x] `themes/` _<- Folder to contain color themes_
   - [x] `darkdecay.ini`
   - [x] `decaycs.ini`
+  - [x] `nord.conf` _<- Default theme_
 - [x] `README.md`
 
 ### `zsh/`
@@ -147,9 +149,9 @@ If you don't want to run this script and only copy what you want, then just brow
 
 If you need help or something does not work as expected, please contact me on Discord.
 
-I am almost _always_ online, and if I'm not online, I usually respond extremely quickly.
+I am almost _always_ online, and I will usually respond very quickly.
 
-- NOTE: If you do contact me, tell me that you found me from GitHub and need help. I am extremely paranoid of who messages me, especially people I don't know.
+- NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially people I don't know.
 
 ## Contributing
 
