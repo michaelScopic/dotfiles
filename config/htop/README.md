@@ -4,8 +4,8 @@ This is my htop config.
 
 ## Features:
 
-- CPU temp
-- CPU frequencies 
+- CPU temp (if supported)
+- CPU frequencies
 - Swap
 - ZRAM
 - Battery

@@ -5,6 +5,7 @@ Neofetch is a system tool to *fetch* information of your system and hardware. It
 ## Installation
 
 (Inside the dotfiles directory...)
+
 ```sh
 cp config/neofetch/config.conf ~/.config/neofetch
 ```
