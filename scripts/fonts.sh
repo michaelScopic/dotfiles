@@ -27,45 +27,9 @@ else
     
 fi
 
-# --- Download fonts ---
-function download_fonts() {
-    echo -e "${purple}--- Downloading fonts... ---${reset} \n"
-    mkdir -v "$thisDir"/.font_tmp 
-    cd "$thisDir"/.font_tmp || return 1
-
-    ## Download CaskaydiaCove
-    wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/CascadiaCode.zip &&
-        echo -e "${green}Successfully downloaded '${reset}CaskaydiaCove${green}'.${reset} \n"
-
-    ## Download JetBrains
-    wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/JetBrainsMono.zip &&
-        echo -e "${green}Successfully downloaded '${reset}JetBrainsMono${green}'.${reset} \n"
-
-    ## Download FiraCode
-    wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/FiraCode.zip &&
-        echo -e "${green}Successfully downloaded '${reset}FiraCode${green}'.${reset} \n"
-
-    echo -e "${cyan}--- Done downloading fonts! ---${reset} \n"
-
-    return
-}
-
 function install_fonts() {
-    echo -e "${purple}--- Extracting/installing fonts... ---${reset} \n"
 
-    ## Extract CaskaydiaCove
-    mkdir -v "$fontDest"/CaskaydiaCove/
-
-    ## Extract JetBrainsMono
-    mkdir -v "$fontsDest"/JetBrainsMono/
-
-    ## Extract FiraCode
-    mkdir -v "$fontsDest"/FiraCode/
-
-    return
 }
-
-
 
 echo -e "
 ####################
