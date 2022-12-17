@@ -2,10 +2,14 @@
 
 #* This is a script to automate deploying these dotfiles onto the user's machine
 
-# --- Store the dotfiles dir location as a var ---
+# TODO: finish `scripts/fonts.sh` and then call it from here
+#       merge every script into here as one big script (More simplified but more to go wrong/more complex)
+#       clean up code
 
+# --- Store the dotfiles dir location as a var ---
 dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
 export dotfilesLoc
+
 echo -e "Dotfiles location: $dotfilesLoc \n"
 
 # --- Make the initalization a function ---
@@ -56,13 +60,13 @@ function backup() {
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -v "$HOME"/.config/kitty "$HOME"/.config/kitty/backups && \
         rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME"/.config/kitty/backups &&
-            echo -e "${green}Success! Your current Kitty configs are in:${reset} '~/.config/kitty/backups' \n" 
+            echo -e "${green}Success! Your current Kitty configs are in:${reset} '~/.config/kitty/backups' \n"
 
         sleep 1
 
     else
         ## If kitty config dir isn't found, skip the backup
-        
+
         echo -e "${red}${bold}Hmmm, I couldn't find ${reset}'~/.config/kitty/'${red}${bold}. Skipping backup.${reset}"
 
         echo -e "${yellow}Note: I need 'rsync' to be able to do this backup!${reset} \n"
