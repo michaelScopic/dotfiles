@@ -1,20 +1,23 @@
-#               _              
-#       _______| |__  _ __ ___ 
-#      |_  / __| '_ \| '__/ __|
-#   _   / /\__ \ | | | | | (__ 
-#  (_) /___|___/_| |_|_|  \___|
-
-
+#				     _
+# 			 _______| |__  _ __ ___
+# 			|_  / __| '_ \| '__/ __|
+# 		 _   / /\__ \ | | | | | (__ 
+# 		(_) /___|___/_| |_|_|  \___|
+#
+#
 # Credits: ArchLabs Linux for base zshrc
 # 	Website: https://archlabslinux.com
 #	GitHub: https://github.com/ArchLabs
 #
-# Really nice distro, ty dev team for this comprehensive zshrc
+# Really nice distro, ty dev team for this comprehensive zshrc :)
+#
+## User aliases, tweaks, and autostart is at the bottom of this file
+##	 - Michael
 
+# --- Change $PATH if you need to ---
+#export PATH=</path/to/bin/>:$PATH
 
-# Did my own aliases and plugins on top of this zshrc. (well more like at the bottom)
-# User aliases, prompts, and plugins start at line ~ 205 (just go to the bottom of the file)
-
+# --- Check if shell is interactive ---
 if [[ $- != *i* ]]; then
 	return
 fi
@@ -36,6 +39,19 @@ KEYTIMEOUT=1
 SAVEHIST=10000 
 HISTSIZE=10000
 HISTFILE="$HOME/.cache/.zsh_history"
+
+# --- less/manpager colours ----
+export MANWIDTH=80
+export LESS='-R'
+export LESSHISTFILE=-
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[32m'
+export LESS_TERMCAP_mb=$'\e[31m'
+export LESS_TERMCAP_md=$'\e[31m'
+export LESS_TERMCAP_so=$'\e[47;30m'
+export LESSPROMPT='?f%f .?ltLine %lt:?pt%pt\%:?btByte %bt:-...'
 
 # --- Completion ---
 setopt CORRECT
@@ -67,7 +83,7 @@ setopt INTERACTIVE_COMMENTS
 autoload -U compinit     # completion
 autoload -U terminfo     # terminfo keys
 zmodload -i zsh/complist # menu completion
-#autoload -U promptinit   # prompt
+autoload -U promptinit   # prompt
 
 # --- Better history navigation, matching currently typed text ---
 autoload -U up-line-or-beginning-search; zle -N up-line-or-beginning-search
@@ -172,17 +188,24 @@ ttyctl -f
 # --- Initialize completion ---
 compinit -u -d "$compfile"
 
-#--------------------------------------------------------------------
 
 # ==== START personalized tweaks ====
 
+# --- Set editor/viewer env vars ---
+export VIEWER=vim
+export EDITOR=vim
+#export VIEWER=nvim     # <-
+#export EDITOR=nvim		# ^ Uncomment these lines you use neovim
+
 # --- User functions ---
-cd() # cd and ls after
+cd() ## Automatically run 'ls' after you cd into a dir
 {
 	builtin cd "$@" && command lsd --color=auto -AF
+	##						   ^^^^^^^^^^^^^^^^^^^^
+	## Change 'lsd --color=auto -AF' with 'exa --color=auto -aF' or just 'ls  --color=auto -AF' if you don't want to use lsd
 }
 
-src() # recompile completion and reload zsh
+src() ## Recompile completion and then reload zsh
 {
 	autoload -U zrecompile
 	rm -rf "$compfile"*
@@ -190,54 +213,52 @@ src() # recompile completion and reload zsh
 	zrecompile -p "$compfile"
 	exec zsh
 }
-#-----------------------------------------
 
 # --- User aliases --- 
-# - Dont question my alias names - 
-alias please='sudo'
-#alias please='doas'	# For 'doas' users
-#alias sudo='doas'		# For 'doas' users
-alias ls='lsd -F --color=always'
-alias la='lsd -AF --color=always'
-alias ll='exa -lah'
-alias grep='grep --color=auto'
-alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias cum='sudo reboot'
-#alias cum='doas reboot' 	# use doas instead of sudo
-alias kys='sudo shutdown now'
-#alias kys='doas shutdown now'	# use doas instead of sudo
-alias nut='clear; neofetch'
+# - File/directory related aliases -
+alias ls='lsd -F' 
+alias la='lsd -AF'
+alias ll='exa -lahF'
+#alias ll='lsd -lAhF'   ## 'exa' alternative for 'll'
 alias rm='rm -iv'
 alias cp='cp -iv'
 alias mv='mv -iv'
-#alias mirror-update='sudo reflector --verbose --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist'		# For Arch users
-#alias ssh='kitty +kitten ssh'	# For kitty users
-#-----------------------------------------
+alias grep='grep --color=auto'
+# - Boot related aliases -
+alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias cum='sudo reboot'
+alias kys='sudo shutdown now'
+# - Config editing related aliases -
+alias edit-zshrc='$EDITOR ~/.zshrc'
+# - Misc. aliases -
+alias nut='clear; neofetch'
+#alias ssh='kitty +kitten ssh'  ## !! REQUIRED FOR KITTY TERMINAL !!
+#alias virt-man_net_start='sudo virsh net-start default' 
+alias free='free -mt'
+# - OpenSUSE aliases -
+alias update='sudo zypper update'
+alias big-update='sudo zypper dup'
+alias zypp-ref='sudo zypper refresh -f'
 
-# --- Editor ---
-export EDITOR=vim
-#export EDITOR=nvim		# Uncomment this line if you're a chad and use nvim
-#-----------------------------------------
 
 # --- ZSH prompt ---
-# Starship prompt
-eval "$(starship init zsh)" 
-#-----------------------------------------
+# - Start Starship prompt -
+if [ ! "$(eval "$(starship init zsh 2>/dev/null)")" ]; then
+    ## If we can't use starship, then use zsh's builtin prompts with promptinit
+    promptinit
+    prompt adam1
+fi
 
 # --- Plugins --- 
-# Autosuggestions
 source ~/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-# Syntax highlighting 
 source ~/.zsh-plugins/fsh/fast-syntax-highlighting.plugin.zsh
-# Fuzzy tab
 source ~/.zsh-plugins/fzf-tab/fzf-tab.plugin.zsh
-# Interactive cd completion
 source ~/.zsh-plugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
-#-----------------------------------------
 
 # --- Autostart ---
-#neofetch  
+#neofetch
 #pfetch
-#-----------------------------------------
-# ==== END personalized tweaks ====
+# - Merge .Xresources -
+#xrdb -merge ~/.Xresources
 
+# ==== END personalized tweaks ====
