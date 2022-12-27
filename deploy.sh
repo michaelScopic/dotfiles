@@ -20,9 +20,9 @@ function init_script() {
 }
 
 # --- Make the plugin and dependency installation as a function ---
-function plugins() {
-    bash -c "$dotfilesLoc"/scripts/pluginInstall.sh
-    ## 'pluginInstall.sh' will then call 'dependencies.sh', so no need to include it here
+function zsh() {
+    bash -c "$dotfilesLoc"/scripts/zshInstall.sh
+    ## 'zshInstall.sh' will then call 'dependencies.sh', so no need to include it here
 
     return
 }
@@ -229,7 +229,7 @@ function usage() {
     echo -e "${bold}Possible agruments:${reset}"
     echo -e "${blue}${bold}all${reset}       ->     ${cyan}Run all functions:"
     echo -e "                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)${reset}"
-    echo -e "${blue}${bold}plugins${reset}   ->     ${cyan}Just install ZSH plugins and dependencies${reset}"
+    echo -e "${blue}${bold}zsh${reset}       ->     ${cyan}Just install ZSH plugins and dependencies${reset}"
     echo -e "${blue}${bold}backup${reset}    ->     ${cyan}Just backup user's current configs (htop, kitty, neofetch, starship prompt)${reset}"
     echo -e "${blue}${bold}overwrite${reset} ->     ${cyan}Just overwrite user's current configs with the ones in this repo${reset}"
     echo -e "${blue}${bold}info${reset}      ->     ${cyan}Print some basic info of this machine${reset}"
@@ -245,16 +245,17 @@ case $1 in
 all) ## Call all functions (plugins -> backups -> overwrite)
     init_script
     bash -c "$dotfilesLoc"/scripts/info.sh
-    plugins
+    zsh
     backup
     overwrite
+    fonts
     exit
     ;;
 
-plugins) ## Just call the plugin funct
+zsh) ## Just call the plugin funct
     init_script
     bash -c "$dotfilesLoc"/scripts/info.sh
-    plugins
+    zsh
     exit
     ;;
 
