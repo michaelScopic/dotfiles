@@ -141,7 +141,7 @@ function overwrite() {
         read -rp "Do you want to overwrite htop config? [Y/n]: " htopOverwrite
 
         if [ "${htopOverwrite,,}" == "y" ] || [ "${htopOverwrite}" = "" ]; then
-            mkdir "$HOME"/.config/htop/ 2>/dev/null
+            mkdir -p "$HOME"/.config/htop/ 2>/dev/null
             cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
                 echo -e "${green}Copied htoprc config!${reset}"
             sleep 1
@@ -153,7 +153,7 @@ function overwrite() {
         read -rp "Do you want to overwrite kitty config? [Y/n]: " kittyOverwrite
 
         if [ "${kittyOverwrite,,}" == "y" ] || [ "${kittyOverwrite}" = "" ]; then
-            mkdir "$HOME"/.config/kitty/ 2>/dev/null
+            mkdir -p "$HOME"/.config/kitty/ 2>/dev/null
             cp -rv kitty/* "$HOME"/.config/kitty/ &&
                 echo -e "${green}Copied kitty configs!${reset}"
             sleep 1
@@ -165,7 +165,7 @@ function overwrite() {
         read -rp "Do you want to overwrite neofetch config? [Y/n]: " neofetchOverwrite
 
         if [ "${neofetchOverwrite,,}" == "y" ] || [ "${neofetchOverwrite}" = "" ]; then
-            mkdir "$HOME"/.config/neofetch/ 2>/dev/null
+            mkdir -p "$HOME"/.config/neofetch/ 2>/dev/null
             cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
                 echo -e "${green}Copied neofetch configs!${reset}"
             sleep 1
@@ -175,9 +175,8 @@ function overwrite() {
 
         ## Copy starship
         echo -e "${red}About to copy over a Starship prompt."
-        echo -e "${cyan}You have a few choices here - do you want to use the ${red}default ${cyan}prompt, ${purple}rounded ${cyan}prompt, or the ${green}plain text ${cyan}prompt?${reset}"
-        echo -e "${yellow}(Note: for the ${blue}default ${yellow}and ${purple}rounded ${yellow}prompts, you will need a patched nerd font.)${reset}"
-        read -rp "What starship prompt do you want to use? [default/rounded/plain/skip] (skip): " starshipPrompt
+        echo -e "${yellow}Note: for the ${blue}default ${yellow}, ${purple}rounded ${yellow}, and ${purple} nord ${yellow}prompts, you will need a patched nerd font.${reset}"
+        read -rp "What starship prompt do you want to use? [default/rounded/nord/plain/skip] (skip): " starshipPrompt
 
         case ${starshipPrompt,,} in
         default)
@@ -193,6 +192,11 @@ function overwrite() {
         plain)
             echo -e "${blue}Using the plain text prompt... \n ${reset}"
             cp starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
+            ;;
+
+        nord)
+            echo -e "${blue}Using the nord prompt... Fancy. \n ${reset}"
+            cp starship/nord-starship.toml "$HOME"/.config/starship.toml
             ;;
 
         skip | *)
