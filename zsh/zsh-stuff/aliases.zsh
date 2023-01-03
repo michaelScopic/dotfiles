@@ -23,6 +23,10 @@ alias zshrc="$EDITOR ~/.zshrc"
 alias zsh-aliases="$EDITOR ~/.zsh-stuff/aliases.zsh"
 alias ls-aliases="cat ~/.zsh-stuff/aliases.zsh"
 alias zsh-functs="$EDITOR ~/.zsh-stuff/user-functions.zsh"
+alias arch-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/archLinux.zsh"
+alias debian-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/debian.zsh"
+alias opensuse-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/opensuse.zsh"
+alias void-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/void.zsh"
 
 # - Misc. aliases -
 alias nut="clear; neofetch"

@@ -1,4 +1,5 @@
-# - OpenSUSE aliases -
+# === openSUSE aliases for package management ===
+## You are always welcome to add/edit your own aliases :)
 alias up="sudo zypper up"
 alias dist-update="sudo zypper dup"
 alias zypp-ref="sudo zypper ref -f"
