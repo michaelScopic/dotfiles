@@ -4,9 +4,10 @@
 distAliasDir="$HOME/.zsh-stuff/dist-aliases"
 
 # - File/directory related aliases -
-alias ls="lsd -F" 
-alias la="lsd -AF"
-alias ll="exa -lahF"
+LS_OPTIONS="--group-dirs=first -hF"
+alias ls="lsd $LS_OPTIONS" 
+alias la="lsd -A $LS_OPTIONS"
+alias ll="exa -la $LS_OPTIONS"
 #alias ll="lsd -lAhF"   ## "lsd" alternative for "ll"
 alias rm="rm -iv"
 alias cp="cp -iv"
@@ -23,10 +24,6 @@ alias zshrc="$EDITOR ~/.zshrc"
 alias zsh-aliases="$EDITOR ~/.zsh-stuff/aliases.zsh"
 alias ls-aliases="cat ~/.zsh-stuff/aliases.zsh"
 alias zsh-functs="$EDITOR ~/.zsh-stuff/user-functions.zsh"
-alias arch-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/archLinux.zsh"
-alias debian-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/debian.zsh"
-alias opensuse-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/opensuse.zsh"
-alias void-aliases="$EDITOR ~/.zsh-stuff/dist-aliases/void.zsh"
 
 # - Misc. aliases -
 alias nut="clear; neofetch"
