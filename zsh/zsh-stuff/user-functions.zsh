@@ -1,7 +1,7 @@
 # --- User functions ---
 cd() ## Automatically run 'ls' after you cd into a dir
 {
-	builtin cd "$@" && command lsd --color=auto -AF
+	builtin cd "$@" && command lsd --color=auto -AF --group-directories-first
 	##						   ^^^^^^^^^^^^^^^^^^^^
 ## Change 'lsd --color=auto -AF' to 'exa --color=auto -aF' OR 'ls  --color=auto -AF' if you don't want to use lsd
 }
