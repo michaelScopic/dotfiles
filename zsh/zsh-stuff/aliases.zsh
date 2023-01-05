@@ -5,9 +5,10 @@ distAliasDir="$HOME/.zsh-stuff/dist-aliases"
 
 # - File/directory related aliases -
 LS_OPTIONS="--group-dirs=first -hF"
+EXA_OPTIONS="--group-directories-first -hF"
 alias ls="lsd $LS_OPTIONS" 
 alias la="lsd -A $LS_OPTIONS"
-alias ll="exa -la $LS_OPTIONS"
+alias ll="exa -la $EXA_OPTIONS"
 #alias ll="lsd -lAhF"   ## "lsd" alternative for "ll"
 alias rm="rm -iv"
 alias cp="cp -iv"
