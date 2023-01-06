@@ -234,6 +234,7 @@ function usage() {
     echo -e "${blue}${bold}all${reset}       ->     ${cyan}Run all functions:"
     echo -e "                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)${reset}"
     echo -e "${blue}${bold}zsh${reset}       ->     ${cyan}Just install ZSH plugins and dependencies${reset}"
+    echo -e "${blue}${bold}fonts${reset}     ->     ${cyan}Just install fonts"
     echo -e "${blue}${bold}backup${reset}    ->     ${cyan}Just backup user's current configs (htop, kitty, neofetch, starship prompt)${reset}"
     echo -e "${blue}${bold}overwrite${reset} ->     ${cyan}Just overwrite user's current configs with the ones in this repo${reset}"
     echo -e "${blue}${bold}info${reset}      ->     ${cyan}Print some basic info of this machine${reset}"
