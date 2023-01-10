@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+#
 #* This is a script to automate deploying these dotfiles onto the user's machine
-
+#
 # TODO: finish `scripts/fonts.sh` and then call it from here
 #       merge every script into here as one big script (More simplified but more to go wrong/more complex)
 #       clean up code

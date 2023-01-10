@@ -1,5 +1,7 @@
 # --- User aliases --- 
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
 # --- Set alias files dir ---
 distAliasDir="$HOME/.zsh-stuff/dist-aliases"
 

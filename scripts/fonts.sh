@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
 #* Script to download needed fonts and install them
 
 #* Fonts that will be downloaded:

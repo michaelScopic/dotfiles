@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
 #* Script to install ZSH plugins and then optionally backup and overwrite user's zshrc with the one here.
 
 # shellcheck disable=SC2154

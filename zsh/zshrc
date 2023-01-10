@@ -1,9 +1,12 @@
-#		         _
-#   		 _______| |__  _ __ ___
-#   		|_  / __| '_ \| '__/ __|
-# 	     _   / /\__ \ | | | | | (__ 
+#		                 _
+#   	    	 _______| |__  _ __ ___
+#       		|_  / __| '_ \| '__/ __|
+#   	     _   / /\__ \ | | | | | (__ 
 #           (_) /___|___/_| |_|_|  \___|
 #
+
+# Written by: michaelScopic (https://github.com/michaelScopic)
+# Credits: ArchLabs Linux (https://archlabslinux.org)
 
 # - Change $PATH if you need to -
 #export PATH=</path/to/bin/>:$PATH
@@ -14,8 +17,8 @@ if [[ $- != *i* ]]; then
 fi
 
 # - Set editor/viewer -
-export VIEWER=nvim
-export EDITOR=nvim
+#export VIEWER=nvim
+#export EDITOR=nvim
 
 # - Set vars for ZSH config dirs -
 zshConfig="$HOME/.zsh-stuff"
@@ -30,7 +33,6 @@ if [[ -d "$comppath" ]]; then
 else
 	mkdir -p "$comppath"
 fi
-
 
 # - zsh internal stuff -
 SHELL=$(which zsh || echo '/bin/zsh')
@@ -197,6 +199,7 @@ source "$zshPlugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 source "$zshPlugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
 
 # - Start prompt -
+## If you installed starship into another location, this won't work.
 if [ -f /usr/bin/starship ]; then
     eval "$(starship init zsh)"
 else

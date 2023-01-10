@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
 # * Initalizer script
 
 echo -e "--- Initalizing... ---"

@@ -1,13 +1,16 @@
 # --- User functions ---
-cd() ## Automatically run 'ls' after you cd into a dir
-{
+
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
+cd() { ## Automatically run 'ls' after you cd into a dir
+
 	builtin cd "$@" && command lsd --color=auto -AF --group-directories-first
 	##						   ^^^^^^^^^^^^^^^^^^^^
 ## Change 'lsd --color=auto -AF' to 'exa --color=auto -aF' OR 'ls  --color=auto -AF' if you don't want to use lsd
 }
 
-src() ## Recompile completion and then reload zsh
-{
+src() { ## Recompile completion and then reload zsh
+
     toload -U zrecompile
 	rm -rf "$compfile"*
 	compinit -u -d "$compfile"
@@ -15,8 +18,7 @@ src() ## Recompile completion and then reload zsh
 	exec zsh
 }
 
-extract()
-{
+extract() {
     if [ -f $1 ] ; then
         case $1 in
             *.tar.bz2)    tar xvjf $1    ;;

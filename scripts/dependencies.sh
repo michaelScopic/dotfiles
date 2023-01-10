@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
 #* Script to install dependancies according to user's distro/package manager
 #* USED IN: deploy.sh -> plugins() -> pluginInstall.sh -> dependencies.sh
 #* Can be used standalone (you can run this script by itself)
