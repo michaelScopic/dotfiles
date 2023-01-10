@@ -14,12 +14,11 @@ I hope you enjoy!
 - [Installation](https://github.com/michaelScopic/dotfiles#installation-guide)
   - [Install using the wiki](https://github.com/michaelScopic/dotfiles#install-using-the-wiki)
   - [Install using scripts](https://github.com/michaelScopic/dotfiles#install-using-the-provided-script)
-- [Contributing](https://github.com/michaelScopic/dotfiles#contributing)
-  - [Guidelines](https://github.com/michaelScopic/dotfiles#contributing-guidelines)
+- [Credits](https://github.com/michaelScopic/dotfiles#credits)
 
 ## Why?
 
-I wanted to showcase my configs in hopes that someone else can enjoy my work (and stealing from other ppl's dots lmao).
+I wanted to showcase my configs in hopes that someone else can enjoy my work (and stealing from other ppl's dots lmao (credits are at the bottom of this file)).
 
 This was also a perfect oppurtunity to learn Bash/Shell scripting.
 
@@ -153,36 +152,17 @@ I am almost _always_ online, and I will usually respond very quickly.
 
 - NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially people I don't know.
 
-## Contributing
+## Credits
 
-I am still learning how to script in shell/bash, so my code will most likely not be the cleanest or most efficient or most functional.
+Thank you [r/unixporn community](https://reddit.com/r/unixporn) for inspiring me to rice desktops.
 
-Maybe you're smarter than me or know more about Linux. If you think you can clean up my code, address problems, or add new features, then go for it and make a new PR! But please read the guidelines below before you contribute.
+Nord starship prompt (`config/starship/nord-starship.toml`) is from [rxyhn's dotfiles](https://github.com/rxyhn/dotfiles), and I just tweaked the colors to match with any color scheme.
 
-### Contributing guidelines
+Rounded starship prompt (`config/starship/rounded.toml`) is from [Syndrizzle's dotfiles](https://github.com/Syndrizzle/hotfiles), and I also tweaked the colors to match with any color scheme.
 
-ABSOLUTELY NO MALICIOUS CODE
+Plain text starship prompt (`config/starship/plain-text-symbols.toml`) are taken from [Starship's offical prompt presets](https://starship.rs).
 
-Any form of malicious code is **not accepted under any curcumstances**, and any PR containing malicious code will just be rejected. I won't even argue with you if you have a malicious PR. Just fuck off.
+All fonts in `fonts/` are from [Nerdfonts.com](https://www.nerdfonts.com).
 
-**Comments:**
 
-- Put comments breifly explaining what parts of your code does. Why? Because I want to know what you're doing so that (a) I can learn from it and (b) so that I can make sure it's not malicious.
 
-- **If you do not put comments, I will not accept the PR.**
-
-**Confusing/messy code:**
-
-- Please please please don't make your code messy. It makes it much harder to read thru, and makes me not want to trust you.
-
-- I understand if you aren't the most well versed in shell scripting, but ffs don't be a caveman when you submit code.
-
-- If I get sensory overload from trying to read your code then I will most likely question both mine and your existance and then reject the PR.
-
-**Test your code:**
-
-- I've spent enough time testing my own code and I really don't want to test to see if your code works. So please test your own code and verify that it works.
-
-## How to contribute
-
-Read the GitHub docs on creating pull requests [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request?tool=codespaces). :)
