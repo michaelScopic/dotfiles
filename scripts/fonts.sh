@@ -25,24 +25,16 @@ fi
 sleep 1
 
 # --- Copy fonts ---
-function install_fonts() {
-    if [ ! "$(cp -rv fonts/* "$HOME/.fonts")" ]; then
+if [ ! "$(cp -rv fonts/* "$HOME/.fonts")" ]; then
+    # If copy failed, then tell user
+    echo "Exit code: $?"
+    echo -e "${red}${bold}--- Uh oh, copying fonts from '${reset}font/${red}${bold}' was not successful! ---${reset}"
+    echo -e "${yellow}Command that failed: '${reset}cp -rv fonts/* $HOME/.fonts${yellow}'.${reset}"
+else
+    # If copy was successful, then tell user then refresh font cache
+    echo -e "${green}--- Successful! Refreshing font cache... ---${reset}"
+    fc-cache -rv
+    echo -e "${green}--- Done. ---${reset} \n"
+  
+fi
 
-        ## If copy failed, then tell user
-        echo "Exit code: $?"
-        echo -e "${red}${bold}--- Uh oh, copying fonts from '${reset}font/${red}${bold}' was not successful! ---${reset}"
-        echo -e "${yellow}Command that failed: '${reset}cp -rv fonts/* $HOME/.fonts${yellow}'.${reset}"
-
-        return 1
-
-    else
-
-        ## If copy was successful, then tell user then refresh font cache
-        echo -e "${green}--- Successful! Refreshing font cache... ---${reset}"
-        fc-cache -rv
-        echo -e "${green}--- Done. ---${reset} \n"
-        
-    fi
-
-    return
-}
