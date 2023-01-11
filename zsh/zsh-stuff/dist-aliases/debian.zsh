@@ -15,7 +15,7 @@ alias pkg-show="apt show"
 
 # - Nala aliases -
 ## Uncomment this section if you use nala (https://github.com/volitank/nala)
-#alias up="sudo nala update; sudo nala ugrade"
+#alias up="sudo nala update; sudo nala upgrade"
 #alias install="sudo nala install"
 #alias pkg-search="nala search"
 #alias apt-mirrors="sudo nala fetch"
