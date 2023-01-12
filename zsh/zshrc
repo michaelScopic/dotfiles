@@ -16,9 +16,10 @@ if [[ $- != *i* ]]; then
 	rereturn
 fi
 
-# - Set editor/viewer -
+# - Export enviornment vars if needed -
 #export VIEWER=nvim
 #export EDITOR=nvim
+export BAT_THEME="Nord"
 
 # - Set vars for ZSH config dirs -
 zshConfig="$HOME/.zsh-stuff"
@@ -84,7 +85,6 @@ setopt INTERACTIVE_COMMENTS
 autoload -U compinit     # completion
 autoload -U terminfo     # terminfo keys
 zmodload -i zsh/complist # menu completion
-autoload -U promptinit   # prompt
 
 # - Better history navigation, matching currently typed text -
 autoload -U up-line-or-beginning-search; zle -N up-line-or-beginning-search
@@ -203,6 +203,7 @@ source "$zshPlugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
 if [ -f /usr/bin/starship ]; then
     eval "$(starship init zsh)"
 else
+    autoload -U promptinit
     promptinit
     prompt adam1
 fi

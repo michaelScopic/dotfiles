@@ -6,6 +6,7 @@ alias up="sudo pacman -Syu"
 alias aur-up="sudo yay -Syu ; sudo paru -Syu"
 alias mirror-update="sudo reflector --verbose --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist"
 alias pkg-search="pacman -Qs"
+alias repo-sync="sudo pacman -Syyy"
 
 # --- Arch functions ---
 pacman-keyfix() {
