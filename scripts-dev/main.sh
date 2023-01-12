@@ -7,59 +7,109 @@
 # TODO: put everything from '.../scripts/' into here
 # TODO: Make everything a function
 
-
-
 function init() {
     echo -e "--- Initalizing... ---"
+
+    if [ ! -f /etc/os-release ]; then
+        # If we can't source '/etc/os-release', then set a var to "false" let install_deps() know about it
+        echo "Cannot find '/etc/os-release'..."
+        echo "I will not be able to detect your distro."
+        can_detect_distro="false"
+    else
+        # If file is found, source it and set the var to "true"
+        echo "Found '/etc/os-release'!"
+        . /etc/os-release 
+        can_detect_distro="true"
+    fi
 
     # - Set colors -
     echo -e "- Setting colors... - "
     # Normal text
     reset='\e[0m'
-
     # Bold text
     bold='\e[1m'
-
     # Red
     red='\e[31m'
     redbg='\e[41m'
-
     # Green
     green='\e[32m'
     greenbg='\e[42m'
-
     # Yellow
     yellow='\e[33m'
     yellowbg='\e[43m'
-
     # Blue
     blue='\e[34m'
     bluebg='\e[44m'
-
     # Purple
     purple='\e[35m'
     purplebg='\e[45m'
-
     # Cyan
     cyan='\e[36m'
     cyanbg='\e[46m'
-
-    echo -e "${cyan} Done setting colors ${reset}"
+    echo -e "${cyan}- Done setting colors. -${reset}"
 
     # - Store user's current dir as a var -
     thisDir=$(pwd)
-    echo -e "${purple}${bold}Current directory: ${reset}$thisDir"
+    echo -e "${purple}${bold}Current directory:${reset} $thisDir"
 
     # - Finish up -
     echo -e "${green}${bold}--- Done initalizing. ---${reset} \n"
+
+    if [ $can_detect_distro == "false" ]; then
+        echo -e "${red}Error: Unable to find '${reset}/etc/os-release${red}'.${reset}" 
+        echo -e "${red}I won't be able to automatically install dependencies.${reset} \n"
+    fi
 }
 
+# --- Detect Distro ---
+function detect_distro() {
+    if [ $can_detect_distro == "false" ]; then
+        # If init wasn't able to find os-release, then abort this function
+        echo -e "${yellow}DEBUG: Current function: detect_distro(), line 65${reset}"
+        echo -e "${red}ERROR: Initalizer was could not to find '/etc/os-release'.${reset}"
+        echo -e "${red}ERROR: Unable to detect distro...${reset} \n"
+        return 1
+    fi 
+
+    echo "Name: ${NAME}"
+    echo "ID: ${ID}"
+    echo "ID like: ${ID_LIKE}"
+    echo "Pretty name: ${PRETTY_NAME}"
+    echo ""
+
+    if [ "${ID}" == "ubuntu" ] || [ "${ID}" == "debian" ] || [ "${ID_LIKE}" == '"ubuntu debian"' ] || [ "${ID_LIKE}" == "debian" ]; then
+        echo "Found Ubuntu/Debian."
+        distro="debian"
+
+    elif [ "${ID}" == "arch" ] || [ "${ID_LIKE}" == '"arch"' ] || [ "${ID}" == "artix" ]; then
+        echo "Found Arch Linux."
+        distro="arch"
+
+    elif [ "${ID}" == "fedora" ]; then
+        echo "Found Fedora Linux."
+        distro="rhel"
+
+    elif [ "${NAME}" == "openSUSE Tumbleweed" ]; then
+        echo "Found openSUSE Tumbleweed."
+        distro="opensuse"
+    
+    elif [ "${NAME}" == "void" ]; then
+        echo "Found Void Linux."
+        distro="void"
+
+    else 
+        echo -e "${red}ERROR: Couldn't detect your distro${reset}"
+        echo -e "${yellow}INFO: Supported distros:
+        ${blue}Ubuntu/Debian, Arch/Manjaro/Artix/EndeavourOS/Arco, Fedora, OpenSUSE TW, Void Linux ${reset}\n"
+
+    fi
+}
 
 function info() {
     # --- Print out basic info about system ---
     echo -e "${bold}---------- Basic info ----------${reset}"
-    # Print the distro
-    echo -e "${green}${bold}Distro:${reset} $(lsb-release -ds)"
+    # Print the distro (needs '/etc/os-release' for this part)
+    echo -e "${green}${bold}Distro:${reset} ${PRETTY_NAME}"
     # Print kernel version
     echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
     # Print shell
@@ -78,12 +128,20 @@ function info() {
 
 # --- Copy ZSH configs ---
 function zsh_install() {
-
+    true; # Placeholder for now
 
 }
 
 # --- Install dependancies ---
 function install_deps() {
+    if [ $can_detect_distro == "false" ]; then
+        echo -e "${red}${bold}ERROR:${reset} ${red}The initalizer process was unable to find '${reset}/etc/os-release${red}'.${reset}"
+        echo -e "${red}${bold}ERROR:${reset} ${red}Because of this, I won't be able to install dependencies for you. You are on your own for that. :( ${bold}Aborting!${reset} \n"
+        return 1
+    fi
+
+    
+
 
 
 }
@@ -339,3 +397,7 @@ function usage() {
     return 255
 
 }
+
+init
+info
+detect_distro

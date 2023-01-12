@@ -3,7 +3,9 @@
 # --- Detect Distro ---
 function detect_distro() {
     if [ ! -f "/etc/os-release" ]; then
+        # Test to see if '/etc/os-release' exists. If it doesn't exist, abort.
         echo "Can't find '/etc/os-release'. Unable to continue."
+        return 1
     fi
 
     . /etc/os-release
@@ -14,19 +16,19 @@ function detect_distro() {
     echo "Pretty name: ${PRETTY_NAME}"
     echo ""
 
-    if [ ${ID} == "ubuntu" ] || [ ${ID} == "debian" ] || [ ${ID_LIKE} == '"ubuntu debian"' ]; then
+    if [ "${ID}" == "ubuntu" ] || [ "${ID}" == "debian" ] || [ "${ID_LIKE}" == '"ubuntu debian"' ]; then
         echo "Found Ubuntu/Debian."
         distro="debian"
 
-    elif [ ${ID} == "Arch Linux" ] || [ ${ID_LIKE} == '"arch"' ]; then
+    elif [ "${ID}" == "Arch Linux" ] || [ "${ID_LIKE}" == '"arch"' ]; then
         echo "Found Arch Linux."
         distro="arch"
 
-    elif [ ${ID} == "fedora" ]; then
+    elif [ "${ID}" == "fedora" ]; then
         echo "Found Fedora Linux."
         distro="rhel"
 
-    elif [ ${NAME} == "openSUSE Tumbleweed" ]; then
+    elif [ "${NAME}" == "openSUSE Tumbleweed" ]; then
         echo "Found openSUSE Tumbleweed"
         distro="opensuse"
     
