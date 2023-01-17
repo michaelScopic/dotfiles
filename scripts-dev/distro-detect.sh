@@ -1,41 +1,57 @@
 #!/usr/bin/env bash
 
-# --- Detect Distro ---
-function detect_distro() {
-    if [ ! -f "/etc/os-release" ]; then
-        # Test to see if '/etc/os-release' exists. If it doesn't exist, abort.
-        echo "Can't find '/etc/os-release'. Unable to continue."
-        return 1
-    fi
+function dist_detect() {
+    echo "$OSTYPE"
+    if [[ $OSTYPE == "linux-gnu" ]]; then
 
-    . /etc/os-release
+        if command -v apt-get >/dev/null; then
+            echo "Found Debian/Ubuntu."
+            sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa unzip
+            # - 'rsync' isn't installing when put in the above line, installing it seperately
+            sudo apt-get install -y rsync
+            # Installing lsd
+            mkdir "${buildDir}"
+            cd "${buildDir}" || exit 1
+            # Get the lsd .deb file
+            wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null &&
+            # Install the .deb file
+            sudo dpkg -i lsd_0.23.1_amd64.deb && \
+            cd ${repoDir}
+            # Installing starship
+            curl -sS https://starship.rs/install.sh | sh
+            echo -e "${greenbg}Done installing dependancies!${reset} \n"
 
-    echo "Name: ${NAME}"
-    echo "ID: ${ID}"
-    echo "ID like: ${ID_LIKE}"
-    echo "Pretty name: ${PRETTY_NAME}"
-    echo ""
+        elif command -v pacman >/dev/null; then
+            echo "Found Arch Linux."
+            sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync unzip
+            echo -e "${greenbg}Done installing dependencies!${reset} \n"
 
-    if [ "${ID}" == "ubuntu" ] || [ "${ID}" == "debian" ] || [ "${ID_LIKE}" == '"ubuntu debian"' ]; then
-        echo "Found Ubuntu/Debian."
-        distro="debian"
+        elif command -v zypper >/dev/null; then
+            echo "Found openSUSE."
+            sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
+            echo -e "${greenbg}Done installing dependancies!${reset}"
 
-    elif [ "${ID}" == "Arch Linux" ] || [ "${ID_LIKE}" == '"arch"' ]; then
-        echo "Found Arch Linux."
-        distro="arch"
+        elif command -v dnf >/dev/null; then
+            echo "Found RHEL."
+            sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip
+            # Install starship
+            curl -sS https://starship.rs/install.sh | sh
+            echo -e "${greenbg}Done installing dependancies!${reset}"
 
-    elif [ "${ID}" == "fedora" ]; then
-        echo "Found Fedora Linux."
-        distro="rhel"
 
-    elif [ "${NAME}" == "openSUSE Tumbleweed" ]; then
-        echo "Found openSUSE Tumbleweed"
-        distro="opensuse"
+        elif command -v xbps-install >/dev/null; then
+            echo "Found Void Linux."
+            sudo xbps-install -Suy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
+            echo -e "${greenbg}Done installing dependancies!${reset}"
+
+        else
+            echo "Couldn't detect your package manager. Unable to install packages."
+        fi
     
     else 
-        echo -e "Couldn't detect your distro :("
+        echo "Your OS is not Linux! There is no support for BSD or Darwin hosts. Unable to install packages."
     fi
+
 }
 
-detect_distro
-
+dist_detect

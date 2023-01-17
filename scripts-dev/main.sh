@@ -50,6 +50,7 @@ function init() {
 
     # - Store user's current dir as a var -
     thisDir=$(pwd)
+    buildDir=$HOME/.build_tmp
     echo -e "${purple}${bold}Current directory:${reset} $thisDir"
 
     # - Finish up -
@@ -99,8 +100,13 @@ function detect_distro() {
 
     else 
         echo -e "${red}ERROR: Couldn't detect your distro${reset}"
-        echo -e "${yellow}INFO: Supported distros:
-        ${blue}Ubuntu/Debian, Arch/Manjaro/Artix/EndeavourOS/Arco, Fedora, OpenSUSE TW, Void Linux ${reset}\n"
+        echo -e "${yellow}INFO: Offically tested distros${red}*${yellow}:
+        Ubuntu, Debian
+        Arch, Manjaro, Artix, EndeavourOS, Arco
+        Fedora, Rocky Linux
+        OpenSUSE Tumbleweed 
+        Void Linux
+        ${red}* ARM versions of these distros aren't offically supported.${reset}\n"
 
     fi
 }
