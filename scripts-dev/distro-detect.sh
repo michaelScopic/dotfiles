@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function dist_detect() {
+function dependencies() {
     echo "$OSTYPE"
     if [[ $OSTYPE == "linux-gnu" ]]; then
 
