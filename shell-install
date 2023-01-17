@@ -11,6 +11,7 @@
 function init() {
     echo -e "--- Initalizing... ---"
 
+    # Source /etc/os-release
     . /etc/os-release 
 
     # - Set colors -
@@ -44,7 +45,7 @@ function init() {
     buildDir=$HOME/.build_tmp
     echo -e "${purple}${bold}Current directory:${reset} $thisDir"
 
-    dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 3- | rev)"
+    dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
     echo -e "${purple}${bold}Dotfiles directory:${reset} $dotfilesLoc"
     # - Finish up -
     echo -e "${green}${bold}--- Done initalizing. ---${reset} \n"
@@ -460,7 +461,7 @@ function usage() {
     ## Prints usage for script
 
     echo -e "${red}${bold}Bad argument: ${reset}'$*' "
-    echo -e "${yellow}Usage: ${reset}'./deploy.sh ${blue}AGRUMENTS${reset}' \n"
+    echo -e "${yellow}Usage: ${reset}'./shell-install ${blue}AGRUMENTS${reset}' \n"
 
     echo -e "${bold}Possible agruments:${reset}"
     echo -e "${blue}${bold}all${reset}       ->     ${cyan}Run all functions:"
