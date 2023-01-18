@@ -13,7 +13,7 @@
 
 # - Check if shell is interactive -
 if [[ $- != *i* ]]; then
-	rereturn
+	return
 fi
 
 # - Export enviornment vars if needed -
