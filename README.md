@@ -12,7 +12,6 @@ I hope you enjoy!
 - [Todo](https://github.com/michaelScopic/dotfiles#todo)
 - [Progress](https://github.com/michaelScopic/dotfiles#progress)
 - [Installation](https://github.com/michaelScopic/dotfiles#installation-guide)
-  - [Install using the wiki](https://github.com/michaelScopic/dotfiles#install-using-the-wiki)
   - [Install using scripts](https://github.com/michaelScopic/dotfiles#install-using-the-provided-script)
 - [Credits](https://github.com/michaelScopic/dotfiles#credits)
 
@@ -102,21 +101,6 @@ Shell script features:
 More coming soon...hopefully.
 
 ## Installation guide
-
-### Install using the wiki
-
-First, clone the repository:
-
-```sh
-# Clone the repo
-git clone https://github.com/michaelScopic/dotfiles
-
-cd dotfiles
-```
-
-Then look at the [wiki](https://github.com/michaelScopic/dotfiles/wiki) for copying configs.
-
-- Note: The wiki is really really out of date, sorry.
 
 ### Install using the provided script
 
