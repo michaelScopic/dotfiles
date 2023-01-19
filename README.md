@@ -43,19 +43,23 @@ Shell script features:
 - [ ] MacOS support _<- I won't be able to do this as I don't use a Mac, so a PR is appreciated_
   - [ ] Add MacOS support/dependencies in `scripts/dependencies.sh`
 - [x] Make overwriting function in `deploy.sh` interactive
-- [ ] Add fonts
+- [x] Add fonts
   - [ ] Auotmate installing fonts in `deploy.sh`
+- [x] `shell-install` _<- Successor to `deploy.sh`_
+- [ ] Remove `deploy.sh.bak`
+- [ ] Remove everything in `scripts/`
 
 ## Progress
 
 ### Scripts
 
-- [ ] `scripts/fonts.sh` _<- Installs fonts_
-- [x] `scripts/info.sh` _<- Prints info about the system it's running on_
-- [x] `scripts/init.sh` _<- Initalizer script_
-- [x] `scripts/pluginInstall.sh` _<- Installs ZSH plugins, optionally calls `dependencies.sh`_
-- [x] `scripts/dependencies.sh` _<- Installs dependencies (on supported distros)_
-- [ ] `deploy.sh` _<- Automates everything, calls the above scripts_
+- [x] `scripts/fonts.sh` _<- Installs fonts (DEPRECATED)_
+- [x] `scripts/info.sh` _<- Prints info about the system it's running on (DEPRECATED)_
+- [x] `scripts/init.sh` _<- Initalizer script (DEPRECATED)_
+- [x] `scripts/pluginInstall.sh` _<- Installs ZSH plugins, optionally calls `dependencies.sh` (DEPRECATED)_
+- [x] `scripts/dependencies.sh` _<- Installs dependencies on supported distros (DEPRECATED)_
+- [x] `deploy.sh` _<- DEPRECATED, please only use this script if `shell-install` doesn't work properly_
+- [x] `shell-install` _<- Automates installing shell related configs_
 
 ### Preview pics
 
@@ -73,7 +77,6 @@ Shell script features:
 
 - [x] `config/starship/rounded.toml`
 - [x] `config/starship/plain-text-symbols.toml`
-- [ ] My own prompt _<- (it's a skid at best, I have no clue what I'm doing)_
 - [x] `README.md`
 
 ### `config/neofetch/`
@@ -129,7 +132,10 @@ Look at the possible agruments to use in the script by running:
 - (cd into the dotfiles directory if you aren't already there)
 
 ```sh
-./deploy.sh help
+./shell-install help
+
+# Not putting in an argument will do the same
+./shell-install
 ```
 
 You can use these following arguments with this script: `all`, `plugins`, `backup`, or `overwrite`.
@@ -137,7 +143,7 @@ You can use these following arguments with this script: `all`, `plugins`, `backu
 So if you want to run all of them, just do:
 
 ```sh
-./deploy.sh all
+./shell-install all
 ```
 
 If you don't want to run this script and only copy what you want, then just browse `config/` and/or `zsh/` and do what you want from there.
