@@ -8,12 +8,9 @@
 # Written by: michaelScopic (https://github.com/michaelScopic)
 # Credits: ArchLabs Linux (https://archlabslinux.org)
 
-<<<<<<< HEAD
 # Written by: michaelScopic (https://github.com/michaelScopic)
 # Credits: ArchLabs Linux (https://archlabslinux.org)
 
-=======
->>>>>>> testing
 # - Change $PATH if you need to -
 #export PATH=</path/to/bin/>:$PATH
 
@@ -25,7 +22,7 @@ fi
 # - Export enviornment vars if needed -
 #export VIEWER=nvim
 #export EDITOR=nvim
-export BAT_THEME="Nord"
+export BAT_THEME="base16"
 
 # - Set vars for ZSH config dirs -
 zshConfig="$HOME/.zsh-stuff"
