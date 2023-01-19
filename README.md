@@ -138,7 +138,7 @@ Look at the possible agruments to use in the script by running:
 ./shell-install
 ```
 
-You can use these following arguments with this script: `all`, `plugins`, `backup`, or `overwrite`.
+You can use these following arguments with this script: `all`, `zsh`, `backup`, `fonts`, or `overwrite`.
 
 So if you want to run all of them, just do:
 
