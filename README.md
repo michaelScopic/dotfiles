@@ -95,6 +95,7 @@ Shell script features:
 
 ### `zsh/`
 
+- [x] `zsh-stuff/`
 - [x] `ArchLabs_zshrc`
 - [x] `zshrc`
 
