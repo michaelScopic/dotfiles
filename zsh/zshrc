@@ -4,16 +4,22 @@
 #   	     _   / /\__ \ | | | | | (__ 
 #           (_) /___|___/_| |_|_|  \___|
 #
-
+#
 # Written by: michaelScopic (https://github.com/michaelScopic)
 # Credits: ArchLabs Linux (https://archlabslinux.org)
 
+<<<<<<< HEAD
+# Written by: michaelScopic (https://github.com/michaelScopic)
+# Credits: ArchLabs Linux (https://archlabslinux.org)
+
+=======
+>>>>>>> testing
 # - Change $PATH if you need to -
 #export PATH=</path/to/bin/>:$PATH
 
 # - Check if shell is interactive -
 if [[ $- != *i* ]]; then
-	rereturn
+	return
 fi
 
 # - Export enviornment vars if needed -

@@ -67,14 +67,16 @@ fi
 # --- Create the zsh config dir ---
 echo -e "
 #################################
-# Creating a directory for ZSH  #
-# configs in: ~/.zsh-stuff/ ... #
+#${yellow} Creating a directory for ZSH  ${reset}#
+#${yellow} configs in: ${purple}~/.zsh-stuff/${yellow} ... ${reset}#
 #################################"
 
-mkdir -vp ~/.zsh-stuff/plugins/
-mkdir -v ~/.zsh-stuff/dist-aliases/
+if [ -d "$HOME/.zsh-stuff/" ]; then
+    # If '~/.zsh-stuff' doesnt exist, create it
+    mkdir -vp ~/.zsh-stuff/{plugins,dist-aliases}
+fi
 
-echo -e "${greenbg}Done. Going to install plugins...${reset}"
+echo -e "${green}Done. Going to install plugins...${reset}"
 
 # --- Install plugins ---
 echo -e "
@@ -91,16 +93,20 @@ sleep 2
 # -- Clone plugin repos --
 
 # autosuggestions
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh-stuff/plugins/zsh-autosuggestions 2>/dev/null
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh-stuff/plugins/zsh-autosuggestions 2>/dev/null && \
+echo -e "${blue}Finished installing autosuggestions...${reset}"
 
 # syntax highlighting
-git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.zsh-stuff/plugins/fsh 2>/dev/null
+git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.zsh-stuff/plugins/fsh 2>/dev/null && \
+echo -e "${blue}Finished installing syntax highlighting...${reset}"
 
 # Fuzzy tab
-git clone https://github.com/Aloxaf/fzf-tab ~/.zsh-stuff/plugins/fzf-tab 2>/dev/null
+git clone https://github.com/Aloxaf/fzf-tab ~/.zsh-stuff/plugins/fzf-tab 2>/dev/null && \
+echo -e "${blue}Finished installing fuzzy tab completion...${reset}"
 
 # fish -like cd
-git clone https://github.com/changyuheng/zsh-interactive-cd.git ~/.zsh-stuff/plugins/zsh-interactive-cd/ 2>/dev/null
+git clone https://github.com/changyuheng/zsh-interactive-cd.git ~/.zsh-stuff/plugins/zsh-interactive-cd/ 2>/dev/null && \
+echo -e "${blue}Finished installing fish cd...${reset}"
 
 echo -e "${greenbg}Finished installing plugins...${reset}"
 
@@ -119,18 +125,22 @@ echo -e "
 read -rp "Overwrite? [Y/n]: " zshOverwrite
 
 if [ "${zshOverwrite,,}" == "y" ] || [ "${zshOverwrite}" = "" ]; then
-    # make a copy of user's zshrc and rename it as '.zshrc.bak'
-
-    mv -v "$HOME"/.zshrc "$HOME"/.zshrc.bak 2>/dev/null
-    # copy the zshrc from this directory to home as '.zshrc'
-
-    cp -v zsh/zshrc "$HOME"/.zshrc
+    # Make a copy of user's zshrc and rename it as '.zshrc.bak'
+    cp -v --backup=t "$HOME"/.zshrc "$HOME"/.zshrc.bak 3>/dev/null
     
-    cp -vr zsh/zsh-stuff/* "$HOME"/.zsh-stuff/
+    # Copy the zshrc from this directory to home as '.zshrc'
+    cp -v zsh/zshrc "$HOME"/.zshrc
+
+    # Backup .zsh-stuff/ if exists
+    cp -v --backup=t "$HOME"/.zsh-stuff/* "$HOME"/.zsh-stuff.bak/ 2>/dev/null
+    
+    # Copy zsh-stuff/ to ~
+    cp -vr zsh/zsh-stuff/* "$HOME"/.zsh-stuff/ 
+
     echo -e "${greenbg}Done!${reset}"
 
 else
-    # skip overwriting zshrc and keep user's current one
+    # Skip overwriting zshrc and keep user's current one
 
     echo -e "${redbg}Ok, ${bold}not${reset}${redbg} overwriting.${reset}"
 
@@ -145,11 +155,11 @@ ${red}(say 'n' if you already have Starship installed)${reset}"
 read -rp "Install starship? [Y/n]: " install_starship
 
 if [ "${install_starship,,}" == "y" ] || [ "${install_starship}" == "" ]; then
-    # if user pressed enter or 'y', we will install starship
+    # If user pressed enter or 'y', we will install starship
 
     echo -e "${green}Ok. Installing Starship prompt...${reset}"
 
-    # offical install script from https://starship.rs , this is safe.
+    # Offical install script from https://starship.rs , this is safe.
     curl -sS https://starship.rs/install.sh | sh
 
 else

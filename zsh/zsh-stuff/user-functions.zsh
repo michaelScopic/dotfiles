@@ -54,6 +54,6 @@ extract() {
     else
         echo "'$1': Not a valid file."
     fi
- }
+}
 
 
