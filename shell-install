@@ -78,7 +78,7 @@ function info() {
 function dependencies() {
     if [[ $OSTYPE == "linux-gnu" ]]; then
         if command -v apt-get >/dev/null; then
-            echo "Found Debian/Ubuntu."
+            echo -e "${green}Found Debian/Ubuntu.${reset}"
             sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa unzip
             # - 'rsync' isn't installing when put in the above line, installing it seperately
             sudo apt-get install -y rsync
@@ -95,26 +95,31 @@ function dependencies() {
             echo -e "${greenbg}Done installing dependencies!${reset} \n"
 
         elif command -v pacman >/dev/null; then
-            echo "Found Arch Linux."
+            echo -e "${reset}Found Arch Linux.${reset}"
             sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync unzip
             echo -e "${greenbg}Done installing dependencies!${reset} \n"
 
         elif command -v zypper >/dev/null; then
-            echo "Found openSUSE."
+            echo -e "${green}Found openSUSE.${reset}"
             sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
             echo -e "${greenbg}Done installing dependencies!${reset}"
 
         elif command -v dnf >/dev/null; then
-            echo "Found RHEL."
+            echo -e "${green}Found RHEL.${reset}"
             sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip
             # Install starship
             curl -sS https://starship.rs/install.sh | sh
             echo -e "${greenbg}Done installing dependencies!${reset}"
 
         elif command -v xbps-install >/dev/null; then
-            echo "Found Void Linux."
+            echo -e "${green}Found Void Linux.${reset}"
             sudo xbps-install -Suy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
             echo -e "${greenbg}Done installing dependencies!${reset}"
+        
+        elif command -v nix-env >/dev/null; then
+            echo -e "${green}Found NixOS.${reset}"
+            sudo nix-env -i neovim kitty htop neofetch-unstable zsh curl wget git fzf exa lsd starship rsync unzip
+            echo -e "${green}Done installing dependencies!${reset}"
 
         else
             echo "Couldn't detect your package manager. Unable to install packages."
