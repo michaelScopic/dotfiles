@@ -104,7 +104,7 @@ function dependencies() {
     msg_info "git kitty htop neofetch zsh curl wget fzf exa unzip vim rsync lsd \n"
     sleep 2
 
-    if [[ $OSTYPE == "linux-gnu" ]] && [[ $MACHTYPE == "x86_64-pc-linux-gnu" ]]; then
+    if [[ $(uname -s) == "Linux" ]] && [[ $(uname -m) == "x86_64" ]]; then
         if command -v apt-get >/dev/null; then
             msg_info "Found Debian/Ubuntu."
             sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim 
