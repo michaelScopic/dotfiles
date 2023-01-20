@@ -11,11 +11,7 @@
 function init() {
     echo -e "--- Initalizing... ---"
 
-    # Source /etc/os-release
-    . /etc/os-release 
-
     # - Set colors -
-    echo -e "- Setting colors... - "
     # Normal text
     reset='\e[0m'
     # Bold text
@@ -38,20 +34,47 @@ function init() {
     # Cyan
     cyan='\e[36m'
     cyanbg='\e[46m'
-    echo -e "${cyan}- Done setting colors. -${reset}"
+
+    # - Set 'info', 'error', and 'success' message functions -
+    msg_info() {
+        echo -e "${yellow}${bold}[INFO]${reset} $@ ${reset}"
+    }
+
+    msg_error() {
+        echo -e "${red}${bold}[ERROR]${reset} $@ ${reset}"
+    }
+
+    msg_success() {
+        echo -e "${green}${bold}[SUCCESS]${reset} $@"
+    }
+    
+    msg_success "Done setting colors and message functions."
+
+    # - Source /etc/os-release -
+    if [[ -f /etc/os-release ]]; then
+        . /etc/os-release
+        msg_success "Sourced '${cyan}/etc/os-release${reset}'."
+    else
+        msg_error "Could not find '${cyan}/etc/os-release${reset}'."
+        msg_error "Unable to source '${cyan}/etc/os-release${reset}'."
+    fi
 
     # - Store user's current dir as a var -
     thisDir=$(pwd)
-    buildDir=$HOME/.build_tmp
-    echo -e "${purple}${bold}Current directory:${reset} $thisDir"
+    buildDir="$HOME/.build_tmp"
+    dotfilesLoc=$(realpath "$0" | rev | cut -d '/' -f 2- | rev)
+    backup_format=$(date +%F_%I-%M-%S-%p)
 
-    dotfilesLoc="$(realpath "$0" | rev | cut -d '/' -f 2- | rev)"
-    echo -e "${purple}${bold}Dotfiles directory:${reset} $dotfilesLoc"
+    msg_info "Current directory: ${cyan}$thisDir${reset}"
+    msg_info "Dotfiles directory: ${cyan}$dotfilesLoc${reset}"
+    msg_info "Backup format: ${cyan}$backup_format${reset}"
+
+    msg_info "A temporary directory will be made in '${cyan}$buildDir${reset}' if needed."
+
     # - Finish up -
-    echo -e "${green}${bold}--- Done initalizing. ---${reset} \n"
+    msg_success "Done initallizing! \n"
 
 }
-
 
 # --- Function for printing info ---
 function info() {
@@ -76,57 +99,95 @@ function info() {
 
 # --- Install dependencies ---
 function dependencies() {
-    if [[ $OSTYPE == "linux-gnu" ]]; then
+    msg_info "Installing dependencies for ZSH."
+    msg_info "What will be installed:"
+    msg_info "git kitty htop neofetch zsh curl wget fzf exa unzip vim rsync lsd \n"
+    sleep 2
+
+    if [[ $OSTYPE == "linux-gnu" ]] && [[ $MACHTYPE == "x86_64-pc-linux-gnu" ]]; then
         if command -v apt-get >/dev/null; then
-            echo -e "${green}Found Debian/Ubuntu.${reset}"
-            sudo apt-get install -y git kitty htop neofetch zsh curl wget htop fzf exa unzip
-            # - 'rsync' isn't installing when put in the above line, installing it seperately
-            sudo apt-get install -y rsync
-            # Installing lsd
-            mkdir "${buildDir}"
-            cd "${buildDir}" || exit 1
+            msg_info "Found Debian/Ubuntu."
+            sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim 
+            ## 'rsync' isn't installing when put in the above line, installing it seperately
+            sudo apt-get install -y rsync 
+
+            # Installing lsd/exa
+            msg_info "Making a temporary build directory..."
+            mkdir "$buildDir"
+            cd "$buildDir" 
             # Get the lsd .deb file
-            wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null &&
-            # Install the .deb file
-            sudo dpkg -i lsd_0.23.1_amd64.deb && \
-            cd ${repoDir}
+            wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null
+            wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null && \
+                # Install the .deb files
+                sudo dpkg -i ./*.deb &>/dev/null && \
+                cd "$repoDir"
+                msg_info "Removing temporary build directory..."
+                rm -vrf "${buildDir}"
+
             # Installing starship
             curl -sS https://starship.rs/install.sh | sh
-            echo -e "${greenbg}Done installing dependencies!${reset} \n"
+            msg_success "Done installing dependencies!"
 
         elif command -v pacman >/dev/null; then
-            echo -e "${reset}Found Arch Linux.${reset}"
-            sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync unzip
-            echo -e "${greenbg}Done installing dependencies!${reset} \n"
+            msg_info "Found Arch Linux."
+            sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync unzip vim
+            msg_success "Done installing dependencies!"
 
         elif command -v zypper >/dev/null; then
-            echo -e "${green}Found openSUSE.${reset}"
-            sudo zypper -n install neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
-            echo -e "${greenbg}Done installing dependencies!${reset}"
+            msg_info "Found openSUSE."
+            sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip vim
+            msg_success "Done installing dependencies!"
 
         elif command -v dnf >/dev/null; then
-            echo -e "${green}Found RHEL.${reset}"
-            sudo dnf install -y neovim kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip
+            msg_info "Found RHEL/Fedora Linux."
+            sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip vim
             # Install starship
             curl -sS https://starship.rs/install.sh | sh
-            echo -e "${greenbg}Done installing dependencies!${reset}"
+            msg_success "Done installing dependencies!"
 
         elif command -v xbps-install >/dev/null; then
-            echo -e "${green}Found Void Linux.${reset}"
-            sudo xbps-install -Suy neovim kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip
-            echo -e "${greenbg}Done installing dependencies!${reset}"
-        
+            msg_info "Found Void Linux."
+            sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip vim
+            msg_success "Done installing dependencies!"
+
         elif command -v nix-env >/dev/null; then
-            echo -e "${green}Found NixOS.${reset}"
-            sudo nix-env -i neovim kitty htop neofetch-unstable zsh curl wget git fzf exa lsd starship rsync unzip
-            echo -e "${green}Done installing dependencies!${reset}"
+            msg_info "Found NixOS/nixpkgs."
+            sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa lsd starship rsync unzip vim
+            msg_success "Done installing dependencies!"
+            # - Show user how to change their default shell in NixOS -
+            msg_info "You might need to edit '${cyan}/etc/nixos/configuration.nix${reset}' and change your default shell to zsh."
+            msg_info " --- Example (/etc/nixos/configuration.nix) --- "
+            msg_info "users.users.alice = {"
+            msg_info "  isNormalUser = true;"
+            msg_info "  extraGroups = [ \"wheel\" ];"
+            msg_info "${green}  shell = pkgs.zsh; ${reset}"
+            msg_info "  packages = with pkgs; [ "
+            msg_info "  ];"
+            msg_info "};"
+            msg_info " ---------------------------------------------- "
+            sleep 3
 
         else
-            echo "Couldn't detect your package manager. Unable to install packages."
+            msg_error "Unable to detect your package manager!"
+            msg_error "You will need to install the dependencies yourself. \n"
+            msg_info "Supported package managers are:"
+            msg_info "'apt-get', 'pacman', 'zypper', 'dnf', 'xbps-install', and 'nix-env' \n"
+            msg_info "Message me on Discord (${purple}Michael_Scopic.zsh#0102${reset}) if you want to request adding support for another package manager."
+
+            sleep 2
+            return 1
+
         fi
-    
-    else 
-        echo "Your OS is not Linux! There is no support for BSD or Darwin hosts. Unable to install packages."
+
+    else
+        # If host is not Linux based and CPU is not x86_64, then print an error.
+        # People running BSD or Darwin hosts will encounter this.
+        msg_error "Detected OS is NOT Linux and CPU architecture is NOT x86_64 (amd64) either."
+        msg_error "There is no support for BSD or Darwin (MacOS) hosts."
+        msg_error "There is no support for ARM based computers (eg: aarch64/armv8*, armv7*, RISC, etc)."
+        msg_error "You will need to install the dependencies yourself."
+        sleep 3
+        return 1
     fi
 
 }
@@ -141,7 +202,7 @@ function install_fonts() {
         mkdir -v "$HOME/.fonts"
     fi
 
-    if [ ! "$(cp -rv fonts/* "$HOME/.fonts")" ]; then
+    if [ ! "$(cp -rv fonts/* $HOME/.fonts)" ]; then
         ## If copy failed, then tell user
         echo "Exit code: $?"
         echo -e "${red}${bold}--- Uh oh, copying fonts from '${reset}font/${red}${bold}' was not successful! ---${reset}"
@@ -153,29 +214,27 @@ function install_fonts() {
         fc-cache -rv
         echo -e "${green}--- Done. ---${reset} \n"
     fi
-
-
 }
 
 # --- ZSH function ---
 function install_zsh() {
 
     cd "$dotfilesLoc"
-    
-    echo -e "
-#################################
-#${yellow} Creating a directory for ZSH  ${reset}#
-#${yellow} configs in: ${purple}~/.zsh-stuff/${yellow} ... ${reset}#
-#################################"
 
-    if [ -d "$HOME/.zsh-stuff/" ]; then
+    echo -e "
+##################################
+#${yellow} Creating a directory for ZSH   ${reset}#
+#${yellow} configs in: ${purple}~/.config/zsh/${yellow} ... ${reset}#
+##################################"
+
+    if [ -d "$HOME/.config/zsh" ]; then
         # If '~/.zsh-stuff' doesnt exist, create it
-        mkdir -vp ~/.zsh-stuff/{plugins,dist-aliases}
+        mkdir -vp ~/.config/zsh/{plugins,dist-aliases}
     fi
 
     echo -e "${green}Done. Going to install plugins...${reset}"
 
-# --- Install plugins ---
+    # --- Install plugins ---
     echo -e "
 ###################################
 #${yellow} Plugins that will be installed:${reset} #
@@ -190,20 +249,20 @@ function install_zsh() {
     # -- Clone plugin repos --
 
     # autosuggestions
-    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh-stuff/plugins/zsh-autosuggestions 2>/dev/null && \
-    echo -e "${blue}Finished installing autosuggestions...${reset}"
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.config/zsh/plugins/zsh-autosuggestions 2>/dev/null &&
+        echo -e "${blue}Finished installing autosuggestions...${reset}"
 
     # syntax highlighting
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.zsh-stuff/plugins/fsh 2>/dev/null && \
-    echo -e "${blue}Finished installing syntax highlighting...${reset}"
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.config/zsh/plugins/fsh 2>/dev/null &&
+        echo -e "${blue}Finished installing syntax highlighting...${reset}"
 
     # Fuzzy tab
-    git clone https://github.com/Aloxaf/fzf-tab ~/.zsh-stuff/plugins/fzf-tab 2>/dev/null && \
-    echo -e "${blue}Finished installing fuzzy tab completion...${reset}"
+    git clone https://github.com/Aloxaf/fzf-tab ~/.config/zsh/plugins/fzf-tab 2>/dev/null &&
+        echo -e "${blue}Finished installing fuzzy tab completion...${reset}"
 
     # fish -like cd
-    git clone https://github.com/changyuheng/zsh-interactive-cd.git ~/.zsh-stuff/plugins/zsh-interactive-cd/ 2>/dev/null && \
-    echo -e "${blue}Finished installing fish cd...${reset}"
+    git clone https://github.com/changyuheng/zsh-interactive-cd.git ~/.config/zsh/plugins/zsh-interactive-cd/ 2>/dev/null &&
+        echo -e "${blue}Finished installing fish cd...${reset}"
 
     echo -e "${greenbg}Finished installing plugins...${reset}"
 
@@ -211,7 +270,7 @@ function install_zsh() {
 
     # --- Overwrite .zshrc ---
     # make a backup of user's .zshrc and place my .zshrc in their ~/.zshrc
-echo -e "
+    echo -e "
 ########################################
 # ${red}${bold}Do you want to overwrite your ${reset}       #
 # ${red}${bold}.zshrc with my zshrc?  ${reset}              #
@@ -223,24 +282,21 @@ echo -e "
 
     if [ "${zshOverwrite,,}" == "y" ] || [ "${zshOverwrite}" = "" ]; then
         # Make a copy of user's zshrc and rename it as '.zshrc.bak'
-        cp -v --backup=t "$HOME"/.zshrc "$HOME"/.zshrc.bak 3>/dev/null
-    
+        cp -v "$HOME/.zshrc" "$HOME/.zshrc-$backup_format.bak" 2>/dev/null
+
         # Copy the zshrc from this directory to home as '.zshrc'
-        cp -v zsh/zshrc "$HOME"/.zshrc
+        cp -v zsh/zshrc "$HOME/.zshrc"
 
-        # Backup .zsh-stuff/ if exists
-        cp -v --backup=t "$HOME"/.zsh-stuff/* "$HOME"/.zsh-stuff.bak/ 2>/dev/null
-    
-        # Copy zsh-stuff/ to ~
-        cp -vr zsh/zsh-stuff/* "$HOME"/.zsh-stuff/ 
+        # Backup .config/zsh/ if exists
+        mkdir -v "$HOME/.config/zsh-$backup_format.d.bak"
+        cp -v "$HOME/.config/zsh/*" "$HOME/.config/zsh-$backup_format.d.bak/" 2>/dev/null
 
+        # Copy zsh-stuff/ to ~/.config/zsh/
+        cp -vr zsh/zsh-stuff/* "$HOME/.config/zsh/"
         echo -e "${greenbg}Done!${reset}"
-
     else
         # Skip overwriting zshrc and keep user's current one
-
         echo -e "${redbg}Ok, ${bold}not${reset}${redbg} overwriting.${reset}"
-
     fi
 
     sleep 1
@@ -253,18 +309,13 @@ ${red}(say 'n' if you already have Starship installed)${reset}"
 
     if [ "${install_starship,,}" == "y" ] || [ "${install_starship}" == "" ]; then
         # If user pressed enter or 'y', we will install starship
-
         echo -e "${green}Ok. Installing Starship prompt...${reset}"
-
         # Offical install script from https://starship.rs , this is safe.
         curl -sS https://starship.rs/install.sh | sh
-
     else
-
         echo -e "${red}Ok. ${bold}Not${reset}${red} installing Starship. \n ${reset}"
-
     fi
-    
+
 }
 
 # --- Backup function ---
@@ -272,7 +323,6 @@ function backup() {
     echo -e "${cyan}Backing up configs... (htop, kitty, neofetch, starship)${reset}"
     echo -e "${yellow}* Note: 'rsync' is needed to backup kitty and neofetch. ${reset}"
 
-    backup_format=$(date +%F_%I-%M-%S-%p)
     # -- Backup htop config --
     echo -e "${blue}${bold}Attempting to backup htop... \n ${reset}"
     sleep 1
@@ -303,7 +353,7 @@ function backup() {
 
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -v "$HOME"/.config/kitty "$HOME"/.config/kitty/backups && \
-        rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME/.config/kitty/backups/$backup_format" && \
+        rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME/.config/kitty/backups/$backup_format" &&
             echo -e "${green}Success! Your current Kitty configs are in:${reset} ~/.config/kitty/backups/$backup_format \n"
 
         sleep 1
@@ -328,7 +378,7 @@ function backup() {
 
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -rv "$HOME/.config/neofetch" ~/.config/neofetch/backups/ && \
-        rsync -av --exclude='backups' "$HOME"/.config/neofetch/ "$HOME"/.config/neofetch/backups/$backup_format/ && \
+        rsync -av --exclude='backups' "$HOME"/.config/neofetch/ "$HOME"/.config/neofetch/backups/$backup_format/ &&
             echo -e "${green}Success! Your current neofetch configs are in:${reset} ~/.config/neofetch/backups/$backup_format \n"
 
         sleep 1
@@ -346,7 +396,7 @@ function backup() {
 
     if [ -f "$HOME"/.config/starship.toml ]; then
         ## If 'starship.toml' exists, back it up.
-        cp -v "$HOME"/.config/starship.toml "$HOME/.config/starship.toml.$backup_format.bak" && \
+        cp -v "$HOME"/.config/starship.toml "$HOME/.config/starship.toml.$backup_format.bak" &&
             echo -e "${green}Success! A backup of your current starship config is in:${reset} ~/.config/starship.toml.$backup_format.bak \n"
         sleep 1
     else
@@ -490,6 +540,12 @@ function usage() {
 
 # --- Read arguments passed ---
 case $1 in
+init)
+    # This just runs init() to test it initalizes correctly.
+    # This argument does nothing important, therefore is hidden from the normal user
+    init
+    ;;
+
 all)
     init
     info
@@ -527,7 +583,7 @@ backup)
 
 overwrite)
     init
-    info 
+    info
     overwrite
     ;;
 
