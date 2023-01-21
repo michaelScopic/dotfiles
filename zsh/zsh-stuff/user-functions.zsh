@@ -1,13 +1,32 @@
 # --- User functions ---
-cd() ## Automatically run 'ls' after you cd into a dir
-{
-	builtin cd "$@" && command lsd --color=auto -AF --group-directories-first
-	##						   ^^^^^^^^^^^^^^^^^^^^
-## Change 'lsd --color=auto -AF' to 'exa --color=auto -aF' OR 'ls  --color=auto -AF' if you don't want to use lsd
+
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
+#recomp_chadwm() {
+#     if [ -d "$HOME/.config/chadwm/chadwm" ]; then
+#         echo "--- Recompiling ChadWM... ---"
+#         cd "$HOME/.config/chadwm/chadwm/"
+#         rm -v config.h
+#         sudo make install 
+#         echo "Exit code: $?"
+#         echo "--- Done compiling ChadWM! ---"
+#         cd
+#     else
+#         echo "Could not find '~/.config/chadwm/chadwm/'. ABORTING!"
+#         return 1
+#     fi
+# }
+ 
+
+ cd() { ## Automatically run 'ls' after you cd into a dir
+
+	builtin cd "$@" && \
+        command lsd --color=auto -AF --group-directories-first
 }
 
-src() ## Recompile completion and then reload zsh
-{
+
+src() { ## Recompile completion and then reload zsh
+
     toload -U zrecompile
 	rm -rf "$compfile"*
 	compinit -u -d "$compfile"
@@ -15,8 +34,7 @@ src() ## Recompile completion and then reload zsh
 	exec zsh
 }
 
-extract()
-{
+extract() { 
     if [ -f $1 ] ; then
         case $1 in
             *.tar.bz2)    tar xvjf $1    ;;
@@ -37,4 +55,5 @@ extract()
         echo "'$1': Not a valid file."
     fi
 }
+
 

@@ -8,6 +8,9 @@
 # Written by: michaelScopic (https://github.com/michaelScopic)
 # Credits: ArchLabs Linux (https://archlabslinux.org)
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+# Credits: ArchLabs Linux (https://archlabslinux.org)
+
 # - Change $PATH if you need to -
 #export PATH=</path/to/bin/>:$PATH
 
@@ -30,8 +33,8 @@ zshPlugins="$HOME/.config/zsh/plugins"
 # --- Start sourcing files --- #
 ################################
 
-# - Source zsh internal settings -
-. "$zshConfig/zsh-bs.zsh"
+# - Source ZSH settings file -
+. "$zshConfig/zsh-settings.zsh"
 
 # - Source user functions -
 . "$zshConfig/user-functions.zsh"
@@ -46,7 +49,6 @@ zshPlugins="$HOME/.config/zsh/plugins"
 . "$zshPlugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
 
 # - Start prompt -
-## If you installed starship into another location, this won't work.
 if command -v starship >/dev/null; then
     eval "$(starship init zsh)"
 else
@@ -56,7 +58,7 @@ else
 fi
 
 # - Autostart -
-neofetch
+#neofetch
 #pfetch
 #xrdb -merge ~/.Xresources
 

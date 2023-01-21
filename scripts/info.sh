@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Written by: michaelScopic (https://github.com/michaelScopic)
+
 #* Script to print basic info about the machine it's running on
 #* Needs `init.sh` for color functionality (although colors aren't required)
 
