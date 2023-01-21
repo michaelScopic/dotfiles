@@ -49,7 +49,7 @@ function init() {
     msg_success() {
         echo -e "${green}${bold}[SUCCESS]${reset} $@ ${reset}"
     }
-    
+
     msg_note() {
         echo -e "${blue}${bold}[NOTE]${reset} $@ ${reset}"
     }
@@ -157,7 +157,7 @@ function dependencies() {
             msg_info "Found NixOS/nixpkgs."
             sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa lsd starship rsync unzip vim
             msg_success "Done installing dependencies!"
-            
+
             # - Show user how to change their default shell in NixOS -
             msg_note "You might need to edit '${cyan}/etc/nixos/configuration.nix${reset}' and change your default shell to zsh."
             msg_note " --- Example (/etc/nixos/configuration.nix) --- "
@@ -191,7 +191,7 @@ function dependencies() {
         msg_error "There is no support for Linux hosts that aren't x86_64 (amd64)."
         msg_error "You will need to install the dependencies yourself."
         sleep 3
-        
+
         return 1
     fi
 
@@ -219,8 +219,8 @@ function install_fonts() {
         # If copy was successful, then tell user then refresh font cache
         msg_success "Copied fonts! Reloading font cache..."
         msg_info "Running: '${purple}fc-cache -rv${reset}'"
-        fc-cache -rv && \
-        msg_success "Finished reloading font cache!"
+        fc-cache -rv &&
+            msg_success "Finished reloading font cache!"
     fi
 }
 
@@ -232,8 +232,8 @@ function install_zsh() {
     if [ -d "$HOME/.config/zsh" ]; then
         # If '~/.zsh-stuff' doesnt exist, create it
         msg_info "'${cyan}~/.config/zsh/${reset} does not exist. Fixing that."
-        mkdir -vp ~/.config/zsh/{plugins,dist-aliases} && \
-        msg_success "Done creating '${cyan}~/.config/zsh/${reset}'!"
+        mkdir -vp ~/.config/zsh/{plugins,dist-aliases} &&
+            msg_success "Done creating '${cyan}~/.config/zsh/${reset}'!"
     fi
 
     msg_info "Continuing to install ZSH plugins..."
@@ -286,7 +286,7 @@ function install_zsh() {
     if [ "${zshOverwrite,,}" == "y" ] || [ "${zshOverwrite}" = "" ]; then
         # If user answered yes (or pressed enter), run this
         msg_info "Answered 'yes'. Continuing..."
-        
+
         # Make a copy of user's zshrc and rename it as '.zshrc.bak'
         cp -v "$HOME/.zshrc" "$HOME/.zshrc-$backup_format.bak" 2>/dev/null
 
@@ -300,11 +300,11 @@ function install_zsh() {
         # Copy zsh-stuff/ to ~/.config/zsh/
         cp -vr zsh/zsh-stuff/* "$HOME/.config/zsh/"
         msg_success "Done copying ZSH configs!"
-        
+
     else
         # If user answered no, then skip overwriting zshrc
         msg_info "Answered 'no'. Skipping overwritting zsh."
-        
+
     fi
 
     sleep 1
@@ -332,8 +332,7 @@ function backup() {
     msg_info "Attempting to back up current configs..."
     msg_info "Trying to back up htop, neofetch, kitty, and starship configs, if possible."
     msg_note "rsync is needed to backup up kitty and neofetch. \n"
-    
-    
+
     # -- Backup htop config --
     msg_info "Attempting to backup htop..."
     sleep 1
@@ -350,7 +349,7 @@ function backup() {
         ## If htop config dir isn't found, skip the backup
         msg_error "Unable to find '${cyan}~/.config/htop/${reset}', cannot backup htop. \n"
         sleep 1
-        
+
     fi
 
     # -- Backup kitty config --
@@ -364,8 +363,8 @@ function backup() {
 
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -v "$HOME"/.config/kitty "$HOME"/.config/kitty/backups && \
-        rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME/.config/kitty/backups/$backup_format" && \
-        msg_success "A backup of kitty is in:${cyan} ~/.config/kitty/backups/$backup_format \n"
+        rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME/.config/kitty/backups/$backup_format" &&
+            msg_success "A backup of kitty is in:${cyan} ~/.config/kitty/backups/$backup_format \n"
 
         sleep 1
 
@@ -387,8 +386,8 @@ function backup() {
 
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -rv "$HOME/.config/neofetch" ~/.config/neofetch/backups/ && \
-        rsync -av --exclude='backups' "$HOME/.config/neofetch/" "$HOME/.config/neofetch/backups/$backup_format/" && \
-        msg_success "A backup of neofetch configs are in:${cyan} ~/.config/neofetch/backups/$backup_format \n"
+        rsync -av --exclude='backups' "$HOME/.config/neofetch/" "$HOME/.config/neofetch/backups/$backup_format/" &&
+            msg_success "A backup of neofetch configs are in:${cyan} ~/.config/neofetch/backups/$backup_format \n"
 
         sleep 1
     else
@@ -404,8 +403,8 @@ function backup() {
 
     if [ -f "$HOME"/.config/starship.toml ]; then
         ## If 'starship.toml' exists, back it up.
-        cp -v "$HOME"/.config/starship.toml "$HOME/.config/starship.toml.$backup_format.bak" && \
-        msg_success "A backup of your current starship config is in:${cyan} ~/.config/starship.toml.$backup_format.bak \n"
+        cp -v "$HOME"/.config/starship.toml "$HOME/.config/starship.toml.$backup_format.bak" &&
+            msg_success "A backup of your current starship config is in:${cyan} ~/.config/starship.toml.$backup_format.bak \n"
         sleep 1
     else
         ## If 'starship.toml' doesn't exist, skip it
@@ -438,18 +437,18 @@ function overwrite() {
 
     if [ "${config_overwrite,,}" == "y" ] || [ "${config_overwrite}" = "" ]; then
 
-        cd "$dotfilesLoc/config/" || \
-        # If for some reason we can't enter back into the dotfiles config folder, then abort.
-        msg_error "FATAL! Could not enter '${cyan}$dotfilesLoc/config/${reset}'. ABORTING!" && \
-        exit 1 
+        cd "$dotfilesLoc/config/" ||
+            # If for some reason we can't enter back into the dotfiles config folder, then abort.
+            msg_error "FATAL! Could not enter '${cyan}$dotfilesLoc/config/${reset}'. ABORTING!" &&
+            exit 1
 
         ## Copy htoprc
         read -rp "Do you want to overwrite htop config? [Y/n]: " htopOverwrite
 
         if [ "${htopOverwrite,,}" == "y" ] || [ "${htopOverwrite}" = "" ]; then
             mkdir -p "$HOME"/.config/htop/ 2>/dev/null
-            cp -v htop/htoprc "$HOME"/.config/htop/htoprc && \
-            msg_success "Copied over htop config."
+            cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
+                msg_success "Copied over htop config."
             sleep 1
         else
             msg_info "Skipping overwriting htop."
@@ -460,8 +459,8 @@ function overwrite() {
 
         if [ "${kittyOverwrite,,}" == "y" ] || [ "${kittyOverwrite}" = "" ]; then
             mkdir -p "$HOME"/.config/kitty/ 2>/dev/null
-            cp -rv kitty/* "$HOME"/.config/kitty/ && \
-            msg_success "Copied over kitty configs."
+            cp -rv kitty/* "$HOME"/.config/kitty/ &&
+                msg_success "Copied over kitty configs."
             sleep 1
         else
             msg_info "Skipping overwriting kitty configs."
@@ -472,8 +471,8 @@ function overwrite() {
 
         if [ "${neofetchOverwrite,,}" == "y" ] || [ "${neofetchOverwrite}" = "" ]; then
             mkdir -p "$HOME"/.config/neofetch/ 2>/dev/null
-            cp -v neofetch/config.conf "$HOME"/.config/neofetch/ && \
-            msg_success "Copied over neofetch configs."
+            cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
+                msg_success "Copied over neofetch configs."
             sleep 1
         else
             msg_info "Skipping overwriting neofetch configs."
@@ -484,7 +483,7 @@ function overwrite() {
         msg_note "All of these prompt presets will need a patched nerd font (except for the 'plain' preset)."
         msg_note "Running '${purple}./shell-install.sh fonts${reset}' or '${purple}./shell-install.sh all${reset}' will install the nerd fonts for you."
         msg_note "Alternatively, you can install your own fonts manually by visiting: https://nerdfonts.com/ \n"
-        
+
         read -rp "What starship prompt do you want to use? [default/rounded/rxyhn/plain/skip] (default: skip): " starshipPrompt
 
         case ${starshipPrompt,,} in
