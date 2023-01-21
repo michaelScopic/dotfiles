@@ -3,7 +3,6 @@
 #* Script to do everything
 
 # shellcheck disable=SC2145
-# 
 
 # ! Requirements: bash, rsync, coreutils
 
