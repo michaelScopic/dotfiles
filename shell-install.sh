@@ -4,10 +4,7 @@
 
 # shellcheck disable=SC2145
 
-# ! Requirements: bash, rsync, coreutils
-
-# TODO: put everything from '.../scripts/' into here
-# TODO: Make everything a function
+#* Requirements: bash, rsync, coreutils
 
 # --- Initalization function ---
 function init() {

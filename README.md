@@ -154,5 +154,3 @@ Rounded starship prompt (`config/starship/rounded.toml`) is from [Syndrizzle's d
 Plain text starship prompt (`config/starship/plain-text-symbols.toml`) are taken from [Starship's offical prompt presets](https://starship.rs).
 
 All fonts in `fonts/` are from [Nerdfonts.com](https://www.nerdfonts.com).
-
-
