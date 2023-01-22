@@ -14,7 +14,8 @@ function init() {
     # Normal text
     reset='\e[0m'
     # Bold text
-    bold='\e[1m'
+    bold='\e[1m
+    '
     # Red
     red='\e[31m'
     redbg='\e[41m'
@@ -503,7 +504,7 @@ function overwrite() {
 
         rxyhn)
             msg_info "Using rxyhn's Starship prompt. Nice."
-            cp starship/nord-starship.toml "$HOME"/.config/starship.toml
+            cp starship/rxyhn.toml "$HOME"/.config/starship.toml
             ;;
 
         skip | *)
