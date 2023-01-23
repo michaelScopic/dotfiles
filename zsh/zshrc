@@ -54,13 +54,13 @@ if command -v starship >/dev/null; then
     # If it is, then initalize starship prompt
     eval "$(starship init zsh)"
 else
-    # If 'starship' isn't a command, fallback to a builtin prompt
-    autoload -U promptinit
-    promptinit
-    prompt bart
+    # If 'starship' isn't a command, fall back to a builtin prompt
+    autoload -U promptinit && promptinit    # Load/initalize prompt
+    prompt bart 
 fi
 
 # - Autostart -
+## Uncomment stuff you want to start automatically, like merging .Xresources
 #neofetch
 #pfetch
 #xrdb -merge ~/.Xresources

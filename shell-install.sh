@@ -14,8 +14,7 @@ function init() {
     # Normal text
     reset='\e[0m'
     # Bold text
-    bold='\e[1m
-    '
+    bold='\e[1m'
     # Red
     red='\e[31m'
     redbg='\e[41m'
@@ -57,7 +56,7 @@ function init() {
     # - Source /etc/os-release -
     if [[ -f /etc/os-release ]]; then
         . /etc/os-release
-        msg_success "Sourced '${cyan}/etc/os-release${reset}'."
+        msg_success "Found and sourced '${cyan}/etc/os-release${reset}'."
     else
         msg_error "Could not find '${cyan}/etc/os-release${reset}'."
         msg_error "Unable to source '${cyan}/etc/os-release${reset}'."
@@ -78,6 +77,7 @@ function init() {
     # - Finish up -
     msg_success "Done initallizing! \n"
 
+    return 
 }
 
 # --- Function for printing info ---
@@ -106,55 +106,68 @@ function dependencies() {
     sleep 2
 
     if [[ $(uname -s) == "Linux" ]] && [[ $(uname -m) == "x86_64" ]]; then
+    # Test if host is running Linux AND the cpu is x86_64 (amd64) based 
+
         if command -v apt-get >/dev/null; then
-            msg_info "Found Debian/Ubuntu."
+        # Test if package manager is 'apt-get', for Debian/Ubuntu distros
+            msg_info "Found Debian/Ubuntu.\n"
             sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim
             ## 'rsync' isn't installing when put in the above line, installing it seperately
             sudo apt-get install -y rsync
 
             # Installing lsd/exa
+            ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
+            ## Downside of doing it this way is that the .deb files might not be the most recent ones
             msg_info "Making a temporary build directory..."
             mkdir "$buildDir"
             cd "$buildDir"
-            # Get the lsd .deb file
+            # Get the lsd and exa .deb files
             wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null
             wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null &&
                 # Install the .deb files
                 sudo dpkg -i ./*.deb &>/dev/null &&
                 cd "$repoDir"
-            msg_info "Removing temporary build directory..."
+            msg_info "Done. Removing temporary build directory..."
             rm -vrf "${buildDir}"
 
             # Installing starship
+            msg_info "Installing Starship using the offical installer script..."
             curl -sS https://starship.rs/install.sh | sh
-            msg_success "Done installing dependencies!"
+            msg_success "Done installing dependencies! \n"
 
         elif command -v pacman >/dev/null; then
-            msg_info "Found Arch Linux."
+        # Test if 'pacman' is the package manager, for Arch based distros
+            msg_info "Found Arch Linux.\n"
             sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync unzip vim
-            msg_success "Done installing dependencies!"
+            msg_success "Done installing dependencies! \n"
 
         elif command -v zypper >/dev/null; then
-            msg_info "Found openSUSE."
+        # Test if 'zypper' if the pacakge manager, for openSUSE distros
+        ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
+            msg_info "Found openSUSE.\n"
             sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip vim
-            msg_success "Done installing dependencies!"
+            msg_success "Done installing dependencies! \n"
 
         elif command -v dnf >/dev/null; then
-            msg_info "Found RHEL/Fedora Linux."
+        # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
+        ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
+            msg_info "Found RHEL/Fedora Linux.\n"
             sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip vim
             # Install starship
             curl -sS https://starship.rs/install.sh | sh
-            msg_success "Done installing dependencies!"
+            msg_success "Done installing dependencies! \n"
 
         elif command -v xbps-install >/dev/null; then
-            msg_info "Found Void Linux."
+        # Test if 'xbps-install' is present, for Void Linux
+            msg_info "Found Void Linux.\n"
             sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip vim
-            msg_success "Done installing dependencies!"
+            msg_success "Done installing dependencies! \n"
 
         elif command -v nix-env >/dev/null; then
-            msg_info "Found NixOS/nixpkgs."
+        # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
+            msg_info "Found NixOS/nixpkgs.\n"
             sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa lsd starship rsync unzip vim
-            msg_success "Done installing dependencies!"
+            msg_success "Done installing dependencies! \n"
 
             # - Show user how to change their default shell in NixOS -
             msg_note "You might need to edit '${cyan}/etc/nixos/configuration.nix${reset}' and change your default shell to zsh."
@@ -166,15 +179,20 @@ function dependencies() {
             msg_note "  packages = with pkgs; [ "
             msg_note "  ];"
             msg_note "};"
-            msg_note " ---------------------------------------------- "
+            msg_note " ---------------------------------------------- \n"
             sleep 3
 
         else
+        # If above package managers aren't present, then give an error
             msg_error "Unable to detect your package manager!"
             msg_error "You will need to install the dependencies yourself. \n"
             msg_info "Supported package managers are:"
             msg_info "'apt-get', 'pacman', 'zypper', 'dnf', 'xbps-install', and 'nix-env' \n"
-            msg_note "Message me on Discord (${purple}Michael_Scopic.zsh#0102${reset}) if you want to request adding support for another package manager."
+            msg_note "Message me on Discord (${purple}Michael_Scopic.zsh#0102${reset}) if you want to request adding support for another package manager.\n"
+            msg_info "Required packages are:"
+            msg_info "zsh curl wget git fzf exa lsd rsync unzip\n"
+            msg_info "Optional packages:"
+            msg_info "neofetch kitty vim \n"
 
             sleep 2
             return 1
@@ -187,7 +205,7 @@ function dependencies() {
         msg_error "Detected OS is ${bold}not${reset} x86_64 Linux."
         msg_error "There is no support for BSD or Darwin (MacOS) hosts."
         msg_error "There is no support for Linux hosts that aren't x86_64 (amd64)."
-        msg_error "You will need to install the dependencies yourself."
+        msg_error "You will need to install the dependencies yourself. \n"
         sleep 3
 
         return 1
@@ -209,16 +227,16 @@ function install_fonts() {
     if [ ! "$(cp -rv fonts/* "$HOME/.fonts")" ]; then
         # If copy failed, then tell user
         msg_error "Exit code: $?"
-        ## ^ Shellcheck will warn about reffering to "$?", this is fine.
+        ## ^ Shellcheck will warn about refering to "$?", this is fine.
         msg_error "Could not copy fonts to '${cyan}~/.fonts/${reset}'."
-        msg_error "Command that failed: '${blue}cp -rv fonts/* $HOME/.fonts${reset}'"
+        msg_error "Command that failed: '${blue}cp -rv fonts/* $HOME/.fonts${reset}' \n"
         return 1
     else
         # If copy was successful, then tell user then refresh font cache
         msg_success "Copied fonts! Reloading font cache..."
         msg_info "Running: '${purple}fc-cache -rv${reset}'"
         fc-cache -rv &&
-            msg_success "Finished reloading font cache!"
+            msg_success "Finished reloading font cache! \n"
     fi
 }
 
@@ -273,11 +291,11 @@ function install_zsh() {
     # make a backup of user's .zshrc and place my .zshrc in their ~/.zshrc
     echo -e "
 ########################################
-# ${red}${bold}Do you want to overwrite your ${reset}       #
+# ${red}${bold}Do you want to overwrite your${reset}        #
 # ${red}${bold}.zshrc with my zshrc?  ${reset}              #
 # ${cyan}I will make a backup of your current ${reset}#
 # ${cyan}one called${purple} '~/.zshrc.bak' ${reset}           #
-########################################"
+######################################## "
 
     read -rp "Overwrite? [Y/n]: " zshOverwrite
 
@@ -297,7 +315,7 @@ function install_zsh() {
 
         # Copy zsh-stuff/ to ~/.config/zsh/
         cp -vr zsh/zsh-stuff/* "$HOME/.config/zsh/"
-        msg_success "Done copying ZSH configs!"
+        msg_success "Done copying ZSH configs!\n"
 
     else
         # If user answered no, then skip overwriting zshrc
@@ -420,25 +438,22 @@ function backup() {
 # --- Overwrite function ---
 function overwrite() {
     echo -e "
-    ###########################
-    #${red} I am about to overwrite${reset} #
-    #${red} your configs.${reset}           #
-    #                         #
-    #${purple} Configs affected:${reset}       #
-    #${blue}  htop ${reset}                  #
-    #${blue}  neofetch ${reset}              #
-    #${blue}  kitty ${reset}                 #
-    #${blue}  starship ${reset}              #
-    ###########################\n"
+###########################
+#${red} I am about to overwrite${reset} #
+#${red} your configs.${reset}           #
+#                         #
+#${purple} Configs affected:${reset}       #
+#${blue}  htop ${reset}                  #
+#${blue}  neofetch ${reset}              #
+#${blue}  kitty ${reset}                 #
+#${blue}  starship ${reset}              #
+###########################\n"
 
     read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " config_overwrite
 
     if [ "${config_overwrite,,}" == "y" ] || [ "${config_overwrite}" = "" ]; then
 
-        cd "$dotfilesLoc/config/" ||
-            # If for some reason we can't enter back into the dotfiles config folder, then abort.
-            msg_error "FATAL! Could not enter '${cyan}$dotfilesLoc/config/${reset}'. ABORTING!" &&
-            exit 1
+        cd "$dotfilesLoc/config/"
 
         ## Copy htoprc
         read -rp "Do you want to overwrite htop config? [Y/n]: " htopOverwrite
@@ -446,10 +461,10 @@ function overwrite() {
         if [ "${htopOverwrite,,}" == "y" ] || [ "${htopOverwrite}" = "" ]; then
             mkdir -p "$HOME"/.config/htop/ 2>/dev/null
             cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
-                msg_success "Copied over htop config."
+                msg_success "Copied over htop config. \n"
             sleep 1
         else
-            msg_info "Skipping overwriting htop."
+            msg_info "Skipping overwriting htop. \n"
         fi
 
         ## Copy kitty config
@@ -458,10 +473,10 @@ function overwrite() {
         if [ "${kittyOverwrite,,}" == "y" ] || [ "${kittyOverwrite}" = "" ]; then
             mkdir -p "$HOME"/.config/kitty/ 2>/dev/null
             cp -rv kitty/* "$HOME"/.config/kitty/ &&
-                msg_success "Copied over kitty configs."
+                msg_success "Copied over kitty configs. \n"
             sleep 1
         else
-            msg_info "Skipping overwriting kitty configs."
+            msg_info "Skipping overwriting kitty configs. \n"
         fi
 
         ## Copy neofetch
@@ -470,17 +485,17 @@ function overwrite() {
         if [ "${neofetchOverwrite,,}" == "y" ] || [ "${neofetchOverwrite}" = "" ]; then
             mkdir -p "$HOME"/.config/neofetch/ 2>/dev/null
             cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
-                msg_success "Copied over neofetch configs."
+                msg_success "Copied over neofetch configs. \n"
             sleep 1
         else
-            msg_info "Skipping overwriting neofetch configs."
+            msg_info "Skipping overwriting neofetch configs. \n"
         fi
 
         ## Copy starship
         msg_info "Copying a Starship prompt."
-        msg_note "All of these prompt presets will need a patched nerd font (except for the 'plain' preset)."
+        msg_note "All of these prompt presets will need a patched nerd font (except for the 'plain' preset). \n"
         msg_note "Running '${purple}./shell-install.sh fonts${reset}' or '${purple}./shell-install.sh all${reset}' will install the nerd fonts for you."
-        msg_note "Alternatively, you can install your own fonts manually by visiting: https://nerdfonts.com/ \n"
+        msg_note "Alternatively, you can install your own fonts manually by visiting: ${blue}https://nerdfonts.com/${reset} \n"
 
         read -rp "What starship prompt do you want to use? [default/rounded/rxyhn/plain/skip] (default: skip): " starshipPrompt
 
@@ -508,15 +523,15 @@ function overwrite() {
             ;;
 
         skip | *)
-            msg_info "Skipping copying a Starship prompt."
+            msg_info "Will NOT copy a Starship prompt."
             ;;
 
         esac
 
-        msg_success "Done copying Starship prompts."
+        msg_success "Done copying Starship prompts. \n"
 
     else
-        msg_info "Not copying any configs."
+        msg_info "Not copying any configs. \n"
 
     fi
 
@@ -531,10 +546,9 @@ function usage() {
     msg_info "Script usage: './shell-install.sh ${blue}ARGUMENT${reset}' \n"
 
     echo -e "${bold}Possible agruments:${reset}"
-    echo -e "${blue}${bold}all${reset}       ->     ${cyan}Run all functions:"
-    echo -e "                 (Install dependencies/ZSH plugins -> backup current configs -> overwrite configs)${reset}"
+    echo -e "${blue}${bold}all${reset}       ->     ${cyan}Run all below functions in one go"
 
-    echo -e "${blue}${bold}zsh${reset}       ->     ${cyan}Just install ZSH plugins and dependencies${reset}"
+    echo -e "${blue}${bold}zsh${reset}       ->     ${cyan}Just install ZSH, dependencies, plugins, and fonts${reset}"
 
     echo -e "${blue}${bold}fonts${reset}     ->     ${cyan}Just install fonts"
 
@@ -555,12 +569,13 @@ init)
     # This just runs init() to test it initalizes correctly.
     # This argument does nothing important, therefore is hidden from the normal user
     init
+    echo "Exit code: $?"
     ;;
 
 all)
     init
-    sleep 2
     info
+    sleep 2
     dependencies
     install_zsh
     install_fonts
@@ -575,8 +590,8 @@ info)
 
 zsh)
     init
-    sleep 2
     info
+    sleep 2
     dependencies
     install_zsh
     install_fonts
@@ -584,22 +599,22 @@ zsh)
 
 fonts)
     init
-    sleep 2
     info
+    sleep 2
     install_fonts
     ;;
 
 backup)
     init
-    sleep 2
     info
+    sleep 2
     backup
     ;;
 
 overwrite)
     init
-    sleep 2
     info
+    sleep 2
     overwrite
     ;;
 
