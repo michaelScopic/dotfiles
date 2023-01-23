@@ -25,8 +25,8 @@ fi
 export BAT_THEME="base16"
 
 # - Set vars for ZSH config dirs -
-zshConfig="$HOME/.config/zsh"
-zshPlugins="$HOME/.config/zsh/plugins"
+export ZSH_CONFIG="$HOME/.config/zsh"
+export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 
 
 ################################
@@ -34,24 +34,27 @@ zshPlugins="$HOME/.config/zsh/plugins"
 ################################
 
 # - Source ZSH settings file -
-. "$zshConfig/zsh-settings.zsh"
+. "$ZSH_CONFIG/zsh-settings.zsh"
 
 # - Source user functions -
-. "$zshConfig/user-functions.zsh"
+. "$ZSH_CONFIG/user-functions.zsh"
 
 # - Source user aliases -
-. "$zshConfig/aliases.zsh"
+. "$ZSH_CONFIG/aliases.zsh"
 
 # - Source plugins -
-. "$zshPlugins/fsh/fast-syntax-highlighting.plugin.zsh"
-. "$zshPlugins/fzf-tab/fzf-tab.plugin.zsh"
-. "$zshPlugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
-. "$zshPlugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
+. "$ZSH_PLUGINS/fsh/fast-syntax-highlighting.plugin.zsh"
+. "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"
+. "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+. "$ZSH_PLUGINS/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
 
 # - Start prompt -
 if command -v starship >/dev/null; then
+    # Test if 'starship' is a command
+    # If it is, then initalize starship prompt
     eval "$(starship init zsh)"
 else
+    # If 'starship' isn't a command, fallback to a builtin prompt
     autoload -U promptinit
     promptinit
     prompt bart
