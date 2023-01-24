@@ -63,21 +63,31 @@ function init() {
     fi
 
     # - Store user's current dir as a var -
-    thisDir=$(pwd)
-    buildDir="$HOME/.build_tmp"
-    dotfilesLoc=$(realpath "$0" | rev | cut -d '/' -f 2- | rev)
-    backup_format=$(date +%F_%I-%M-%S-%p)
+    CURRENT_DIR=$(pwd)
+    BUILD_DIR="$HOME/.build_tmp"
+    DOTFILES_DIR=$(realpath "$0" | rev | cut -d '/' -f 2- | rev)
+    BACKUP_FORMAT=$(date +%F_%I-%M-%S-%p)
 
-    msg_info "Current directory: ${cyan}$thisDir${reset}"
-    msg_info "Dotfiles directory: ${cyan}$dotfilesLoc${reset}"
-    msg_info "Backup format: ${cyan}$backup_format${reset}"
+    msg_info "Current directory: ${cyan}$CURRENT_DIR${reset}"
+    msg_info "Dotfiles directory: ${cyan}$DOTFILES_DIR${reset}"
+    msg_info "Backup format: ${cyan}$BACKUP_FORMAT${reset}"
 
-    msg_note "A temporary directory will be made in '${cyan}$buildDir${reset}' if needed."
+    msg_note "A temporary directory will be made in '${cyan}$BUILD_DIR${reset}' if needed. \n"
+
+    if [ "$DOTFILES_DIR" = '' ]; then
+        msg_error "${bold}-------------------------------------------------------------------------"
+        msg_error "${bold}--${reset} WARNING: \$DOTFILES_DIR could not be set. You will encounter errors. ${bold}--"
+        msg_error "${bold}-------------------------------------------------------------------------"
+        msg_error "init() has returned exit code 1 \n"
+        msg_info "Initalization has completed with errors."
+        sleep 1.5
+        return 1
+    fi
 
     # - Finish up -
     msg_success "Done initallizing! \n"
 
-    return 
+    return
 }
 
 # --- Function for printing info ---
@@ -106,10 +116,10 @@ function dependencies() {
     sleep 2
 
     if [[ $(uname -s) == "Linux" ]] && [[ $(uname -m) == "x86_64" ]]; then
-    # Test if host is running Linux AND the cpu is x86_64 (amd64) based 
+        # Test if host is running Linux AND the cpu is x86_64 (amd64) based
 
         if command -v apt-get >/dev/null; then
-        # Test if package manager is 'apt-get', for Debian/Ubuntu distros
+            # Test if package manager is 'apt-get', for Debian/Ubuntu distros
             msg_info "Found Debian/Ubuntu.\n"
             sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim
             ## 'rsync' isn't installing when put in the above line, installing it seperately
@@ -119,16 +129,16 @@ function dependencies() {
             ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
             ## Downside of doing it this way is that the .deb files might not be the most recent ones
             msg_info "Making a temporary build directory..."
-            mkdir "$buildDir"
-            cd "$buildDir"
+            mkdir "$BUILD_DIR"
+            cd "$BUILD_DIR"
             # Get the lsd and exa .deb files
             wget https://github.com/Peltoche/lsd/releases/download/0.23.1/lsd_0.23.1_amd64.deb &>/dev/null
             wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null &&
                 # Install the .deb files
-                sudo dpkg -i ./*.deb &>/dev/null &&
+                sudo dpkg -i ./*.deb &&
                 cd "$repoDir"
             msg_info "Done. Removing temporary build directory..."
-            rm -vrf "${buildDir}"
+            rm -vrf "${BUILD_DIR}"
 
             # Installing starship
             msg_info "Installing Starship using the offical installer script..."
@@ -136,21 +146,21 @@ function dependencies() {
             msg_success "Done installing dependencies! \n"
 
         elif command -v pacman >/dev/null; then
-        # Test if 'pacman' is the package manager, for Arch based distros
+            # Test if 'pacman' is the package manager, for Arch based distros
             msg_info "Found Arch Linux.\n"
             sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa lsd rsync unzip vim
             msg_success "Done installing dependencies! \n"
 
         elif command -v zypper >/dev/null; then
-        # Test if 'zypper' if the pacakge manager, for openSUSE distros
-        ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
+            # Test if 'zypper' if the pacakge manager, for openSUSE distros
+            ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
             msg_info "Found openSUSE.\n"
             sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip vim
             msg_success "Done installing dependencies! \n"
 
         elif command -v dnf >/dev/null; then
-        # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
-        ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
+            # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
+            ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
             msg_info "Found RHEL/Fedora Linux.\n"
             sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa lsd rsync unzip vim
             # Install starship
@@ -158,13 +168,13 @@ function dependencies() {
             msg_success "Done installing dependencies! \n"
 
         elif command -v xbps-install >/dev/null; then
-        # Test if 'xbps-install' is present, for Void Linux
+            # Test if 'xbps-install' is present, for Void Linux
             msg_info "Found Void Linux.\n"
             sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa lsd starship rsync unzip vim
             msg_success "Done installing dependencies! \n"
 
         elif command -v nix-env >/dev/null; then
-        # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
+            # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
             msg_info "Found NixOS/nixpkgs.\n"
             sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa lsd starship rsync unzip vim
             msg_success "Done installing dependencies! \n"
@@ -175,7 +185,7 @@ function dependencies() {
             msg_note "users.users.alice = {"
             msg_note "  isNormalUser = true;"
             msg_note "  extraGroups = [ \"wheel\" ];"
-            msg_note "${green}  shell = pkgs.zsh; ${reset}"
+            msg_note "${green}  shell = pkgs.zsh; # <-- Change shell here${reset}"
             msg_note "  packages = with pkgs; [ "
             msg_note "  ];"
             msg_note "};"
@@ -183,7 +193,7 @@ function dependencies() {
             sleep 3
 
         else
-        # If above package managers aren't present, then give an error
+            # If above package managers aren't present, then give an error
             msg_error "Unable to detect your package manager!"
             msg_error "You will need to install the dependencies yourself. \n"
             msg_info "Supported package managers are:"
@@ -216,7 +226,7 @@ function dependencies() {
 # --- Install fonts ---
 function install_fonts() {
     msg_note "Installing fonts..."
-    cd "$dotfilesLoc"
+    cd "$DOTFILES_DIR"
 
     if [ ! -d "$HOME/.fonts" ]; then
         # Check if '~/.fonts' exist. If it doesn't exist, create it
@@ -235,17 +245,35 @@ function install_fonts() {
         # If copy was successful, then tell user then refresh font cache
         msg_success "Copied fonts! Reloading font cache..."
         msg_info "Running: '${purple}fc-cache -rv${reset}'"
-        fc-cache -rv &&
-            msg_success "Finished reloading font cache! \n"
+
+        if command -v fc-cache >/dev/null; then
+            # If 'fc-cache' is a command, then reload fonts cache
+            fc-cache -rv &&
+                msg_success "Finished reloading fonts."
+        else
+            # If it is not a command, give an error
+            msg_error "'${purple}fc-cache${reset}' is not a command... Unable to refresh your fonts. Please log out and log back in again."
+            return 1
+        fi
+
     fi
 }
 
 # --- ZSH function ---
 function install_zsh() {
     msg_note "Installing ZSH plugins and configs..."
-    cd "$dotfilesLoc"
 
-    if [ -d "$HOME/.config/zsh" ]; then
+    if [ -d "$DOTFILES_DIR" ]; then
+        cd "$DOTFILES_DIR"
+    else
+        msg_error "Unable to change directory to '${cyan}dotfiles/${reset}'. ABORTING!"
+        msg_error "The ${cyan}\$DOTFILES_DIR${reset} variable might not be set correctly, is 'rev' a command on your computer?"
+        msg_error "The dotfiles location (\$DOTFILES_DIR) is set to: '$dotfilesLoc' \n"
+        msg_error "install_zsh() has returned error code 1"
+        return 1
+    fi
+
+    if [ ! -d "$HOME/.config/zsh" ]; then
         # If '~/.zsh-stuff' doesnt exist, create it
         msg_info "'${cyan}~/.config/zsh/${reset} does not exist. Fixing that."
         mkdir -vp ~/.config/zsh/{plugins,dist-aliases} &&
@@ -304,14 +332,14 @@ function install_zsh() {
         msg_info "Answered 'yes'. Continuing..."
 
         # Make a copy of user's zshrc and rename it as '.zshrc.bak'
-        cp -v "$HOME/.zshrc" "$HOME/.zshrc-$backup_format.bak" 2>/dev/null
+        cp -v "$HOME/.zshrc" "$HOME/.zshrc-$BACKUP_FORMAT.bak" 2>/dev/null
 
         # Copy the zshrc from this directory to home as '.zshrc'
         cp -v zsh/zshrc "$HOME/.zshrc"
 
         # Backup .config/zsh/ if exists
-        mkdir -v "$HOME/.config/zsh-$backup_format.d.bak"
-        cp -v "$HOME/.config/zsh/*" "$HOME/.config/zsh-$backup_format.d.bak/" 2>/dev/null
+        mkdir -v "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak"
+        cp -v "$HOME/.config/zsh/*" "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak/" 2>/dev/null
 
         # Copy zsh-stuff/ to ~/.config/zsh/
         cp -vr zsh/zsh-stuff/* "$HOME/.config/zsh/"
@@ -331,7 +359,7 @@ function install_zsh() {
 
     read -rp "Install starship? [Y/n]: " install_starship
 
-    if [ "${install_starship,,}" == "y" ] || [ "${install_starship}" == "" ]; then
+    if [ "${install_starship,,}" == "y" ] || [ "${install_starship}" = "" ]; then
         # If user pressed enter or 'y', we will install starship
         msg_info "User answered 'yes', continuing to install Starship..."
         msg_info "Running command:${purple} curl -sS https://starship.rs/install.sh | sh"
@@ -356,9 +384,9 @@ function backup() {
     if [ -d "$HOME"/.config/htop ]; then
         ## If htop config dir exists, backup that
         mkdir -v "$HOME/.config/htop/backups/" 2>/dev/null
-        cp -v "$HOME/.config/htop/htoprc" "$HOME/.config/htop/backups/htoprc-$backup_format.bak"
+        cp -v "$HOME/.config/htop/htoprc" "$HOME/.config/htop/backups/htoprc-$BACKUP_FORMAT.bak"
 
-        msg_success "A backup of htop is in: ${cyan}~/.config/htop/backups/htoprc-$backup_format.bak${reset} \n"
+        msg_success "A backup of htop is in: ${cyan}~/.config/htop/backups/htoprc-$BACKUP_FORMAT.bak${reset} \n"
         sleep 1
 
     else
@@ -375,12 +403,12 @@ function backup() {
     if [ -d "$HOME/.config/kitty/" ]; then
         ## Backup if kitty config dir exists; some people might not have kitty already installed
 
-        mkdir -v "$HOME/.config/kitty/backups/$backup_format" 2>/dev/null
+        mkdir -v "$HOME/.config/kitty/backups/$BACKUP_FORMAT" 2>/dev/null
 
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -v "$HOME"/.config/kitty "$HOME"/.config/kitty/backups && \
-        rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME/.config/kitty/backups/$backup_format" &&
-            msg_success "A backup of kitty is in:${cyan} ~/.config/kitty/backups/$backup_format \n"
+        rsync -av --exclude='backups' "$HOME"/.config/kitty/ "$HOME/.config/kitty/backups/$BACKUP_FORMAT" &&
+            msg_success "A backup of kitty is in:${cyan} ~/.config/kitty/backups/$BACKUP_FORMAT \n"
 
         sleep 1
 
@@ -398,12 +426,12 @@ function backup() {
 
     if [ -d "$HOME"/.config/neofetch ]; then
         ## If neofetch config dir exists, make a backup
-        mkdir -v "$HOME/.config/neofetch/backups/$backup_format"
+        mkdir -v "$HOME/.config/neofetch/backups/$BACKUP_FORMAT"
 
         ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
         #cp -rv "$HOME/.config/neofetch" ~/.config/neofetch/backups/ && \
-        rsync -av --exclude='backups' "$HOME/.config/neofetch/" "$HOME/.config/neofetch/backups/$backup_format/" &&
-            msg_success "A backup of neofetch configs are in:${cyan} ~/.config/neofetch/backups/$backup_format \n"
+        rsync -av --exclude='backups' "$HOME/.config/neofetch/" "$HOME/.config/neofetch/backups/$BACKUP_FORMAT/" &&
+            msg_success "A backup of neofetch configs are in:${cyan} ~/.config/neofetch/backups/$BACKUP_FORMAT \n"
 
         sleep 1
     else
@@ -419,8 +447,8 @@ function backup() {
 
     if [ -f "$HOME"/.config/starship.toml ]; then
         ## If 'starship.toml' exists, back it up.
-        cp -v "$HOME"/.config/starship.toml "$HOME/.config/starship.toml.$backup_format.bak" &&
-            msg_success "A backup of your current starship config is in:${cyan} ~/.config/starship.toml.$backup_format.bak \n"
+        cp -v "$HOME"/.config/starship.toml "$HOME/.config/starship.toml.$BACKUP_FORMAT.bak" &&
+            msg_success "A backup of your current starship config is in:${cyan} ~/.config/starship.toml.$BACKUP_FORMAT.bak \n"
         sleep 1
     else
         ## If 'starship.toml' doesn't exist, skip it
@@ -437,6 +465,17 @@ function backup() {
 
 # --- Overwrite function ---
 function overwrite() {
+
+    if [ -d "$DOTFILES_DIR" ]; then
+        cd "$DOTFILES_DIR/config"
+    else
+        msg_error "Unable to change directory to '${cyan}config/${bold}'. ABORTING!"
+        msg_error "The ${cyan}\$DOTFILES_DIR${reset} variable might not be set correctly, is 'rev' a command on your host?"
+        msg_error "The dotfiles location is set to: $DOTFILES_DIR"
+        msg_error "overwrite() has returned exit code 1"
+        return 1
+    fi
+
     echo -e "
 ###########################
 #${red} I am about to overwrite${reset} #
@@ -452,8 +491,6 @@ function overwrite() {
     read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " config_overwrite
 
     if [ "${config_overwrite,,}" == "y" ] || [ "${config_overwrite}" = "" ]; then
-
-        cd "$dotfilesLoc/config/"
 
         ## Copy htoprc
         read -rp "Do you want to overwrite htop config? [Y/n]: " htopOverwrite
