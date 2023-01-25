@@ -3,7 +3,7 @@
 # Written by: michaelScopic (https://github.com/michaelScopic)
 
 # --- Set alias files dir ---
-distAliasDir="$HOME/.config/zsh/distAliases"
+distAliasDir="$HOME/.config/zsh/dist-aliases"
 
 # - File/directory related aliases -
 LS_OPTIONS="--group-dirs=first -hF"
