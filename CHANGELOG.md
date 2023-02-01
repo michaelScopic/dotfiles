@@ -1,5 +1,11 @@
 # Changelog
 
+## Feb 1, 2023
+
+- Removed `deploy.sh.bak`
+- Removed everything in `scripts/`
+
+
 ## Jan 24, 2023
 
 - Renamed variables (look in `init()`)
