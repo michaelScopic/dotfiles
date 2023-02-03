@@ -61,7 +61,7 @@ Shell script features:
 - [x] `htoprc`
 - [x] `README.md`
 
-### `starship`
+### `config/starship`
 
 - [x] `config/starship/rounded.toml`
 - [x] `config/starship/plain-text-symbols.toml`
