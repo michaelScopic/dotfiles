@@ -27,9 +27,9 @@ alias kys="sudo shutdown now"
 
 # - Config editing related aliases -
 alias zshrc="$EDITOR ~/.zshrc"
-alias zsh-aliases="$EDITOR ~/.zsh-stuff/aliases.zsh"
-alias ls-aliases="cat ~/.zsh-stuff/aliases.zsh"
-alias zsh-functs="$EDITOR ~/.zsh-stuff/user-functions.zsh"
+alias zsh-aliases="$EDITOR ~/.config/zsh/aliases.zsh"
+alias ls-aliases="cat ~/.config/zsh/aliases.zsh"
+alias zsh-functs="$EDITOR ~/.config/zshf/user-functions.zsh"
 alias kitty-config="$EDITOR ~/.config/kitty/kitty.conf"
 alias chadwmrc="$EDITOR ~/.config/chadwm/scripts/run.sh"
 alias chadwm-config="$EDITOR ~/.config/chadwm/chadwm/config.def.h"

@@ -39,26 +39,15 @@ Shell script features:
 
 ## TODO
 
-- [ ] MacOS support _<- I won't be able to do this as I don't use a Mac, so a PR is appreciated_
-  - [ ] Add MacOS support/dependencies in `scripts/dependencies.sh`
-- [x] Make overwriting function in `deploy.sh` interactive
+- [x] Depricate `deploy.sh.bak` and `scripts/`
+  - [x] Remove `deploy.sh.bak` and `scripts/` 
+- [x] Make everything a function in `shell-install.sh`
+- [x] Make functions for printing info/notes, errors, and success messages
+- [x] Detect if user is running x86_64 Linux in `install_deps()`, and give an error if both aren't detected
 - [x] Add fonts
-  - [ ] Auotmate installing fonts in `deploy.sh`
-- [x] `shell-install` _<- Successor to `deploy.sh`_
-- [ ] Remove `deploy.sh.bak`
-- [ ] Remove everything in `scripts/`
-
-## Progress
-
-### Scripts
-
-- [x] `scripts/fonts.sh` _<- Installs fonts (DEPRECATED)_
-- [x] `scripts/info.sh` _<- Prints info about the system it's running on (DEPRECATED)_
-- [x] `scripts/init.sh` _<- Initalizer script (DEPRECATED)_
-- [x] `scripts/pluginInstall.sh` _<- Installs ZSH plugins, optionally calls `dependencies.sh` (DEPRECATED)_
-- [x] `scripts/dependencies.sh` _<- Installs dependencies on supported distros (DEPRECATED)_
-- [x] `deploy.sh` _<- DEPRECATED, please only use this script if `shell-install` doesn't work properly_
-- [x] `shell-install` _<- Automates installing shell related configs_
+  - [x] Auotmate installing fonts in `shell-install.sh`
+- [x] `shell-install.sh` _<- Successor to `deploy.sh`_
+- [x] Add support for NixOS
 
 ### Preview pics
 
@@ -72,7 +61,7 @@ Shell script features:
 - [x] `htoprc`
 - [x] `README.md`
 
-### `starship`
+### `config/starship`
 
 - [x] `config/starship/rounded.toml`
 - [x] `config/starship/plain-text-symbols.toml`
@@ -123,7 +112,7 @@ Look at the possible agruments to use in the script by running:
 ./shell-install
 ```
 
-You can use these following arguments with this script: `all`, `zsh`, `backup`, `fonts`, or `overwrite`.
+You can use these following arguments with this script: `all`, `zsh`, `backup`, `fonts`, `overwrite`, or `info`.
 
 So if you want to run all of them, just do:
 
