@@ -84,9 +84,38 @@ function init() {
 
 # --- Function for printing info ---
 function info() {
+    get_distro() {
+        local distro_name
+        if command -v lsb_release >/dev/null; then
+            distro_name=$(lsb_release -ds)
+        else
+            if [[ ! -f /etc/os-release ]]; then
+                distro_name="${PRETTY_NAME}"
+            else 
+                distro_name="Unknown"
+            fi
+        fi
+        echo "$distro_name"
+    }
+
+    get_cpu() {
+        # Get model
+        local cpu_model
+        cpu_model=$(grep 'model name' /proc/cpuinfo | uniq | cut -d ':' -f 2-)
+
+        # Get cores/threads
+        local cpu_threads
+        local cpu_cores
+        cpu_threads=$(nproc)
+        cpu_cores=$(grep -m 1 'cpu cores' /proc/cpuinfo | cut -d ':' -f 2-)
+
+        # Print result
+        echo "$cpu_model ($cpu_cores/$cpu_threads)"
+    }
+
     # --- Print out basic info about system ---
     echo -e "${bold}---------- Basic info ----------${reset}"
-    echo -e "${green}${bold}Distro:${reset} ${PRETTY_NAME}"
+    echo -e "${green}${bold}Distro:${reset} $(get_distro)"
     # Print kernel version
     echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
     # Print shell
@@ -94,10 +123,13 @@ function info() {
     # Print hostname
     echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname 2>/dev/null || uname -n)"
     # Print CPU name
-    echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
+    #    echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
+    echo -e "${red}${bold}CPU:${reset} $(get_cpu)"
     # Print current user
     echo -e "${cyan}${bold}User:${reset} $(whoami)"
     echo -e "${bold}-------------------------------- \n${reset}"
+
+    return
 }
 
 # --- Install dependencies ---
