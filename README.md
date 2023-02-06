@@ -43,7 +43,7 @@ Shell script features:
   - [x] Remove `deploy.sh.bak` and `scripts/` 
 - [x] Make everything a function in `shell-install.sh`
 - [x] Make functions for printing info/notes, errors, and success messages
-- [x] Detect if user is running x86_64 Linux in `install_deps()`, and give an error if both aren't detected
+- [x] Detect if user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
 - [x] Add fonts
   - [x] Auotmate installing fonts in `shell-install.sh`
 - [x] `shell-install.sh` _<- Successor to `deploy.sh`_
