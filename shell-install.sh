@@ -467,9 +467,9 @@ function backup() {
 function overwrite() {
 
     if [ -d "$DOTFILES_DIR" ]; then
-        cd "$DOTFILES_DIR/config"
+        cd "$DOTFILES_DIR/.config"
     else
-        msg_error "Unable to change directory to '${cyan}config/${bold}'. ABORTING!"
+        msg_error "Unable to change directory to '${cyan}.config/${bold}'. ABORTING!"
         msg_error "The ${cyan}\$DOTFILES_DIR${reset} variable might not be set correctly, is 'rev' a command on your host?"
         msg_error "The dotfiles location is set to: $DOTFILES_DIR"
         msg_error "overwrite() has returned exit code 1"

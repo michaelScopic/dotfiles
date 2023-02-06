@@ -1,10 +1,15 @@
 # Changelog
 
+## Feb 6, 2023
+
+- Renamed config dir to `.config/`
+  - Updated `shell-install.sh` to account for new name
+- Renamed bin dir to `.local/bin/`
+
 ## Feb 1, 2023
 
 - Removed `deploy.sh.bak`
 - Removed everything in `scripts/`
-
 
 ## Jan 24, 2023
 
