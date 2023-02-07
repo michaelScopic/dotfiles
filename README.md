@@ -39,6 +39,8 @@ Shell script features:
 
 ## TODO
 
+- [ ] Upload ChadWM configs
+  - [ ] Impliment a new script to automate deploying configs, like `shell-install.sh`
 - [x] Depricate `deploy.sh.bak` and `scripts/`
   - [x] Remove `deploy.sh.bak` and `scripts/` 
 - [x] Make everything a function in `shell-install.sh`
