@@ -23,7 +23,7 @@ This was also a perfect oppurtunity to learn Bash/Shell scripting.
 
 ## Disclamer
 
-I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient.
+I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works. 
 
 ## Features
 
@@ -33,6 +33,7 @@ Shell script features:
 - Interactive
 - Automation for deploying dotfiles:
   - Installs needed dependencies (on supported distros)
+    - Vast distro support: Ubuntu/Debian, Arch Linux, RHEL/Fedora, openSUSE TW, Void Linux, NixOS/nixpkgs
   - Installs ZSH plugins and then backup and overwrite user's zshrc
   - Backs up user's current configs (in case they want to rollback)
   - Overwrites user's configs with the ones in this repo
@@ -132,7 +133,7 @@ If you need help or something does not work as expected, please contact me on Di
 
 I am almost _always_ online, and I will usually respond very quickly.
 
-- NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially people I don't know.
+- NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, for especially people I don't know.
 
 ## Credits
 
