@@ -3,15 +3,16 @@
 # Written by: michaelScopic (https://github.com/michaelScopic/)
 
 # - Installing/updating -
-alias up="sudo zypper up"
-alias install="sudo zypper in"
+alias up="sudo zypper dup"
 alias dup="sudo zypper dup"
+alias install-pkg="sudo zypper in"
+alias remove-pkg="sudo zypper rm"
 alias zypp-verify="sudo zypper verify"
 alias purge-kernels="sudo zypper purge-kernels"
 
 # - Quererying -
-alias pkg-search="zypper se"
-alias pkg-info="zypper if"
+alias search-pkg="zypper se"
+alias info-pkg="zypper if"
 alias what-provides="zypper wp"
 
 # - Misc -

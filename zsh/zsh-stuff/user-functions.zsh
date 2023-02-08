@@ -2,23 +2,7 @@
 
 # Written by: michaelScopic (https://github.com/michaelScopic)
 
-#recomp_chadwm() {
-#     if [ -d "$HOME/.config/chadwm/chadwm" ]; then
-#         echo "--- Recompiling ChadWM... ---"
-#         cd "$HOME/.config/chadwm/chadwm/"
-#         rm -v config.h
-#         sudo make install 
-#         echo "Exit code: $?"
-#         echo "--- Done compiling ChadWM! ---"
-#         cd
-#     else
-#         echo "Could not find '~/.config/chadwm/chadwm/'. ABORTING!"
-#         return 1
-#     fi
-# }
- 
-
- cd() { ## Automatically run 'ls' after you cd into a dir
+cd() { ## Automatically run 'ls' after you cd into a dir
 
 	builtin cd "$@" && \
         command lsd --color=auto -AF --group-directories-first
