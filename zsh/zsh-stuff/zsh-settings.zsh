@@ -1,3 +1,7 @@
+#### ==> INTERNAL ZSH SETTINGS <==
+
+## Credits: ArchLabs Linux
+
 # - Completion cache path setup -
 typeset -g comppath="$HOME/.cache"
 typeset -g compfile="$comppath/.zcompdump"

@@ -8,23 +8,19 @@
 # Written by: michaelScopic (https://github.com/michaelScopic)
 # Credits: ArchLabs Linux (https://archlabslinux.org)
 
-# Written by: michaelScopic (https://github.com/michaelScopic)
-# Credits: ArchLabs Linux (https://archlabslinux.org)
-
-# - Change $PATH if you need to -
-#export PATH=</path/to/bin/>:$PATH
-
 # - Check if shell is interactive -
 if [[ $- != *i* ]]; then
     return
 fi
 
-# - Export enviornment vars if needed -
+
+#### - Export enviornment vars if needed -
 #export VIEWER=nvim
 #export EDITOR=nvim
 export BAT_THEME="base16"
+export PATH=$HOME/.local/bin:$PATH
 
-# - Set vars for ZSH config dirs -
+#### - Declare vars for ZSH config dirs -
 export ZSH_CONFIG="$HOME/.config/zsh"
 export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 
@@ -49,11 +45,10 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 
 # - Start prompt -
 if command -v starship >/dev/null; then
-    # Test if 'starship' is a command
-    # If it is, then initalize starship prompt
+    # If starship is installed, then start it
     eval "$(starship init zsh)"
 else
-    # If 'starship' isn't a command, fall back to a builtin prompt
+    # If 'starship' isn't installed, fall back to a builtin prompt
     autoload -U promptinit && promptinit # Load/initalize prompt
     prompt bart
 fi
