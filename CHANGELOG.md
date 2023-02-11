@@ -1,5 +1,11 @@
 # Changelog
 
+## Feb 10, 2023
+
+- Deprecated `lsd`, fully switched to `exa`
+  - Removed `lsd` from being installed in `shell-install.sh`
+- Detected if terminal is a tty, and disable using icons if it is a tty
+
 ## Feb 6, 2023
 
 - Renamed config dir to `.config/`
@@ -15,6 +21,7 @@
 
 - Renamed variables (look in `init()`)
 - Added error handling if certain criteria aren't met:
+
   - Will throw an error if `/etc/os-release` doesn't exist and will throw another error if `$DOTFILES_DIR` is not set.
   - `init()`:
     - Will throw an error if `/etc/os-release` does not exist.
@@ -38,6 +45,7 @@
       - This is because function needs to be able to copy files from the dotfiles directory.
 
 - `install_zsh()`
+
   - Fixed typo to make `~/.config/zsh` if it _does not_ already exists.
     - Origianally detected if it _does_ exists, then makes the directory even though it already exists.
 
