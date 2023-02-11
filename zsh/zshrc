@@ -1,7 +1,7 @@
 #		                 _
 #   	    	 _______| |__  _ __ ___
 #       		|_  / __| '_ \| '__/ __|
-#   	     _   / /\__ \ | | | | | (__ 
+#   	     _   / /\__ \ | | | | | (__
 #           (_) /___|___/_| |_|_|  \___|
 #
 #
@@ -16,7 +16,7 @@
 
 # - Check if shell is interactive -
 if [[ $- != *i* ]]; then
-	return
+    return
 fi
 
 # - Export enviornment vars if needed -
@@ -28,7 +28,6 @@ export BAT_THEME="base16"
 export ZSH_CONFIG="$HOME/.config/zsh"
 export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 
-
 ################################
 # --- Start sourcing files --- #
 ################################
@@ -36,11 +35,11 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 # - Source ZSH settings file -
 . "$ZSH_CONFIG/zsh-settings.zsh"
 
-# - Source user functions -
-. "$ZSH_CONFIG/user-functions.zsh"
-
 # - Source user aliases -
 . "$ZSH_CONFIG/aliases.zsh"
+
+# - Source user functions -
+. "$ZSH_CONFIG/user-functions.zsh"
 
 # - Source plugins -
 . "$ZSH_PLUGINS/fsh/fast-syntax-highlighting.plugin.zsh"
@@ -55,8 +54,8 @@ if command -v starship >/dev/null; then
     eval "$(starship init zsh)"
 else
     # If 'starship' isn't a command, fall back to a builtin prompt
-    autoload -U promptinit && promptinit    # Load/initalize prompt
-    prompt bart 
+    autoload -U promptinit && promptinit # Load/initalize prompt
+    prompt bart
 fi
 
 # - Autostart -
@@ -64,4 +63,3 @@ fi
 #neofetch
 #pfetch
 #xrdb -merge ~/.Xresources
-
