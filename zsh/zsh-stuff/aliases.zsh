@@ -8,15 +8,20 @@ if [ "$EDITOR" = "" ]; then
     #export EDITOR=$(which vim)
 fi
 
-#### --- Define variables ---
 distAliasDir="$HOME/.config/zsh/dist-aliases" ## <- Directory for distro-specific aliases
 
+#### --- Set aliases according to terminal ---
 if [ "$(tty >/dev/null)" == "/dev/pts/*" ]; then
     ## If terminal is a psudo-terminal/terminal emulator, then use icons
     export EXA_OPTIONS="--group-directories-first --icons -hFg"
 else
     ## If terminal is attacted to /dev/tty*, then do not use icons
     export EXA_OPTIONS="--group-directories-first -hFg"
+fi
+
+if [ "$TERM" == "xterm-kitty" ]; then
+    ## If terminal is Kitty, set a ssh variable
+    alias ssh="kitty +kitten ssh"
 fi
 
 #### - File/directories -
@@ -39,12 +44,11 @@ alias zshrc="$EDITOR ~/.zshrc"
 alias zsh-aliases="$EDITOR ~/.config/zsh/aliases.zsh"
 alias ls-aliases="cat ~/.config/zsh/aliases.zsh"
 alias zsh-functs="$EDITOR ~/.config/zsh/user-functions.zsh"
-#alias kitty-config="$EDITOR ~/.config/kitty/kitty.conf"
-#alias chadwmrc="$EDITOR ~/.config/chadwm/scripts/run.sh"
-#alias chadwm-config="$EDITOR ~/.config/chadwm/chadwm/config.def.h"
+alias kitty-config="$EDITOR ~/.config/kitty/kitty.conf"
+alias chadwmrc="$EDITOR ~/.config/chadwm/scripts/run.sh"
+alias chadwm-config="$EDITOR ~/.config/chadwm/chadwm/config.def.h"
 
 #### - Networking -
-#alias ssh="kitty +kitten ssh" ## <- Only for kitty-term, uncomment if you use another terminal
 alias virt-man_net_start="sudo virsh net-start default" ## <-- For virt-manager
 alias nmcli="nmcli -p"                                  ## <- Make nmcli pretty
 alias nm-stat="nmcli dev status"

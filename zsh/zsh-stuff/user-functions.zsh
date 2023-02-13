@@ -2,15 +2,6 @@
 
 ### Written by: michaelScopic (https://github.com/michaelScopic)
 
-## Check if terminal is a psudo-terminal or a tty
-if [ "$(tty >/dev/null)" == "/dev/pts/*" ]; then
-    ## If terminal is a psudo-terminal/terminal emulator (/dev/pts/*), then use icons
-    EXA_OPTIONS="--group-directories-first --icons -hFg"
-else
-    ## If terminal is a tty (/dev/tty*), then don't use icons
-    EXA_OPTIONS="--group-directories-first -hFg"
-fi
-
 ## Automatically run 'ls' after you cd into a dir
 cd() {
     builtin cd "$@" &&
