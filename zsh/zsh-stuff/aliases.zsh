@@ -11,7 +11,7 @@ fi
 distAliasDir="$HOME/.config/zsh/dist-aliases" ## <- Directory for distro-specific aliases
 
 #### --- Set aliases according to terminal ---
-if [ "$(tty >/dev/null)" == "/dev/pts/*" ]; then
+if [ -t 0 ]; then
     ## If terminal is a psudo-terminal/terminal emulator, then use icons
     export EXA_OPTIONS="--group-directories-first --icons -hFg"
 else
