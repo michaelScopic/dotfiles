@@ -25,7 +25,7 @@ if [ "$TERM" == "xterm-kitty" ]; then
 fi
 
 #### - File/directories -
-alias ls="exa -$EXA_OPTIONS"
+alias ls="exa $EXA_OPTIONS"
 alias la="exa -a $EXA_OPTIONS"
 alias ll="exa -la $EXA_OPTIONS"
 alias rm="rm -iv"
