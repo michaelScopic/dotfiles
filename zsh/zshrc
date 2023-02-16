@@ -1,13 +1,17 @@
-
+#               _
+#     ____ ___ | |__   _ __  ___  
+#    |_  // __|| '_ \ | '__|/ __| 
+#  _  / / \__ \| | | || |  | (__  
+# (_)/___||___/|_| |_||_|   \___| 
 #
 # Written by: michaelScopic (https://github.com/michaelScopic)
-# Credits: ArchLabs Linux (https://archlabslinux.org)
 
-# !! -> NOTE FOR NEW USERS: <- !!
+#       -> NOTE FOR NEW USERS: <- 
 # Aliases are defined in: ~/.config/zsh/aliases.zsh
 # ZSH settings are set in: ~/.config/zsh/zsh-settings.zsh
 # Functions are defined in: ~/.config/zsh/user-functions.zsh
 # Distro specific aliases are defined in: ~/.config/zsh/dists-aliases/
+
 
 # - Check if shell is interactive -
 if [[ $- != *i* ]]; then
