@@ -11,21 +11,21 @@ fi
 distAliasDir="$HOME/.config/zsh/dist-aliases" ## <- Directory for distro-specific aliases
 
 #### --- Set aliases according to terminal ---
-if [ "$(tty >/dev/null)" == "/dev/pts/*" ]; then
+if [ -t 0 ]; then
     ## If terminal is a psudo-terminal/terminal emulator, then use icons
-    export EXA_OPTIONS="--group-directories-first --icons -hFg"
+    export EXA_OPTIONS="--icons -hFg"
 else
     ## If terminal is attacted to /dev/tty*, then do not use icons
-    export EXA_OPTIONS="--group-directories-first -hFg"
+    export EXA_OPTIONS="-hFg"
 fi
 
 if [ "$TERM" == "xterm-kitty" ]; then
-    ## If terminal is Kitty, set a ssh variable
+    ## If terminal is Kitty, set a ssh alias
     alias ssh="kitty +kitten ssh"
 fi
 
 #### - File/directories -
-alias ls="exa $EXA_OPTIONS"
+alias ls="exa -$EXA_OPTIONS"
 alias la="exa -a $EXA_OPTIONS"
 alias ll="exa -la $EXA_OPTIONS"
 alias rm="rm -iv"

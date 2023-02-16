@@ -5,7 +5,7 @@
 ## Automatically run 'ls' after you cd into a dir
 cd() {
     builtin cd "$@" &&
-        command exa $EXA_OPTIONS
+        command exa --icons -hFga
 }
 
 ## Recompile completion and then reload zsh
