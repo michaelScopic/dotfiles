@@ -1,31 +1,33 @@
-#### ==> ZSH ALIASES <== ####
-
+#            _              _  _
+#  ____ ___ | |__     __ _ | |(_)  __ _  ___   ___  ___
+# |_  // __|| '_ \   / _` || || | / _` |/ __| / _ \/ __|
+#  / / \__ \| | | | | (_| || || || (_| |\__ \|  __/\__ \
+# /___||___/|_| |_|  \__,_||_||_| \__,_||___/ \___||___/
+#
 ### Written by: michaelScopic (https://github.com/michaelScopic)
 
-#### Set directory for distro specific aliases
-DISTRO_ALIAS_DIR="$HOME/.config/zsh/dist-aliases" 
 
-#### Expand aliases as you type them
+#### Uncomment to expand aliases as you type them
 #bindkey -- ' ' exp_alias
 
-#### Default to vim if $EDITOR is not set
-if [ -z $EDITOR ]; then
-    export $EDITOR=vim
-fi
+#### Set directory for distro specific aliases
+DISTRO_ALIAS_DIR="$HOME/.config/zsh/dist-aliases"
 
-#### --- Set aliases according to terminal ---
-if [ -t 0 ]; then
-    ## If terminal is a psudo-terminal/terminal emulator, then use icons
-    export EXA_OPTIONS="--icons --group-directories-first -hFg"
-else
-    ## If terminal is attacted to /dev/tty*, then do not use icons
-    export EXA_OPTIONS="--group-directories-first -hFg"
-fi
+#### - Dynamic settings -
+## Determine to use icons
+[ -t 0 ] &&
+    ## Use icons if terminal is not a tty
+    EXA_OPTIONS="--icons --group-directories-first -hFg" ||
+    ## Don't use icons if terminal is a tty
+    EXA_OPTIONS="--group-directories-first -hFg"
 
-if [ "$TERM" == "xterm-kitty" ]; then
-    ## If terminal is Kitty, set a ssh alias
+## Set an ssh alias if terminal is kitty
+[ "$TERM" == "xterm-kitty" ] &&
     alias ssh="kitty +kitten ssh"
-fi
+
+#### Default to vim if $EDITOR is not set
+[ -z $EDITOR ] &&
+    export $EDITOR=vim
 
 #### - File/directories -
 alias ls="exa $EXA_OPTIONS"

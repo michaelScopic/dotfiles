@@ -18,7 +18,6 @@ if [[ $- != *i* ]]; then
     return
 fi
 
-
 #### - Export enviornment vars if needed -
 export PATH=$HOME/.local/bin:$PATH
 #export VIEWER=nvim

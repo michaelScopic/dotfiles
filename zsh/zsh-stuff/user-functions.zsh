@@ -1,18 +1,20 @@
-#### ==> ZSH FUNCTIONS <== ####
-
+#            _        __                      _    _                    
+#  ____ ___ | |__    / _| _   _  _ __    ___ | |_ (_)  ___   _ __   ___ 
+# |_  // __|| '_ \  | |_ | | | || '_ \  / __|| __|| | / _ \ | '_ \ / __|
+#  / / \__ \| | | | |  _|| |_| || | | || (__ | |_ | || (_) || | | |\__ \
+# /___||___/|_| |_| |_|   \__,_||_| |_| \___| \__||_| \___/ |_| |_||___/
+#
 ### Written by: michaelScopic (https://github.com/michaelScopic)
+
 
 ## Automatically run 'ls' after you cd into a dir
 cd() {
-    if [ -t 0 ]; then
-        ## Use icons if we are in a terminal emulator
-        builtin cd "$@" &&
-            command exa --icons --group-directories-first -hFga
-    else
-        ## Do not use icons if we are in a tty
-        builtin cd "$@" &&
-            command exa --group-directories-first -hFga
-    fi
+    builtin cd "$@" &&
+        [ -t 0 ] &&
+        ## Use icons if terminal isn't a tty
+        command exa --icons --group-directories-first -hFg ||
+        ## Don't use icons if terminal is a tty
+        command exa --group-directories-first -hFg
 }
 
 ## Recompile completion and then reload zsh
