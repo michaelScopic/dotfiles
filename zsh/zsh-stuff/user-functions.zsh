@@ -4,8 +4,15 @@
 
 ## Automatically run 'ls' after you cd into a dir
 cd() {
-    builtin cd "$@" &&
-        command exa --icons -hFga
+    if [ -t 0 ]; then
+        ## Use icons if we are in a terminal emulator
+        builtin cd "$@" \
+            && command exa --icons --group-directories-first -hFga
+    else
+        ## Do not use icons if we are in a tty
+        builtin cd "$@" \
+            && command exa --group-directories-first -hFga
+    fi
 }
 
 ## Recompile completion and then reload zsh
