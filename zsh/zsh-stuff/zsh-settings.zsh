@@ -77,7 +77,6 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 fi
 
 # - Bind keys not in terminfo -
-#bindkey -- ' '     exp_alias
 bindkey -- '^P'    up-history
 bindkey -- '^N'    down-history
 bindkey -- '^E'    end-of-line

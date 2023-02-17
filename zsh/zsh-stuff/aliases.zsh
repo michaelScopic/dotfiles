@@ -2,21 +2,19 @@
 
 ### Written by: michaelScopic (https://github.com/michaelScopic)
 
-#### --- Defualt to nano (for new users) if $EDITOR is not set ---
-if [ "$EDITOR" = "" ]; then
-    export EDITOR=$(which nano)
-    #export EDITOR=$(which vim)
-fi
+DISTRO_ALIAS_DIR="$HOME/.config/zsh/dist-aliases" ## <- Directory for distro-specific aliases
 
-distAliasDir="$HOME/.config/zsh/dist-aliases" ## <- Directory for distro-specific aliases
+#### Uncomment below to expand aliases as you type them
+#bindkey -- ' ' exp_alias
+## eg: typing 'ls' then pressing space will make it appear as 'exa $EXA_OPTIONS'
 
 #### --- Set aliases according to terminal ---
 if [ -t 0 ]; then
     ## If terminal is a psudo-terminal/terminal emulator, then use icons
-    export EXA_OPTIONS="--icons -hFg"
+    export EXA_OPTIONS="--icons --group-directories-first -hFg"
 else
     ## If terminal is attacted to /dev/tty*, then do not use icons
-    export EXA_OPTIONS="-hFg"
+    export EXA_OPTIONS="--group-directories-first -hFg"
 fi
 
 if [ "$TERM" == "xterm-kitty" ]; then
@@ -36,21 +34,23 @@ alias grep="grep --color=auto"
 #### - Booting/GRUB -
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias grub-config="sudo grub-configurator"
+alias edit-fstab="sudo vim /etc/fstab"
 alias cum="echo -e 'System rebooting...\nGoodbye!'; sudo reboot"
 alias kys="echo -e 'System shutting down...\nGoodbye!'; sudo shutdown now"
 
 #### - Config editing -
-alias zshrc="$EDITOR ~/.zshrc"
-alias zsh-aliases="$EDITOR ~/.config/zsh/aliases.zsh"
+alias zshrc="vim ~/.zshrc"
+alias zsh-aliases="vim ~/.config/zsh/aliases.zsh"
 alias ls-aliases="cat ~/.config/zsh/aliases.zsh"
-alias zsh-functs="$EDITOR ~/.config/zsh/user-functions.zsh"
-alias kitty-config="$EDITOR ~/.config/kitty/kitty.conf"
-alias chadwmrc="$EDITOR ~/.config/chadwm/scripts/run.sh"
-alias chadwm-config="$EDITOR ~/.config/chadwm/chadwm/config.def.h"
+alias zsh-functs="vim ~/.config/zsh/user-functions.zsh"
+alias kitty-config="vim ~/.config/kitty/kitty.conf"
+alias chadwmrc="vim ~/.config/chadwm/scripts/run.sh"
+alias chadwm-config="vim ~/.config/chadwm/chadwm/config.def.h"
 
 #### - Networking -
 alias virt-man_net_start="sudo virsh net-start default" ## <-- For virt-manager
 alias nmcli="nmcli -p"                                  ## <- Make nmcli pretty
+alias ip="ip -c"
 alias nm-stat="nmcli dev status"
 alias ls-wifi="nmcli dev wifi list"
 alias wifi-restart="nmcli radio wifi off && nmcli radio wifi on"
@@ -60,17 +60,18 @@ alias wifi-on="nmcli radio wifi on"
 #### - Misc. -
 alias nut="clear; neofetch"
 #alias docker="podman" ## <- Uncomment if you use podman
-alias free="free -mt"
+alias free="free -mth"
 alias du="du -h"
 alias df="df -h"
 alias xrmerge="xrdb -merge ~/.Xresources"
 alias reload-sh="exec zsh"
-alias e="echo 'Goodbye!'; sleep 0.2; exit"
-alias quit="echo 'Goodbye!'; sleep 0.2; exit"
+alias exit="echo 'Goodbye!'; sleep 0.2; exit"
+alias e="exit"
+alias quit="exit"
 
 #### - Distro aliases -
 ## Uncomment out the distro that you use
-#source "$distAliasDir/opensuse.zsh"    ## <- For OpenSUSE
-#source "$distAliasDir/debian.zsh"      ## <- For Debian/Ubuntu
-#source "$distAliasDir/archLinux.zsh"   ## <- For Arch Linux
-#source "$distAliasDir/rhel.zsh"        ## <- For Fedora/CentOS/RHEL
+#source "$DISTRO_ALIAS_DIR/opensuse.zsh"    ## <- For OpenSUSE
+#source "$DISTRO_ALIAS_DIR/debian.zsh"      ## <- For Debian/Ubuntu
+#source "$DISTRO_ALIAS_DIR/archLinux.zsh"   ## <- For Arch Linux
+#source "$DISTRO_ALIAS_DIR/rhel.zsh"        ## <- For Fedora/CentOS/RHEL

@@ -6,12 +6,12 @@
 cd() {
     if [ -t 0 ]; then
         ## Use icons if we are in a terminal emulator
-        builtin cd "$@" \
-            && command exa --icons --group-directories-first -hFga
+        builtin cd "$@" &&
+            command exa --icons --group-directories-first -hFga
     else
         ## Do not use icons if we are in a tty
-        builtin cd "$@" \
-            && command exa --group-directories-first -hFga
+        builtin cd "$@" &&
+            command exa --group-directories-first -hFga
     fi
 }
 
