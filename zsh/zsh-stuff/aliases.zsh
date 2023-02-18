@@ -27,7 +27,7 @@ DISTRO_ALIAS_DIR="$HOME/.config/zsh/dist-aliases"
 
 #### Default to vim if $EDITOR is not set
 [ -z $EDITOR ] &&
-    export $EDITOR=vim
+    export EDITOR=vim
 
 #### - File/directories -
 alias ls="exa $EXA_OPTIONS"
