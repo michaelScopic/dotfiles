@@ -2,22 +2,26 @@
 
 # Written by: michaelScopic (https://github.com/michaelScopic)
 
-alias up="sudo apt update; sudo apt upgrade"
-alias full-up="sudo apt update; sudo apt full-upgrade"
-alias install="sudo apt install"
-alias uninstall="sudo apt uninstall"
-alias autoremove="sudo apt autoremove"
-alias reinstall="sudo apt reinstall"
-alias apt-sources="sudo apt edit-sources"
-alias pkg-search="apt-cache search"
-alias pkg-show="apt show"
+# - apt-get aliases -
+alias up="sudo apt-get update; sudo apt-get upgrade"
+alias full-up="sudo apt-get update; sudo apt-get full-upgrade"
+alias in-pkg="sudo apt-get install"
+alias rm-pkg="sudo apt-get uninstall"
+alias autoremove="sudo apt-get autoremove"
+alias reinstall="sudo apt-get reinstall"
+alias apt-get-sources="sudo apt edit-sources"
+alias search-pkg="apt-cache search"
+alias show-pkg="apt-cache show"
 
 
 # - Nala aliases -
 ## Uncomment this section if you use nala (https://github.com/volitank/nala)
 #alias up="sudo nala update; sudo nala upgrade"
-#alias install="sudo nala install"
-#alias pkg-search="nala search"
-#alias apt-mirrors="sudo nala fetch"
+#alias in-pkg="sudo nala install"
+#alias rm-pkg="sudo nala remove"
+#alias search-pkg="nala search"
+#alias apt-get-mirrors="sudo nala fetch"
 
 
+# - Alias to edit this file -
+alias debian-aliases="$EDITOR ~/.config/zsh/dist-aliases/debian.zsh"

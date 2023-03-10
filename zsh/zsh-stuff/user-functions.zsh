@@ -10,11 +10,7 @@
 ## Automatically run 'ls' after you cd into a dir
 cd() {
     builtin cd "$@" &&
-        [ -t 0 ] &&
-        ## Use icons if terminal isn't a tty
-        command exa --icons --group-directories-first -hFg ||
-        ## Don't use icons if terminal is a tty
-        command exa --group-directories-first -hFg
+        command exa --icons --group-directories-first -hFg
 }
 
 ## Recompile completion and then reload zsh

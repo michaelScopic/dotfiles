@@ -18,15 +18,22 @@ if [[ $- != *i* ]]; then
     return
 fi
 
+# - Default to vim if $EDITOR is unset -
+[ -z $EDITOR ] && 
+    export EDITOR=vim
+
+
 #### - Export enviornment vars if needed -
 export PATH=$HOME/.local/bin:$PATH
 #export VIEWER=nvim
 #export EDITOR=nvim
 export BAT_THEME="base16"
 
+
 #### - Declare vars for ZSH config dirs -
 export ZSH_CONFIG="$HOME/.config/zsh"
 export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
+
 
 ################################
 # --- Start sourcing files --- #
@@ -47,8 +54,9 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 . "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 . "$ZSH_PLUGINS/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
 
+
 # - Start prompt -
-if command -v starship >/dev/null; then
+if [ "$(command -v starship >/dev/null)" ]; then
     # If starship is installed, then start it
     eval "$(starship init zsh)"
 else
@@ -57,8 +65,12 @@ else
     prompt bart
 fi
 
+
 # - Autostart -
 ## Uncomment stuff you want to start automatically, like merging .Xresources
 #neofetch
 #pfetch
-#xrdb -merge ~/.Xresources
+
+# - Merge .Xresources if it exists -
+[ -f ~/.Xresources ] &&
+    xrdb -merge ~/.Xresources
