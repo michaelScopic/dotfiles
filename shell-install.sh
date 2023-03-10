@@ -344,8 +344,9 @@ function install_zsh() {
         cp -v zsh/zshrc "$HOME/.zshrc"
 
         # Backup .config/zsh/ if exists
+        msg_info "Creating a backup of '${cyan}~/.config/zsh/${reset}'."
         mkdir -v "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak"
-        cp -v "$HOME/.config/zsh/*" "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak/" 2>/dev/null
+        cp -r "$HOME/.config/zsh/" "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak/" 
 
         # Copy zsh-stuff/ to ~/.config/zsh/
         cp -vr zsh/zsh-stuff/* "$HOME/.config/zsh/"
