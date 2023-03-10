@@ -56,7 +56,7 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 
 
 # - Start prompt -
-if [ "$(command -v starship >/dev/null)" ]; then
+if command -v starship >/dev/null; then
     # If starship is installed, then start it
     eval "$(starship init zsh)"
 else
