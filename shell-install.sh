@@ -112,7 +112,7 @@ function info() {
 function dependencies() {
     msg_info "Installing dependencies for ZSH."
     msg_info "What will be installed:"
-    msg_info "git kitty htop neofetch zsh curl wget fzf exa unzip vim rsync \n"
+    msg_info "git kitty htop neofetch zsh curl wget fzf exa unzip vim rsync grc \n"
     sleep 2
 
     if [[ $(uname -s) == "Linux" ]] && [[ $(uname -m) == "x86_64" ]]; then
@@ -121,7 +121,7 @@ function dependencies() {
         if command -v apt-get >/dev/null; then
             # Test if package manager is 'apt-get', for Debian/Ubuntu distros
             msg_info "Found Debian/Ubuntu.\n"
-            sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim
+            sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim grc
             ## 'rsync' isn't installing when put in the above line, installing it seperately
             sudo apt-get install -y rsync
 
@@ -147,21 +147,21 @@ function dependencies() {
         elif command -v pacman >/dev/null; then
             # Test if 'pacman' is the package manager, for Arch based distros
             msg_info "Found Arch Linux.\n"
-            sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa rsync unzip vim
+            sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa rsync unzip vim grc
             msg_success "Done installing dependencies! \n"
 
         elif command -v zypper >/dev/null; then
             # Test if 'zypper' if the pacakge manager, for openSUSE distros
             ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
             msg_info "Found openSUSE.\n"
-            sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim
+            sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
             msg_success "Done installing dependencies! \n"
 
         elif command -v dnf >/dev/null; then
             # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
             ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
             msg_info "Found RHEL/Fedora Linux.\n"
-            sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa rsync unzip vim
+            sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa rsync unzip vim grc
             # Install starship
             curl -sS https://starship.rs/install.sh | sh
             msg_success "Done installing dependencies! \n"
@@ -169,13 +169,13 @@ function dependencies() {
         elif command -v xbps-install >/dev/null; then
             # Test if 'xbps-install' is present, for Void Linux
             msg_info "Found Void Linux.\n"
-            sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim
+            sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
             msg_success "Done installing dependencies! \n"
 
         elif command -v nix-env >/dev/null; then
             # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
             msg_info "Found NixOS/nixpkgs.\n"
-            sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa starship rsync unzip vim
+            sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa starship rsync unzip vim grc
             msg_success "Done installing dependencies! \n"
 
             # - Show user how to change their default shell in NixOS -
@@ -316,6 +316,10 @@ function install_zsh() {
     # fish -like cd
     git clone https://github.com/changyuheng/zsh-interactive-cd.git ~/.config/zsh/plugins/zsh-interactive-cd/ 2>/dev/null &&
         echo -e "${blue}Finished installing fish cd...${reset}"
+
+    # Colorizer
+    git clone https://github.com/zpm-zsh/colorize.git ~/.config/zsh/plugins 2>/dev/null &&
+        echo -e "${blue}Finished installing Colorizer...${reset}"
 
     msg_success "Finished installing plugins!"
 

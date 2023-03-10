@@ -53,7 +53,7 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 . "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"
 . "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 . "$ZSH_PLUGINS/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
-
+. "$ZSH_PLUGINS/colorize/colorize.plugin.zsh"
 
 # - Start prompt -
 if command -v starship >/dev/null; then
