@@ -318,7 +318,7 @@ function install_zsh() {
         echo -e "${blue}Finished installing fish cd...${reset}"
 
     # Colorizer
-    git clone https://github.com/zpm-zsh/colorize.git ~/.config/zsh/plugins 2>/dev/null &&
+    git clone https://github.com/zpm-zsh/colorize.git ~/.config/zsh/plugins/colorize 2>/dev/null &&
         echo -e "${blue}Finished installing Colorizer...${reset}"
 
     msg_success "Finished installing plugins!"
