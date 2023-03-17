@@ -13,7 +13,6 @@ alias apt-get-sources="sudo apt edit-sources"
 alias search-pkg="apt-cache search"
 alias show-pkg="apt-cache show"
 
-
 # - Nala aliases -
 ## Uncomment this section if you use nala (https://github.com/volitank/nala)
 #alias up="sudo nala update; sudo nala upgrade"
@@ -21,7 +20,6 @@ alias show-pkg="apt-cache show"
 #alias rm-pkg="sudo nala remove"
 #alias search-pkg="nala search"
 #alias apt-get-mirrors="sudo nala fetch"
-
 
 # - Alias to edit this file -
 alias debian-aliases="$EDITOR ~/.config/zsh/dist-aliases/debian.zsh"
