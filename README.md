@@ -23,7 +23,7 @@ This was also a perfect oppurtunity to learn Bash/Shell scripting.
 
 ## Disclamer
 
-I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient.
+I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works. 
 
 ## Features
 
@@ -33,32 +33,24 @@ Shell script features:
 - Interactive
 - Automation for deploying dotfiles:
   - Installs needed dependencies (on supported distros)
+    - Vast distro support: Ubuntu/Debian, Arch Linux, RHEL/Fedora, openSUSE TW, Void Linux, NixOS/nixpkgs
   - Installs ZSH plugins and then backup and overwrite user's zshrc
   - Backs up user's current configs (in case they want to rollback)
   - Overwrites user's configs with the ones in this repo
 
 ## TODO
 
-- [ ] MacOS support _<- I won't be able to do this as I don't use a Mac, so a PR is appreciated_
-  - [ ] Add MacOS support/dependencies in `scripts/dependencies.sh`
-- [x] Make overwriting function in `deploy.sh` interactive
+- [ ] Upload ChadWM configs
+  - [ ] Impliment a new script to automate deploying configs, like `shell-install.sh`
+- [x] Depricate `deploy.sh.bak` and `scripts/`
+  - [x] Remove `deploy.sh.bak` and `scripts/` 
+- [x] Make everything a function in `shell-install.sh`
+- [x] Make functions for printing info/notes, errors, and success messages
+- [x] Detect if user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
 - [x] Add fonts
-  - [ ] Auotmate installing fonts in `deploy.sh`
-- [x] `shell-install` _<- Successor to `deploy.sh`_
-- [ ] Remove `deploy.sh.bak`
-- [ ] Remove everything in `scripts/`
-
-## Progress
-
-### Scripts
-
-- [x] `scripts/fonts.sh` _<- Installs fonts (DEPRECATED)_
-- [x] `scripts/info.sh` _<- Prints info about the system it's running on (DEPRECATED)_
-- [x] `scripts/init.sh` _<- Initalizer script (DEPRECATED)_
-- [x] `scripts/pluginInstall.sh` _<- Installs ZSH plugins, optionally calls `dependencies.sh` (DEPRECATED)_
-- [x] `scripts/dependencies.sh` _<- Installs dependencies on supported distros (DEPRECATED)_
-- [x] `deploy.sh` _<- DEPRECATED, please only use this script if `shell-install` doesn't work properly_
-- [x] `shell-install` _<- Automates installing shell related configs_
+  - [x] Auotmate installing fonts in `shell-install.sh`
+- [x] `shell-install.sh` _<- Successor to `deploy.sh`_
+- [x] Add support for NixOS
 
 ### Preview pics
 
@@ -72,7 +64,7 @@ Shell script features:
 - [x] `htoprc`
 - [x] `README.md`
 
-### `starship`
+### `config/starship`
 
 - [x] `config/starship/rounded.toml`
 - [x] `config/starship/plain-text-symbols.toml`
@@ -123,7 +115,7 @@ Look at the possible agruments to use in the script by running:
 ./shell-install
 ```
 
-You can use these following arguments with this script: `all`, `zsh`, `backup`, `fonts`, or `overwrite`.
+You can use these following arguments with this script: `all`, `zsh`, `backup`, `fonts`, `overwrite`, or `info`.
 
 So if you want to run all of them, just do:
 
@@ -141,7 +133,7 @@ If you need help or something does not work as expected, please contact me on Di
 
 I am almost _always_ online, and I will usually respond very quickly.
 
-- NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially people I don't know.
+- NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, for especially people I don't know.
 
 ## Credits
 
@@ -154,5 +146,3 @@ Rounded starship prompt (`config/starship/rounded.toml`) is from [Syndrizzle's d
 Plain text starship prompt (`config/starship/plain-text-symbols.toml`) are taken from [Starship's offical prompt presets](https://starship.rs).
 
 All fonts in `fonts/` are from [Nerdfonts.com](https://www.nerdfonts.com).
-
-

@@ -1,3 +1,11 @@
+#            _                  _    _    _                    
+#  ____ ___ | |__    ___   ___ | |_ | |_ (_) _ __    __ _  ___ 
+# |_  // __|| '_ \  / __| / _ \| __|| __|| || '_ \  / _` |/ __|
+#  / / \__ \| | | | \__ \|  __/| |_ | |_ | || | | || (_| |\__ \
+# /___||___/|_| |_| |___/ \___| \__| \__||_||_| |_| \__, ||___/
+#                                                   |___/      
+## Credits: ArchLabs Linux (https://archlabslinux.com)
+
 # - Completion cache path setup -
 typeset -g comppath="$HOME/.cache"
 typeset -g compfile="$comppath/.zcompdump"
@@ -73,7 +81,6 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 fi
 
 # - Bind keys not in terminfo -
-#bindkey -- ' '     exp_alias
 bindkey -- '^P'    up-history
 bindkey -- '^N'    down-history
 bindkey -- '^E'    end-of-line

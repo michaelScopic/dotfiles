@@ -1,59 +1,45 @@
-# --- User functions ---
+#            _        __                      _    _
+#  ____ ___ | |__    / _| _   _  _ __    ___ | |_ (_)  ___   _ __   ___
+# |_  // __|| '_ \  | |_ | | | || '_ \  / __|| __|| | / _ \ | '_ \ / __|
+#  / / \__ \| | | | |  _|| |_| || | | || (__ | |_ | || (_) || | | |\__ \
+# /___||___/|_| |_| |_|   \__,_||_| |_| \___| \__||_| \___/ |_| |_||___/
+#
+### Written by: michaelScopic (https://github.com/michaelScopic)
 
-# Written by: michaelScopic (https://github.com/michaelScopic)
-
-#recomp_chadwm() {
-#     if [ -d "$HOME/.config/chadwm/chadwm" ]; then
-#         echo "--- Recompiling ChadWM... ---"
-#         cd "$HOME/.config/chadwm/chadwm/"
-#         rm -v config.h
-#         sudo make install 
-#         echo "Exit code: $?"
-#         echo "--- Done compiling ChadWM! ---"
-#         cd
-#     else
-#         echo "Could not find '~/.config/chadwm/chadwm/'. ABORTING!"
-#         return 1
-#     fi
-# }
- 
-
- cd() { ## Automatically run 'ls' after you cd into a dir
-
-	builtin cd "$@" && \
-        command lsd --color=auto -AF --group-directories-first
+## Automatically run 'ls' after you cd into a dir
+cd() {
+  builtin cd "$@" &&
+    command exa --icons --group-directories-first -hFg
 }
 
-
-src() { ## Recompile completion and then reload zsh
-
-    toload -U zrecompile
-	rm -rf "$compfile"*
-	compinit -u -d "$compfile"
-	zrecompile -p "$compfile"
-	exec zsh
+## Recompile completion and then reload zsh
+src() {
+  toload -U zrecompile
+  rm -rf "$compfile"*
+  compinit -u -d "$compfile"
+  zrecompile -p "$compfile"
+  exec zsh
 }
 
-extract() { 
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)    tar xvjf $1    ;;
-            *.tar.gz)    tar xvzf $1    ;;
-            *.tar.xz)    tar xf $1      ;;
-            *.bz2)        bunzip2 $1     ;;
-            *.rar)        unrar x $1     ;;
-            *.gz)        gunzip $1      ;;
-            *.tar)        tar xvf $1     ;;
-            *.tbz2)        tar xvjf $1    ;;
-            *.tgz)        tar xvzf $1    ;;
-            *.zip)        unzip $1       ;;
-            *.Z)        uncompress $1  ;;
-            *.7z)        7z x $1        ;;
-            *)        echo "Not sure how to decompress this: '$1'" ;;
-            esac
-    else
-        echo "'$1': Not a valid file."
-    fi
+## Extract different archive formats
+extract() {
+  if [ -f $1 ]; then
+    case $1 in
+    *.tar.bz2) tar xvjf $1 ;;
+    *.tar.gz) tar xvzf $1 ;;
+    *.tar.xz) tar xf $1 ;;
+    *.bz2) bunzip2 $1 ;;
+    *.rar) unrar x $1 ;;
+    *.gz) gunzip $1 ;;
+    *.tar) tar xvf $1 ;;
+    *.tbz2) tar xvjf $1 ;;
+    *.tgz) tar xvzf $1 ;;
+    *.zip) unzip $1 ;;
+    *.Z) uncompress $1 ;;
+    *.7z) 7z x $1 ;;
+    *) echo "Not sure how to decompress this: '$1'" ;;
+    esac
+  else
+    echo "'$1': Not a valid file."
+  fi
 }
-
-

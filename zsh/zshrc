@@ -1,33 +1,35 @@
-#		                 _
-#   	    	 _______| |__  _ __ ___
-#       		|_  / __| '_ \| '__/ __|
-#   	     _   / /\__ \ | | | | | (__ 
-#           (_) /___|___/_| |_|_|  \___|
-#
+#               _
+#     ____ ___ | |__   _ __  ___
+#    |_  // __|| '_ \ | '__|/ __|
+#  _  / / \__ \| | | || |  | (__
+# (_)/___||___/|_| |_||_|   \___|
 #
 # Written by: michaelScopic (https://github.com/michaelScopic)
-# Credits: ArchLabs Linux (https://archlabslinux.org)
 
-# Written by: michaelScopic (https://github.com/michaelScopic)
-# Credits: ArchLabs Linux (https://archlabslinux.org)
-
-# - Change $PATH if you need to -
-#export PATH=</path/to/bin/>:$PATH
+#       -> NOTE FOR NEW USERS: <-
+# Aliases are defined in: ~/.config/zsh/aliases.zsh
+# ZSH settings are set in: ~/.config/zsh/zsh-settings.zsh
+# Functions are defined in: ~/.config/zsh/user-functions.zsh
+# Distro specific aliases are defined in: ~/.config/zsh/dists-aliases/
 
 # - Check if shell is interactive -
 if [[ $- != *i* ]]; then
-	return
+  return
 fi
 
-# - Export enviornment vars if needed -
+# - Default to vim if $EDITOR is unset -
+[ -z $EDITOR ] &&
+  export EDITOR=vim
+
+#### - Export enviornment vars if needed -
+export PATH=$HOME/.local/bin:$PATH
 #export VIEWER=nvim
 #export EDITOR=nvim
 export BAT_THEME="base16"
 
-# - Set vars for ZSH config dirs -
+#### - Declare vars for ZSH config dirs -
 export ZSH_CONFIG="$HOME/.config/zsh"
 export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
-
 
 ################################
 # --- Start sourcing files --- #
@@ -36,32 +38,34 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 # - Source ZSH settings file -
 . "$ZSH_CONFIG/zsh-settings.zsh"
 
-# - Source user functions -
-. "$ZSH_CONFIG/user-functions.zsh"
-
 # - Source user aliases -
 . "$ZSH_CONFIG/aliases.zsh"
+
+# - Source user functions -
+. "$ZSH_CONFIG/user-functions.zsh"
 
 # - Source plugins -
 . "$ZSH_PLUGINS/fsh/fast-syntax-highlighting.plugin.zsh"
 . "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"
 . "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 . "$ZSH_PLUGINS/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
+. "$ZSH_PLUGINS/colorize/colorize.plugin.zsh"
 
 # - Start prompt -
 if command -v starship >/dev/null; then
-    # Test if 'starship' is a command
-    # If it is, then initalize starship prompt
-    eval "$(starship init zsh)"
+  # If starship is installed, then start it
+  eval "$(starship init zsh)"
 else
-    # If 'starship' isn't a command, fallback to a builtin prompt
-    autoload -U promptinit
-    promptinit
-    prompt bart
+  # If 'starship' isn't installed, fall back to a builtin prompt
+  autoload -U promptinit && promptinit # Load/initalize prompt
+  prompt bart
 fi
 
 # - Autostart -
+## Uncomment stuff you want to start automatically, like merging .Xresources
 #neofetch
 #pfetch
-#xrdb -merge ~/.Xresources
 
+# - Merge .Xresources if it exists -
+[ -f ~/.Xresources ] &&
+  xrdb -merge ~/.Xresources

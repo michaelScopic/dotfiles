@@ -4,20 +4,21 @@
 
 # - Installing/updating -
 alias up="sudo dnf update"
-alias upgrade="sudo dnf upgrade"
-alias install="sudo dnf install"
-alias uninstall="sudo dnf remove"
+alias in-pkg="sudo dnf install"
+alias rm-pkg="sudo dnf remove"
 alias autoremove="sudo dnf autoremove"
 alias reinstall="sudo dnf reinstall"
 alias downgrade="sudo dnf downgrade"
 
 # - Querying -
 alias what-provides="sudo dnf provides"
-alias pkg-search="dnf search"
-alias pkg-info="dnf info"
+alias search-pkg="dnf search"
+alias info-pkg="dnf info"
 
 # - Misc -
-alias pkg-clean="sudo dnf clean"
+alias dnf-clean="sudo dnf clean"
 alias dnf-regen="sudo dnf makecache"
 alias dnf-config="sudo $EDITOR /etc/dnf/dnf.conf"
 
+# - Alias to edit this file -
+alias rhel-aliases="$EDITOR ~/.config/zsh/dist-aliases/rhel.zsh"
