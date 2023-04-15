@@ -476,6 +476,8 @@ function install_zsh() {
 
     # Copy configs/ to ~/.config/zsh/
     cp -vr zsh/configs/* "$HOME/.config/zsh/"
+    cp -v config/.Xresources "$HOME"
+
     msg_success "Done copying ZSH configs!\n"
 
     return 0
@@ -544,6 +546,7 @@ function install_zsh() {
 
     # Copy configs/ to ~/.config/zsh/
     cp -vr zsh/configs/* "$HOME/.config/zsh/"
+    cp -v config/.Xresources "$HOME"
     msg_success "Done copying ZSH configs!\n"
 
   else
