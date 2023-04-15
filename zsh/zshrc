@@ -1,27 +1,25 @@
 #               _
-#     ____ ___ | |__   _ __  ___  
-#    |_  // __|| '_ \ | '__|/ __| 
-#  _  / / \__ \| | | || |  | (__  
-# (_)/___||___/|_| |_||_|   \___| 
+#     ____ ___ | |__   _ __  ___
+#    |_  // __|| '_ \ | '__|/ __|
+#  _  / / \__ \| | | || |  | (__
+# (_)/___||___/|_| |_||_|   \___|
 #
 # Written by: michaelScopic (https://github.com/michaelScopic)
 
-#       -> NOTE FOR NEW USERS: <- 
+#       -> NOTE FOR NEW USERS: <-
 # Aliases are defined in: ~/.config/zsh/aliases.zsh
 # ZSH settings are set in: ~/.config/zsh/zsh-settings.zsh
 # Functions are defined in: ~/.config/zsh/user-functions.zsh
 # Distro specific aliases are defined in: ~/.config/zsh/distro-aliases/
 
-
 # - Check if shell is interactive -
 if [[ $- != *i* ]]; then
-    return
+  return
 fi
 
 # - Default to vim if $EDITOR is unset -
-[ -z $EDITOR ] && 
-    export EDITOR=vim
-
+[ -z $EDITOR ] &&
+  export EDITOR=vim
 
 #### - Export enviornment vars if needed -
 export PATH=$HOME/.local/bin:$PATH
@@ -29,11 +27,9 @@ export VIEWER=nvim
 export EDITOR=nvim
 export BAT_THEME="base16"
 
-
 #### - Declare vars for ZSH config dirs -
 export ZSH_CONFIG="$HOME/.config/zsh"
 export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
-
 
 ################################
 # --- Start sourcing files --- #
@@ -61,17 +57,15 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # - Source custom files -
 . $ZSH_CONFIG/custom/*.zsh
 
-
 # - Start prompt -
 if command -v starship >/dev/null; then
-    # If starship is installed, then start it
-    eval "$(starship init zsh)"
+  # If starship is installed, then start it
+  eval "$(starship init zsh)"
 else
-    # If 'starship' isn't installed, fall back to a builtin prompt
-    autoload -U promptinit && promptinit # Load/initalize prompt
-    prompt bart
+  # If 'starship' isn't installed, fall back to a builtin prompt
+  autoload -U promptinit && promptinit # Initalize/load prompt
+  prompt bart
 fi
-
 
 # - Autostart -
 ## Uncomment stuff you want to start automatically, like merging .Xresources
@@ -79,5 +73,5 @@ fi
 #pfetch
 
 # - Merge .Xresources if it exists -
-[ -f ~/.Xresources ] &&
-    xrdb -merge ~/.Xresources
+[ -f "$HOME/.Xresources" ] &&
+  xrdb -merge ~/.Xresources
