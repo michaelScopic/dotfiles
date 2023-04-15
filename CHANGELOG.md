@@ -1,5 +1,25 @@
 # Changelog
 
+## April 14, 2023
+
+- `shell-install.sh`
+  - Added a server preset with `--server`
+    - Skips installing kitty
+    - Skips installing fonts
+    - Only backups/overwrites htop and Starship configs
+  - Added more messages: `msg_warn` and `msg_fatal`.
+    - `msg_warn` just warns user about something
+    - `msg_fatal` gives an error to a user and then exits shortly after
+  - New help menu
+
+- Renamed directories
+
+  - `.config/` -> `config/`
+  - `zsh/zsh-stuff/` -> `zsh/configs/`
+
+- `zshrc`
+  - Changed how `zsh-autosuggestions` should complete suggestions
+
 ## Feb 10, 2023
 
 - Deprecated `lsd`, fully switched to `exa`
