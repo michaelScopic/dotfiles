@@ -34,27 +34,35 @@ function init() {
   cyan='\e[36m'
   cyanbg='\e[46m'
 
-  # - Set 'info', 'error', 'note', 'success' message functions -
+  # - Set message functions -
   msg_info() {
-    echo -e "${yellow}${bold}[INFO]${reset} $@ ${reset}"
+    echo -e "${cyan}${bold}[ INFO ]${reset} $@ ${reset}"
   }
 
   msg_error() {
-    echo -e "${red}${bold}[ERROR]${reset} $@ ${reset}"
+    echo -e "${red}${bold}[ ERROR ]${reset} $@ ${reset}"
   }
 
   msg_success() {
-    echo -e "${green}${bold}[SUCCESS]${reset} $@ ${reset}"
+    echo -e "${green}${bold}[ SUCCESS ]${reset} $@ ${reset}"
+  }
+
+  msg_warn() {
+    echo -e "${yellow}${bold}[ WARNING ]${reset} $@ ${reset}"
   }
 
   msg_note() {
-    echo -e "${blue}${bold}[NOTE]${reset} $@ ${reset}"
+    echo -e "${blue}${bold}[ NOTE ]${reset} $@ ${reset}"
+  }
+
+  msg_fatal() {
+    echo -e "${red}${bold}[ FATAL ]${reset} $@ ${reset}"
   }
 
   msg_success "Done setting colors and message functions."
 
   # - Source /etc/os-release -
-  if [[ -f /etc/os-release ]]; then
+  if [ -f /etc/os-release ]; then
     . /etc/os-release
     msg_success "Found and sourced '${cyan}/etc/os-release${reset}'."
   else
@@ -68,20 +76,33 @@ function init() {
   DOTFILES_DIR=$(realpath "$0" | rev | cut -d '/' -f 2- | rev)
   BACKUP_FORMAT=$(date +%F_%I-%M-%S-%p)
 
-  msg_info "Current directory: ${cyan}$CURRENT_DIR${reset}"
-  msg_info "Dotfiles directory: ${cyan}$DOTFILES_DIR${reset}"
-  msg_info "Backup format: ${cyan}$BACKUP_FORMAT${reset}"
+  echo -e "-> Current directory: ${cyan}$CURRENT_DIR${reset}"
+  echo -e "-> Dotfiles directory: ${cyan}$DOTFILES_DIR${reset}"
+  echo -e "-> Backup format: ${cyan}$BACKUP_FORMAT${reset}"
 
-  msg_note "A temporary directory will be made in '${cyan}$BUILD_DIR${reset}' if needed. \n"
+  msg_note "A temporary directory will be made in '${cyan}$BUILD_DIR${reset}' if needed."
 
   if [ "$DOTFILES_DIR" = '' ]; then
-    msg_error "${bold}-------------------------------------------------------------------------"
-    msg_error "${bold}--${reset} WARNING: \$DOTFILES_DIR could not be set. You will encounter errors. ${bold}--"
-    msg_error "${bold}-------------------------------------------------------------------------"
-    msg_error "init() has returned exit code 1 \n"
-    msg_info "Initalization has completed with errors."
+    msg_fatal "${bold}--------------------------------------------"
+    msg_fatal "${bold}--${reset} ${red}FATAL: ${cyan}\$DOTFILES_DIR${reset} could not be set. ${reset}${bold}--"
+    msg_fatal "${bold}--------------------------------------------"
+    msg_note "You may need to install ${blue}binutils${reset} using your package manager."
+    msg_fatal "${yellow}init()${reset} has returned exit code 1. \n"
+    msg_fatal "Initalization has completed with errors. Aborting!"
     sleep 1.5
     return 1
+  fi
+
+  if [ "$SERVER_PRESET" == "TRUE" ]; then
+    msg_info "Using the server preset. This uses minimal settings and is non-interactive."
+    msg_warn "This answers 'yes' to all questions, which can result in overwriting the following files/directories:"
+    echo -e "\
+    '${cyan}~/.zshrc${reset}'
+    '${cyan}~/.config/zsh/${reset}'
+    '${cyan}~/.config/htop/${reset}'
+    '${cyan}~/.config/starship.toml${reset}' (If it exists)"
+    msg_warn "Proceed with caution. You have been warned."
+    sleep 2
   fi
 
   # - Finish up -
@@ -90,157 +111,32 @@ function init() {
   return
 }
 
-# --- Function for printing info ---
+######################
+# --- Print info --- #
+######################
 function info() {
-    get_distro() {
-        local distro_name
-        if command -v lsb_release >/dev/null; then
-            distro_name=$(lsb_release -ds)
-        else
-            if [[ ! -f /etc/os-release ]]; then
-                distro_name="${PRETTY_NAME}"
-            else 
-                distro_name="Unknown"
-            fi
-        fi
-        echo "$distro_name"
-    }
-
-    get_cpu() {
-        # Get model
-        local cpu_model
-        cpu_model=$(grep 'model name' /proc/cpuinfo | uniq | cut -d ':' -f 2-)
-
-        # Get cores/threads
-        local cpu_threads
-        local cpu_cores
-        cpu_threads=$(nproc)
-        cpu_cores=$(grep -m 1 'cpu cores' /proc/cpuinfo | cut -d ':' -f 2-)
-
-        # Print result
-        echo "$cpu_model ($cpu_cores/$cpu_threads)"
-    }
-
-    # --- Print out basic info about system ---
-    echo -e "${bold}---------- Basic info ----------${reset}"
-    echo -e "${green}${bold}Distro:${reset} $(get_distro)"
-    # Print kernel version
-    echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
-    # Print shell
-    echo -e "${blue}${bold}Shell:${reset} $SHELL"
-    # Print hostname
-    echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname 2>/dev/null || uname -n)"
-    # Print CPU name
-    #    echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
-    echo -e "${red}${bold}CPU:${reset} $(get_cpu)"
-    # Print current user
-    echo -e "${cyan}${bold}User:${reset} $(whoami)"
-    echo -e "${bold}-------------------------------- \n${reset}"
-
-    return
+  # --- Print out basic info about system ---
+  echo -e "${bold}---------- Basic info ----------${reset}"
+  echo -e "${green}${bold}Distro:${reset} ${PRETTY_NAME}"
+  # Print kernel version
+  echo -e "${yellow}${bold}Kernel:${reset} $(uname -srm)"
+  # Print shell
+  echo -e "${blue}${bold}Shell:${reset} $SHELL"
+  # Print hostname
+  echo -e "${purple}${bold}Hostname:${reset} $(cat /etc/hostname 2>/dev/null || uname -n)"
+  # Print CPU name
+  echo -e "${red}${bold}CPU:${reset} $(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g')"
+  # Print current user
+  echo -e "${cyan}${bold}User:${reset} $(whoami)"
+  echo -e "${bold}-------------------------------- \n${reset}"
 }
 
-# --- Install dependencies ---
+################################
+# --- Install dependencies --- #
+################################
 function dependencies() {
-  msg_info "Installing dependencies for ZSH."
-  msg_info "What will be installed:"
-  msg_info "git kitty htop neofetch zsh curl wget fzf exa unzip vim rsync grc \n"
-  sleep 2
-
-  if [[ $(uname -s) == "Linux" ]] && [[ $(uname -m) == "x86_64" ]]; then
-    # Test if host is running Linux AND the cpu is x86_64 (amd64) based
-
-    if command -v apt-get >/dev/null; then
-      # Test if package manager is 'apt-get', for Debian/Ubuntu distros
-      msg_info "Found Debian/Ubuntu.\n"
-      sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim grc
-      ## 'rsync' isn't installing when put in the above line, installing it seperately
-      sudo apt-get install -y rsync
-
-      # Installing lsd/exa
-      ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
-      ## Downside of doing it this way is that the .deb files might not be the most recent ones
-      msg_info "Making a temporary build directory..."
-      mkdir "$BUILD_DIR"
-      cd "$BUILD_DIR"
-      # Get the lsd and exa .deb files
-      wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null &&
-        # Install the .deb files
-        sudo dpkg -i ./*.deb &&
-        cd "$repoDir"
-      msg_info "Done. Removing temporary build directory..."
-      rm -vrf "${BUILD_DIR}"
-
-      # Installing starship
-      msg_info "Installing Starship using the offical installer script..."
-      curl -sS https://starship.rs/install.sh | sh
-      msg_success "Done installing dependencies! \n"
-
-    elif command -v pacman >/dev/null; then
-      # Test if 'pacman' is the package manager, for Arch based distros
-      msg_info "Found Arch Linux.\n"
-      sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa rsync unzip vim grc
-      msg_success "Done installing dependencies! \n"
-
-    elif command -v zypper >/dev/null; then
-      # Test if 'zypper' if the pacakge manager, for openSUSE distros
-      ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
-      msg_info "Found openSUSE.\n"
-      sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
-      msg_success "Done installing dependencies! \n"
-
-    elif command -v dnf >/dev/null; then
-      # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
-      ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
-      msg_info "Found RHEL/Fedora Linux.\n"
-      sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa rsync unzip vim grc
-      # Install starship
-      curl -sS https://starship.rs/install.sh | sh
-      msg_success "Done installing dependencies! \n"
-
-    elif command -v xbps-install >/dev/null; then
-      # Test if 'xbps-install' is present, for Void Linux
-      msg_info "Found Void Linux.\n"
-      sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
-      msg_success "Done installing dependencies! \n"
-
-    elif command -v nix-env >/dev/null; then
-      # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
-      msg_info "Found NixOS/nixpkgs.\n"
-      sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa starship rsync unzip vim grc
-      msg_success "Done installing dependencies! \n"
-
-      # - Show user how to change their default shell in NixOS -
-      msg_note "You might need to edit '${cyan}/etc/nixos/configuration.nix${reset}' and change your default shell to zsh."
-      msg_note " --- Example (/etc/nixos/configuration.nix) --- "
-      msg_note "users.users.alice = {"
-      msg_note "  isNormalUser = true;"
-      msg_note "  extraGroups = [ \"wheel\" ];"
-      msg_note "${green}  shell = pkgs.zsh; # <-- Change shell here${reset}"
-      msg_note "  packages = with pkgs; [ "
-      msg_note "  ];"
-      msg_note "};"
-      msg_note " ---------------------------------------------- \n"
-      sleep 3
-
-    else
-      # If above package managers aren't present, then give an error
-      msg_error "Unable to detect your package manager!"
-      msg_error "You will need to install the dependencies yourself. \n"
-      msg_info "Supported package managers are:"
-      msg_info "'apt-get', 'pacman', 'zypper', 'dnf', 'xbps-install', and 'nix-env' \n"
-      msg_note "Message me on Discord (${purple}Michael_Scopic.zsh#0102${reset}) if you want to request adding support for another package manager.\n"
-      msg_info "Required packages are:"
-      msg_info "zsh curl wget git fzf exa lsd rsync unzip\n"
-      msg_info "Optional packages:"
-      msg_info "neofetch kitty vim \n"
-
-      sleep 2
-      return 1
-
-    fi
-
-  else
+  # Test if host is running Linux AND the cpu is x86_64 (amd64) based
+  if [[ $(uname -s) != "Linux" ]] || [[ $(uname -m) != "x86_64" ]]; then
     # If host is not Linux based and CPU is not x86_64, then print an error.
     # BSD or Darwin hosts or hosts that are not x86 will encounter this.
     msg_error "Detected OS is ${bold}not${reset} x86_64 Linux."
@@ -248,24 +144,240 @@ function dependencies() {
     msg_error "There is no support for Linux hosts that aren't x86_64 (amd64)."
     msg_error "You will need to install the dependencies yourself. \n"
     sleep 3
-
     return 1
+  fi
+
+  #
+  # -- SERVER INSTALLATION --
+  #
+  if [ "$SERVER_PRESET" == "TRUE" ]; then
+    echo -e "\
+    #############################################
+    # ${bold}${blue}             INSTALLING PACKAGES         ${reset} #
+    #                                           # 
+    # The following packages will be installed: #
+    #  ${cyan} git ${reset}                                    #
+    #  ${cyan} htop ${reset}                                   # 
+    #  ${cyan} zsh ${reset}                                    #
+    #  ${cyan} curl ${reset}                                   #
+    #  ${cyan} wget ${reset}                                   #
+    #  ${cyan} fzf ${reset}                                    #
+    #  ${cyan} exa ${reset}                                    #
+    #  ${cyan} vim ${reset}                                    #
+    #  ${cyan} grc ${reset}                                    #
+    #  ${cyan} starship ${reset}                               #
+    #############################################"
+
+    if command -v apt-get >/dev/null; then
+      # Test if package manager is 'apt-get', for Debian/Ubuntu distros
+      msg_info "Found Debian/Ubuntu.\n"
+      sudo apt-get install --no-install-recommends -y git htop neofetch zsh curl wget fzf exa unzip vim grc
+      ## 'rsync' isn't installing when put in the above line, installing it seperately
+      sudo apt-get install -y rsync
+
+      # Installing lsd/exa
+      ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
+      ## Downside of doing it this way is that the .deb files might not be the most recent ones
+      msg_info "Making a temporary build directory..."
+      mkdir "${BUILD_DIR}" && cd "${BUILD_DIR}"
+      # Get the exa .deb files
+      wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null &&
+        # Install the .deb files
+        sudo dpkg -i ./*.deb
+      # Installing starship
+      msg_info "Installing Starship using the offical installer script..."
+      curl -sS https://starship.rs/install.sh >install-starship.sh &&
+        chmod +x install-starship.sh &&
+        ./install-starship.sh -y
+      msg_success "Done installing dependencies! \n"
+      msg_info "Done. Removing temporary build directory..."
+      rm -vrf "${BUILD_DIR}"
+    elif command -v pacman >/dev/null; then
+      # Test if 'pacman' is the package manager, for Arch based distros
+      msg_info "Found Arch Linux.\n"
+      sudo pacman -S --noconfirm starship htop neofetch zsh curl wget git htop fzf exa rsync unzip vim grc
+      msg_success "Done installing dependencies! \n"
+
+    elif command -v zypper >/dev/null; then
+      # Test if 'zypper' if the pacakge manager, for openSUSE distros
+      ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
+      msg_info "Found openSUSE.\n"
+      sudo zypper -n install htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+      msg_success "Done installing dependencies! \n"
+
+    elif command -v dnf >/dev/null; then
+      # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
+      ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
+      msg_info "Found RHEL/Fedora Linux.\n"
+      sudo dnf install -y htop neofetch zsh curl wget git fzf exa rsync unzip vim grc
+      # Install starship
+      mkdir "${BUILD_DIR}" && cd "${BUILD_DIR}"
+      curl -sS https://starship.rs/install.sh >install-starship.sh &&
+        chmod +x install-starship.sh &&
+        ./install-starship.sh -y
+      cd ..
+      rm -rvf "${BUILD_DIR}"
+      msg_success "Done installing dependencies! \n"
+
+    elif command -v xbps-install >/dev/null; then
+      # Test if 'xbps-install' is present, for Void Linux
+      msg_info "Found Void Linux.\n"
+      sudo xbps-install -Suy htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+      msg_success "Done installing dependencies! \n"
+
+    elif command -v nix-env >/dev/null; then
+      # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
+      msg_info "Found NixOS/nixpkgs.\n"
+      sudo nix-env -i htop neofetch-unstable zsh curl wget git fzf exa starship rsync unzip vim grc
+      msg_success "Done installing dependencies! \n"
+
+    else
+      # If above package managers aren't present, then give an error
+      msg_error "Unable to detect your package manager!"
+      msg_error "You will need to install the dependencies yourself. \n"
+      sleep 3
+      return 1
+
+    fi
+
+    return 0
+  fi
+
+  #
+  # -- REGULAR INSTALLATION --
+  #
+  echo -e "\
+    #############################################
+    # ${bold}${blue}             INSTALLING PACKAGES         ${reset} #
+    #                                           # 
+    # The following packages will be installed: #
+    #  ${cyan} git ${reset}                                    #
+    #  ${cyan} kitty ${reset}                                  #
+    #  ${cyan} htop ${reset}                                   # 
+    #  ${cyan} neofetch ${reset}                               #
+    #  ${cyan} zsh ${reset}                                    #
+    #  ${cyan} curl ${reset}                                   #
+    #  ${cyan} wget ${reset}                                   #
+    #  ${cyan} fzf ${reset}                                    #
+    #  ${cyan} exa ${reset}                                    #
+    #  ${cyan} vim ${reset}                                    #
+    #  ${cyan} grc ${reset}                                    #
+    #  ${cyan} starship ${reset}                               #
+    #############################################"
+
+  if command -v apt-get >/dev/null; then
+    # Test if package manager is 'apt-get', for Debian/Ubuntu distros
+    msg_info "Found Debian/Ubuntu.\n"
+    sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim grc
+    ## 'rsync' isn't installing when put in the above line, installing it seperately
+    sudo apt-get install -y rsync
+
+    # Installing lsd/exa
+    ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
+    ## Downside of doing it this way is that the .deb files might not be the most recent ones
+    msg_info "Making a temporary build directory..."
+    mkdir "$BUILD_DIR"
+    cd "$BUILD_DIR"
+    # Get the lsd and exa .deb files
+    wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null &&
+      # Install the .deb files
+      sudo dpkg -i ./*.deb &&
+      cd "$repoDir"
+    msg_info "Done. Removing temporary build directory..."
+    rm -vrf "${BUILD_DIR}"
+
+    # Installing starship
+    msg_info "Installing Starship using the offical installer script..."
+    curl -sS https://starship.rs/install.sh | sh
+    msg_success "Done installing dependencies! \n"
+
+  elif command -v pacman >/dev/null; then
+    # Test if 'pacman' is the package manager, for Arch based distros
+    msg_info "Found Arch Linux.\n"
+    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa rsync unzip vim grc
+    msg_success "Done installing dependencies! \n"
+
+  elif command -v zypper >/dev/null; then
+    # Test if 'zypper' if the pacakge manager, for openSUSE distros
+    ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
+    msg_info "Found openSUSE.\n"
+    sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+    msg_success "Done installing dependencies! \n"
+
+  elif command -v dnf >/dev/null; then
+    # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
+    ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
+    msg_info "Found RHEL/Fedora Linux.\n"
+    sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa rsync unzip vim grc
+    # Install starship
+    curl -sS https://starship.rs/install.sh | sh
+    msg_success "Done installing dependencies! \n"
+
+  elif command -v xbps-install >/dev/null; then
+    # Test if 'xbps-install' is present, for Void Linux
+    msg_info "Found Void Linux.\n"
+    sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+    msg_success "Done installing dependencies! \n"
+
+  elif command -v nix-env >/dev/null; then
+    # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
+    msg_info "Found NixOS/nixpkgs.\n"
+    sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa starship rsync unzip vim grc
+    msg_success "Done installing dependencies! \n"
+
+    # - Show user how to change their default shell in NixOS -
+    msg_note "You might need to edit '${cyan}/etc/nixos/configuration.nix${reset}' and change your default shell to zsh."
+    echo -e "#--- Example (/etc/nixos/configuration.nix) --- 
+    users.users.alice = {
+      isNormalUser = true;
+      extraGroups = [ \"wheel\" ];
+      shell = ${green}pkgs.zsh${reset}; ${bold}# <-- Change shell here${reset}
+      packages = with pkgs; [ 
+      ];
+    };"
+    sleep 3
+
+  else
+    # If above package managers aren't present, then give an error
+    msg_error "Unable to detect your package manager!"
+    msg_error "You will need to install the dependencies yourself. \n"
+    msg_info "Supported package managers are:"
+    msg_info "'apt-get', 'pacman', 'zypper', 'dnf', 'xbps-install', and 'nix-env' \n"
+    msg_note "Message me on Discord (${purple}Michael_Scopic.zsh#0102${reset}) if you want to request adding support for another package manager.\n"
+    msg_info "Required packages are:"
+    msg_info "zsh curl wget git fzf exa lsd rsync unzip\n"
+    msg_info "Optional packages:"
+    msg_info "neofetch kitty vim \n"
+
+    sleep 2
+    return 1
+
   fi
 
 }
 
-# --- Install fonts ---
+#########################
+# --- Install fonts --- #
+#########################
 function install_fonts() {
-  read -rp "Do you want to install fonts? [Y/n]: " choice
+  local choice
 
-  if [ "${choice,,}" != "y" ] || [ "$choice" = '' ]; then
-    msg_error "User answered 'no'. Will NOT install fonts..."
+  if [ "$SERVER_PRESET" == "TRUE" ]; then
+    msg_info "Server preset does not install fonts. Skipping...\n"
     return 0
   fi
 
-  msg_note "Installing fonts..."
+  read -rp "Do you want to install fonts? [Y/n]: " choice
+
+  if [ "${choice,,}" == "n" ]; then
+    msg_info "Answered 'no'. Will NOT install fonts..."
+    return 0
+  fi
+
+  msg_note "Installing fonts into '${cyan}~/.fonts/${reset}'"
   cd "$DOTFILES_DIR"
 
+  sleep 2
   if [ ! -d "$HOME/.fonts" ]; then
     # Check if '~/.fonts' exist. If it doesn't exist, create it
     msg_info "'${cyan}~/.fonts${reset}' does not exist yet, fixing that."
@@ -297,31 +409,16 @@ function install_fonts() {
   fi
 }
 
-# --- ZSH function ---
+###############################
+# --- INSTALL ZSH CONFIGS --- #
+###############################
 function install_zsh() {
-  msg_note "Installing ZSH plugins and configs..."
+  local choice
+  cd "$DOTFILES_DIR"
 
-  if [ -d "$DOTFILES_DIR" ]; then
-    cd "$DOTFILES_DIR"
-  else
-    msg_error "Unable to change directory to '${cyan}dotfiles/${reset}'. ABORTING!"
-    msg_error "The ${cyan}\$DOTFILES_DIR${reset} variable might not be set correctly, is 'rev' a command on your computer?"
-    msg_error "The dotfiles location (\$DOTFILES_DIR) is set to: '$dotfilesLoc' \n"
-    msg_error "install_zsh() has returned error code 1"
-    return 1
-  fi
-
-  if [ ! -d "$HOME/.config/zsh" ]; then
-    # If '~/.zsh-stuff' doesnt exist, create it
-    msg_info "'${cyan}~/.config/zsh/${reset} does not exist. Fixing that."
-    mkdir -vp ~/.config/zsh/{plugins,dist-aliases} &&
-      msg_success "Done creating '${cyan}~/.config/zsh/${reset}'!"
-  fi
-
-  msg_info "Continuing to install ZSH plugins..."
-
-  # --- Install plugins ---
-  echo -e "
+  function clone_plugins() {
+    # --- Install plugins ---
+    echo -e "
 ###################################
 #${yellow} Plugins that will be installed:${reset} #
 #${blue}  fast-syntax-highlighting ${reset}      #
@@ -330,32 +427,98 @@ function install_zsh() {
 #${blue}  zsh-interactive-cd ${reset}            #
 ###################################"
 
-  sleep 2
+    sleep 2
 
-  # -- Clone plugin repos --
-  # autosuggestions
-  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.config/zsh/plugins/zsh-autosuggestions 2>/dev/null &&
-    echo -e "${blue}Finished installing autosuggestions...${reset}"
+    # -- Clone plugin repos --
+    # autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.config/zsh/plugins/zsh-autosuggestions 2>/dev/null &&
+      echo -e "${blue}Finished installing autosuggestions...${reset}"
 
-  # syntax highlighting
-  git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.config/zsh/plugins/fsh 2>/dev/null &&
-    echo -e "${blue}Finished installing syntax highlighting...${reset}"
+    # syntax highlighting
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.config/zsh/plugins/fsh 2>/dev/null &&
+      echo -e "${blue}Finished installing syntax highlighting...${reset}"
 
-  # Fuzzy tab
-  git clone https://github.com/Aloxaf/fzf-tab ~/.config/zsh/plugins/fzf-tab 2>/dev/null &&
-    echo -e "${blue}Finished installing fuzzy tab completion...${reset}"
+    # Fuzzy tab
+    git clone https://github.com/Aloxaf/fzf-tab ~/.config/zsh/plugins/fzf-tab 2>/dev/null &&
+      echo -e "${blue}Finished installing fuzzy tab completion...${reset}"
 
-  # fish -like cd
-  git clone https://github.com/changyuheng/zsh-interactive-cd.git ~/.config/zsh/plugins/zsh-interactive-cd/ 2>/dev/null &&
-    echo -e "${blue}Finished installing fish cd...${reset}"
+    # fish -like cd
+    git clone https://github.com/changyuheng/zsh-interactive-cd.git ~/.config/zsh/plugins/zsh-interactive-cd/ 2>/dev/null &&
+      echo -e "${blue}Finished installing fish cd...${reset}"
 
-  # Colorizer
-  git clone https://github.com/zpm-zsh/colorize.git ~/.config/zsh/plugins/colorize 2>/dev/null &&
-    echo -e "${blue}Finished installing Colorizer...${reset}"
+    # Colorizer
+    git clone https://github.com/zpm-zsh/colorize.git ~/.config/zsh/plugins/colorize 2>/dev/null &&
+      echo -e "${blue}Finished installing Colorize...${reset}"
 
-  msg_success "Finished installing plugins!"
+    msg_success "Finished installing plugins!"
 
-  sleep 1
+    cd "$DOTFILES_DIR"
+    sleep 1
+  }
+
+  #
+  # -- SERVER INSTALLATION --
+  #
+  if [ "$SERVER_PRESET" == "TRUE" ]; then
+    if [ ! -d "$HOME/.config/zsh" ]; then
+      # If '~/.configs' doesnt exist, create it
+      mkdir -vp ~/.config/zsh/{plugins,distro-aliases} &&
+        msg_success "Created '${cyan}~/.config/zsh/${reset}'!"
+    fi
+
+    clone_plugins
+
+    # Make a copy of user's zshrc and rename it as '.zshrc.bak'
+    cp -v "$HOME/.zshrc" "$HOME/.zshrc-$BACKUP_FORMAT.bak" 2>/dev/null
+
+    # Copy the zshrc from this directory to home as '.zshrc'
+    cp -v zsh/zshrc "$HOME/.zshrc"
+
+    # Copy configs/ to ~/.config/zsh/
+    cp -vr zsh/configs/* "$HOME/.config/zsh/"
+    msg_success "Done copying ZSH configs!\n"
+
+    return 0
+  fi
+
+  #
+  # -- REGULAR INSTALLATION --
+  #
+  # Detect if '~/.config/zsh/' already exists
+  if [ -d "$HOME/.config/zsh" ]; then
+    echo -e "\
+    #########################################
+    # ${bold}${red}               NOTICE                ${reset} #           
+    # '${cyan}~/.config/zsh/${reset}' already exists!      #
+    # Do you wish to backip this directory? #
+    #########################################"
+    read -rp "Backup existing '~/.config/zsh/'? [Y/n]: " choice
+
+    if [ "${backup_zsh,,}" == "y" ] || [ "${backup_zsh}" = '' ]; then
+      # Make a copy of user's zshrc and rename it as '.zshrc.bak'
+      cp -v "$HOME/.zshrc" "$HOME/.zshrc-$BACKUP_FORMAT.bak" 2>/dev/null
+      # Backup .config/zsh/ if exists
+      msg_info "Creating a backup of '${cyan}~/.config/zsh/${reset}'."
+      mkdir -v "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak"
+      cp -r "$HOME/.config/zsh/" "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak/"
+    else
+      msg_info "Skipping backup of '${cyan}~/.config/zsh/${reset}'."
+    fi
+  fi
+
+  msg_note "Installing ZSH plugins and configs..."
+
+  if [ ! -d "$HOME/.config/zsh" ]; then
+    # If '~/.config/zsh' doesnt exist, create it
+    msg_info "'${cyan}~/.config/zsh/${reset} does not exist. Fixing that."
+    mkdir -vp ~/.config/zsh/{plugins,distro-aliases} &&
+      msg_success "Done creating '${cyan}~/.config/zsh/${reset}'!"
+  fi
+
+  msg_info "Continuing to install ZSH plugins..."
+
+  # -- Clone plugins --
+  clone_plugins
 
   # --- Overwrite .zshrc ---
   # make a backup of user's .zshrc and place my .zshrc in their ~/.zshrc
@@ -379,13 +542,8 @@ function install_zsh() {
     # Copy the zshrc from this directory to home as '.zshrc'
     cp -v zsh/zshrc "$HOME/.zshrc"
 
-    # Backup .config/zsh/ if exists
-    msg_info "Creating a backup of '${cyan}~/.config/zsh/${reset}'."
-    mkdir -v "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak"
-    cp -r "$HOME/.config/zsh/" "$HOME/.config/zsh-$BACKUP_FORMAT.d.bak/"
-
-    # Copy zsh-stuff/ to ~/.config/zsh/
-    cp -vr zsh/zsh-stuff/* "$HOME/.config/zsh/"
+    # Copy configs/ to ~/.config/zsh/
+    cp -vr zsh/configs/* "$HOME/.config/zsh/"
     msg_success "Done copying ZSH configs!\n"
 
   else
@@ -414,11 +572,65 @@ function install_zsh() {
 
 }
 
-# --- Backup function ---
+##########################
+# --- BACKUP CONFIGS --- #
+##########################
 function backup() {
-  msg_info "Attempting to back up current configs..."
-  msg_info "Trying to back up htop, neofetch, kitty, and starship configs, if possible."
-  msg_note "rsync is needed to backup up kitty and neofetch. \n"
+  #
+  # -- SERVER INSTALLATION --
+  #
+  if [ "$SERVER_PRESET" == "TRUE" ]; then
+    if [ -d "$HOME"/.config/htop ]; then
+      ## If htop config dir exists, backup that
+      mkdir -v "$HOME/.config/htop/backups/" 2>/dev/null
+      cp -v "$HOME/.config/htop/htoprc" "$HOME/.config/htop/backups/htoprc-$BACKUP_FORMAT.bak"
+
+      msg_success "A backup of htop is in: ${cyan}~/.config/htop/backups/htoprc-$BACKUP_FORMAT.bak${reset} \n"
+      sleep 1
+
+    else
+      ## If htop config dir isn't found, skip the backup
+      msg_error "Unable to find '${cyan}~/.config/htop/${reset}', skipping backup. \n"
+      sleep 1
+
+    fi
+
+    # -- Backup starship config --
+    msg_info "Attempting to backup Starship..."
+    sleep 1
+
+    if [ -f "$HOME"/.config/starship.toml ]; then
+      ## If 'starship.toml' exists, back it up.
+      cp -v "$HOME"/.config/starship.toml "$HOME/.config/starship.toml.$BACKUP_FORMAT.bak" &&
+        msg_success "A backup of your current starship config is in:${cyan} ~/.config/starship.toml.$BACKUP_FORMAT.bak \n"
+      sleep 1
+    else
+      ## If 'starship.toml' doesn't exist, skip it
+      msg_error "Unable to find '${cyan}~/.config/starship.toml${reset}', skipping."
+      msg_note "If you aren't using Starship, or if you're using the default Starship prompt, this is safe to ignore. \n"
+      sleep 1
+    fi
+
+    msg_success "Finished backing up everything!"
+    sleep 1
+
+    return
+
+  fi
+
+  #
+  # -- REGULAR INSTALLATION --
+  #
+  echo -e "\
+  ################################
+  # ${bold}${yellow}           BACKUP           ${reset} #
+  # Attempting to backup the     #
+  # following files/directories: # 
+  #   '${cyan}~/.config/htop/${reset}'          #
+  #   '${cyan}~/.config/kitty/${reset}'         #
+  #   '${cyan}~/.config/neofetch/${reset}'      #  
+  #   '${cyan}~/.config/starship.toml${reset}'  #
+  ################################\n"
 
   # -- Backup htop config --
   msg_info "Attempting to backup htop..."
@@ -434,7 +646,7 @@ function backup() {
 
   else
     ## If htop config dir isn't found, skip the backup
-    msg_error "Unable to find '${cyan}~/.config/htop/${reset}', cannot backup htop. \n"
+    msg_error "Unable to find '${cyan}~/.config/htop/${reset}', skipping backup. \n"
     sleep 1
 
   fi
@@ -457,8 +669,8 @@ function backup() {
 
   else
     ## If kitty config dir isn't found, skip the backup
-    msg_error "Unable to find '${cyan}~/.config/kitty/${reset}', cannot backup kitty."
-    msg_note "rsync is need to backup kitty! \n"
+    msg_error "Unable to find '${cyan}~/.config/kitty/${reset}', skipping backup."
+    msg_note "${blue}rsync${reset} is need to backup kitty! \n"
     sleep 1
 
   fi
@@ -467,7 +679,7 @@ function backup() {
   msg_info "Attempting to backup neofetch..."
   sleep 1
 
-  if [ -d "$HOME"/.config/neofetch ]; then
+  if [ -d "$HOME"/.config/neofetch ] && [ "$(command -v rsync >/dev/null)" ]; then
     ## If neofetch config dir exists, make a backup
     mkdir -v "$HOME/.config/neofetch/backups/$BACKUP_FORMAT"
 
@@ -477,10 +689,11 @@ function backup() {
       msg_success "A backup of neofetch configs are in:${cyan} ~/.config/neofetch/backups/$BACKUP_FORMAT \n"
 
     sleep 1
+
   else
     ## If neofetch config dir doesn't exist, skip it
-    msg_error "Unable to find '${cyan}~/.config/neofetch/${reset}', cannot backup neofetch."
-    msg_note "rsync is needed to backup neofetch."
+    msg_error "Unable to find '${cyan}~/.config/neofetch/${reset}', Skipping."
+    msg_error "${blue}rsync${reset} is needed to run this backup.\n"
     sleep 1
   fi
 
@@ -495,8 +708,8 @@ function backup() {
     sleep 1
   else
     ## If 'starship.toml' doesn't exist, skip it
-    msg_error "Unable to find '${cyan}~/.config/starship.toml${reset}', cannot backup Starship."
-    msg_note "If you aren't using Starship, or if you're using the default Starship prompt, this is safe to ignore."
+    msg_error "Unable to find '${cyan}~/.config/starship.toml${reset}', skipping."
+    msg_note "If you aren't using Starship, or if you're using the default Starship prompt, this is safe to ignore. \n"
     sleep 1
   fi
 
@@ -506,19 +719,33 @@ function backup() {
   return
 }
 
-# --- Overwrite function ---
+#############################
+# --- OVERWRITE CONFIGS --- #
+#############################
 function overwrite() {
+  cd "$DOTFILES_DIR"
 
-  if [ -d "$DOTFILES_DIR" ]; then
-    cd "$DOTFILES_DIR/.config"
-  else
-    msg_error "Unable to change directory to '${cyan}.config/${bold}'. ABORTING!"
-    msg_error "The ${cyan}\$DOTFILES_DIR${reset} variable might not be set correctly, is 'rev' a command on your host?"
-    msg_error "The dotfiles location is set to: $DOTFILES_DIR"
-    msg_error "overwrite() has returned exit code 1"
-    return 1
+  #
+  # -- SERVER INSTALLATION --
+  #
+  if [ "$SERVER_PRESET" == "TRUE" ]; then
+    # Overwrite htop and use default starship prompt
+    msg_info "=> Overwriting htop config..."
+    mkdir -p "$HOME"/.config/htop/ 2>/dev/null
+    cp config/htop/htoprc "$HOME"/.config/htop/htoprc &&
+      msg_success "Copied over htop config. \n"
+
+    msg_info "=> Using default Starship prompt..."
+    rm "$HOME"/.config/starship.toml 2>/dev/null
+    msg_success "Done overwriting configs...\n"
+
+    return 0
   fi
 
+  #
+  # -- REGULAR INSTALLATION --
+  #
+  local choice
   echo -e "
 ###########################
 #${red} I am about to overwrite${reset} #
@@ -531,16 +758,16 @@ function overwrite() {
 #${blue}  starship ${reset}              #
 ###########################\n"
 
-  read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " config_overwrite
+  read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " choice
 
   if [ "${config_overwrite,,}" == "y" ] || [ "${config_overwrite}" = "" ]; then
 
     ## Copy htoprc
-    read -rp "Do you want to overwrite htop config? [Y/n]: " htopOverwrite
+    read -rp "Do you want to overwrite htop config? [Y/n]: " choice
 
-    if [ "${htopOverwrite,,}" == "y" ] || [ "${htopOverwrite}" = "" ]; then
+    if [ "${choice,,}" == "y" ] || [ "${choice}" = "" ]; then
       mkdir -p "$HOME"/.config/htop/ 2>/dev/null
-      cp -v htop/htoprc "$HOME"/.config/htop/htoprc &&
+      cp -v config/htop/htoprc "$HOME"/.config/htop/htoprc &&
         msg_success "Copied over htop config. \n"
       sleep 1
     else
@@ -548,11 +775,11 @@ function overwrite() {
     fi
 
     ## Copy kitty config
-    read -rp "Do you want to overwrite kitty config? [Y/n]: " kittyOverwrite
+    read -rp "Do you want to overwrite kitty config? [Y/n]: " choice
 
-    if [ "${kittyOverwrite,,}" == "y" ] || [ "${kittyOverwrite}" = "" ]; then
+    if [ "${choice,,}" == "y" ] || [ "${choice}" = "" ]; then
       mkdir -p "$HOME"/.config/kitty/ 2>/dev/null
-      cp -rv kitty/* "$HOME"/.config/kitty/ &&
+      cp -rv config/kitty/* "$HOME"/.config/kitty/ &&
         msg_success "Copied over kitty configs. \n"
       sleep 1
     else
@@ -560,11 +787,11 @@ function overwrite() {
     fi
 
     ## Copy neofetch
-    read -rp "Do you want to overwrite neofetch config? [Y/n]: " neofetchOverwrite
+    read -rp "Do you want to overwrite neofetch config? [Y/n]: " choice
 
-    if [ "${neofetchOverwrite,,}" == "y" ] || [ "${neofetchOverwrite}" = "" ]; then
+    if [ "${choice,,}" == "y" ] || [ "${choice}" = "" ]; then
       mkdir -p "$HOME"/.config/neofetch/ 2>/dev/null
-      cp -v neofetch/config.conf "$HOME"/.config/neofetch/ &&
+      cp -v config/neofetch/config.conf "$HOME"/.config/neofetch/ &&
         msg_success "Copied over neofetch configs. \n"
       sleep 1
     else
@@ -577,9 +804,9 @@ function overwrite() {
     msg_note "Running '${purple}./shell-install.sh fonts${reset}' or '${purple}./shell-install.sh all${reset}' will install the nerd fonts for you."
     msg_note "Alternatively, you can install your own fonts manually by visiting: ${blue}https://nerdfonts.com/${reset} \n"
 
-    read -rp "What starship prompt do you want to use? [default/rounded/rxyhn/plain/skip] (default: skip): " starshipPrompt
+    read -rp "What starship prompt do you want to use? [default/rounded/rxyhn/plain/skip] (default: skip): " choice
 
-    case ${starshipPrompt,,} in
+    case ${choice,,} in
     default)
       msg_info "Using the default Starship prompt."
       msg_note "This will remove '${cyan}~/.config/starship.toml${reset}', if it exists."
@@ -588,18 +815,18 @@ function overwrite() {
 
     rounded)
       msg_info "Using the rounded preset."
-      cp starship/rounded.toml "$HOME"/.config/starship.toml
+      cp config/starship/rounded.toml "$HOME"/.config/starship.toml
       ;;
 
     plain)
       msg_info "Using the plain text preset."
       msg_note "You will not need a nerd font for this preset."
-      cp starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
+      cp config/starship/plain-text-symbols.toml "$HOME"/.config/starship.toml
       ;;
 
     rxyhn)
       msg_info "Using rxyhn's Starship prompt. Nice."
-      cp starship/rxyhn.toml "$HOME"/.config/starship.toml
+      cp config/starship/rxyhn.toml "$HOME"/.config/starship.toml
       ;;
 
     skip | *)
@@ -618,36 +845,64 @@ function overwrite() {
   return
 }
 
-# --- Help menu ---
+####################
+# --- HELP MENU--- #
+####################
 function usage() {
   ## Prints usage for script
 
-  msg_error "Bad argument: '$*' "
-  msg_info "Script usage: './shell-install.sh ${blue}ARGUMENT${reset}' \n"
+  msg_fatal "Bad argument/option: '${yellow}$*${reset}'. Cannot continue."
+  msg_info "Script usage: '${green}./shell-install.sh ${blue}ARGUMENT${reset} ${purple}OPTIONS${reset}' \n"
 
-  echo -e "${bold}Possible agruments:${reset}"
-  echo -e "${blue}${bold}all${reset}       ->     ${cyan}Run all below functions in one go"
+  echo -e "\
+Valid ${blue}${bold}ARGUMENTS${reset}:
+--------------------------------------------------
+| ${blue}info${reset}      | ${bold}Print out basic info.${reset}              |
+| ${blue}zsh${reset}       | ${bold}Install ZSH configs and plugins.${reset}   |
+| ${blue}fonts${reset}     | ${bold}Install fonts.${reset}                     |
+| ${blue}backup${reset}    | ${bold}Backup current configs.${reset}            |
+| ${blue}overwrite${reset} | ${bold}Overwrite configs.${reset}                 |
+| ${blue}all${reset}       | ${bold}Run all above arguments in one go.${reset} |
+| ${blue}help${reset}      | ${bold}Print this help menu.${reset}              |
+--------------------------------------------------
+| ${blue}init${reset}      | ${bold}Just run the initalizer.${reset}           |
+|           | ${bold}Only useful for development.${reset}       |
+--------------------------------------------------
 
-  echo -e "${blue}${bold}zsh${reset}       ->     ${cyan}Just install ZSH, dependencies, plugins, and fonts${reset}"
-
-  echo -e "${blue}${bold}fonts${reset}     ->     ${cyan}Just install fonts"
-
-  echo -e "${blue}${bold}backup${reset}    ->     ${cyan}Just backup user's current configs (htop, kitty, neofetch, starship prompt)${reset}"
-
-  echo -e "${blue}${bold}overwrite${reset} ->     ${cyan}Just overwrite user's current configs with the ones in this repo${reset}"
-
-  echo -e "${blue}${bold}info${reset}      ->     ${cyan}Print some basic info of this machine${reset}"
-
-  echo -e "${blue}${bold}help${reset}      ->     ${cyan}Print this menu${reset} \n"
-
+Valid ${purple}${bold}OPTIONS${reset}:
+-------------------------------------
+| ${purple}--server${reset} | ${bold}Use the server preset.${reset} |
+|          | ${bold}Minimal settings.${reset}      |
+-------------------------------------
+  
+${bold}NOTE:${reset} The ${purple}option${reset} ${bold}must${reset} be at the very end of your command.
+      Eg: '${green}./shell-install.sh ${blue}--server ${purple}all${reset}' ${bold}# <- INCORRECT${reset}
+          '${green}./shell-install.sh ${purple}all ${blue}--server${reset}' ${bold}# <- CORRECT${reset}
+  
+${bold}Project maintained/written by:${reset} 
+  ${purple}michaelScopic${reset} (${cyan}https://github.com/michaelScopic${reset})
+  "
   return 255
 }
 
-# --- Read arguments passed ---
+#################################
+# --- Read arguments passed --- #
+#################################
+## Enable or disable the server preset
+case $2 in
+--server)
+  declare -r SERVER_PRESET="TRUE"
+  ;;
+
+--help | -h)
+  init &>/dev/null
+  usage "$@"
+  ;;
+esac
+
 case $1 in
 init)
   # This just runs init() to test it initalizes correctly.
-  # This argument does nothing important, therefore is hidden from the normal user
   init
   echo "Exit code: $?"
   ;;
