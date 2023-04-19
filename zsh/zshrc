@@ -55,7 +55,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 . "$ZSH_PLUGINS/colorize/colorize.plugin.zsh"
 
 # - Source custom files -
-. $ZSH_CONFIG/custom/*.zsh
+#. $ZSH_CONFIG/custom/*.zsh
 
 # - Start prompt -
 if command -v starship >/dev/null; then

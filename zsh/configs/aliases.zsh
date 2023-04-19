@@ -28,9 +28,8 @@ DISTRO_ALIAS_DIR="$HOME/.config/zsh/dist-aliases"
     alias ssh="kitty +kitten ssh"
     
 ## Automatically use podman if it is installed
-if command -v podman >/dev/null; then
+[ "$(command -v podman >/dev/null)" ] &&
   alias docker="podman"
-fi
 
 #### - File/directories -
 alias ls="exa $EXA_OPTIONS"
@@ -85,7 +84,7 @@ alias quit="exit"
 
 #### - Distro aliases -
 ## Uncomment out the distro that you use
-source "$DISTRO_ALIAS_DIR/opensuse.zsh"    ## <- For OpenSUSE
+#source "$DISTRO_ALIAS_DIR/opensuse.zsh"    ## <- For OpenSUSE
 #source "$DISTRO_ALIAS_DIR/debian.zsh"      ## <- For Debian/Ubuntu
 #source "$DISTRO_ALIAS_DIR/archLinux.zsh"   ## <- For Arch Linux
 #source "$DISTRO_ALIAS_DIR/rhel.zsh"        ## <- For Fedora/CentOS/RHEL
