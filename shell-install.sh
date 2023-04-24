@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-#* Script to do everything
+###########
+# Written by: michaelScopic (https://github.com/michaelScopic)
+# 
+# Requirements: bash, rsync, coreutils
+###########
 
 # shellcheck disable=SC2145
-
-#* Requirements: bash, rsync, coreutils
 
 # --- Initalization function ---
 function init() {
@@ -888,9 +890,11 @@ ${bold}Project maintained/written by:${reset}
   return 255
 }
 
+
 #################################
 # --- Read arguments passed --- #
 #################################
+# TODO: make this not ugly as shit
 ## Enable or disable the server preset
 case $2 in
 --server)
