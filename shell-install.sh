@@ -809,7 +809,7 @@ function overwrite() {
     msg_note "Running '${purple}./shell-install.sh fonts${reset}' or '${purple}./shell-install.sh all${reset}' will install the nerd fonts for you."
     msg_note "Alternatively, you can install your own fonts manually by visiting: ${blue}https://nerdfonts.com/${reset} \n"
 
-    read -rp "What starship prompt do you want to use? [default/rounded/rxyhn/plain/skip] (default: skip): " choice
+    read -rp "What starship prompt do you want to use? [default/rounded/rxyhn/plain/michael/skip] (default: skip): " choice
 
     case ${choice,,} in
     default)
@@ -830,8 +830,13 @@ function overwrite() {
       ;;
 
     rxyhn)
-      msg_info "Using rxyhn's Starship prompt. Nice."
+      msg_info "Using rxyhn's Starship prompt."
       cp config/starship/rxyhn.toml "$HOME"/.config/starship.toml
+      ;;
+
+    michael)
+      msg_info "Using my custom prompt. Nice. :)"
+      cp config/starship/michael.toml "$HOME"/.config/starship.toml
       ;;
 
     skip | *)

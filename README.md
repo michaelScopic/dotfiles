@@ -23,41 +23,40 @@ This was also a perfect oppurtunity to learn Bash/Shell scripting.
 
 ## Disclamer
 
-I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works. 
+I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works.
 
 ## Features
 
 Shell script features:
 
 - _Lots_ of colors
-- Interactive
+- Interactive (and non-interactive with the `--server` option)
 - Automation for deploying dotfiles:
   - Installs needed dependencies (on supported distros)
-    - Vast distro support: Ubuntu/Debian, Arch Linux, RHEL/Fedora, openSUSE TW, Void Linux, NixOS/nixpkgs
   - Installs ZSH plugins and then backup and overwrite user's zshrc
   - Backs up user's current configs (in case they want to rollback)
   - Overwrites user's configs with the ones in this repo
+- Various distro support
+  - Debian/Ubuntu and its derivatives
+  - Arch Linux and its derivatives
+  - Fedora (via `dnf`) and its derivative
+  - openSUSE Tumbleweed
+  - Void Linux
+  - NixOS/nix-pkgs
+  - _More comming soon? (maybe)_
 
 ## TODO
 
-- [ ] Upload ChadWM configs
-  - [ ] Impliment a new script to automate deploying configs, like `shell-install.sh`
-- [x] Depricate `deploy.sh.bak` and `scripts/`
-  - [x] Remove `deploy.sh.bak` and `scripts/` 
-- [x] Make everything a function in `shell-install.sh`
-- [x] Make functions for printing info/notes, errors, and success messages
-- [x] Detect if user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
-- [x] Add fonts
-  - [x] Auotmate installing fonts in `shell-install.sh`
-- [x] `shell-install.sh` _<- Successor to `deploy.sh`_
-- [x] Add support for NixOS
+- [ ] `shell-install.sh`
+- [x] Depricate and delete `deploy.sh.bak` and `scripts/`
+  - [x] Make everything a function in `shell-install.sh`
+  - [x] Make functions for printing info/notes, errors, and success messages
+  - [x] Detect if user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
+  - [x] Add fonts and automate installing fonts
+  - [x] Add support for NixOS
 
-### Preview pics
-
-- [x] htop
-- [x] starship
-- [x] kitty
-- [x] neofetch
+- [ ] Upload a WM configs
+  - [ ] Make a script to automate installing the configs/dependencies
 
 ### `config/htop`
 
@@ -86,7 +85,15 @@ Shell script features:
 
 ### `zsh/`
 
-- [x] `zsh-stuff/`
+- [x] `configs/`
+  - [x] `distro-aliases` _<- Aliases for package management_
+    - [x] Arch Linux
+    - [x] Debian/Ubuntu
+    - [x] openSUSE
+    - [x] RHEL/dnf
+  - [x] Aliases
+  - [x] User functions
+  - [x] ZSH settings
 - [x] `ArchLabs_zshrc`
 - [x] `zshrc`
 
@@ -123,6 +130,8 @@ So if you want to run all of them, just do:
 ./shell-install all
 ```
 
+### Installing manually
+
 If you don't want to run this script and only copy what you want, then just browse `config/` and/or `zsh/` and do what you want from there.
 
 ## Getting help
@@ -133,16 +142,18 @@ If you need help or something does not work as expected, please contact me on Di
 
 I am almost _always_ online, and I will usually respond very quickly.
 
-- NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, for especially people I don't know.
+- NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially for people I don't know.
 
 ## Credits
 
 Thank you [r/unixporn community](https://reddit.com/r/unixporn) for inspiring me to rice desktops.
 
-Nord starship prompt (`config/starship/nord-starship.toml`) is from [rxyhn's dotfiles](https://github.com/rxyhn/dotfiles), and I just tweaked the colors to match with any color scheme.
+Rxyhn's starship prompt is from [rxyhn's dotfiles](https://github.com/rxyhn/dotfiles), and I just tweaked the colors to match with any color scheme.
 
 Rounded starship prompt (`config/starship/rounded.toml`) is from [Syndrizzle's dotfiles](https://github.com/Syndrizzle/hotfiles), and I also tweaked the colors to match with any color scheme.
 
 Plain text starship prompt (`config/starship/plain-text-symbols.toml`) are taken from [Starship's offical prompt presets](https://starship.rs).
 
 All fonts in `fonts/` are from [Nerdfonts.com](https://www.nerdfonts.com).
+
+The original `zshrc` and `zsh/configs/zsh-settings.zsh` are based on the `.zshrc` provided by ArchLabs.

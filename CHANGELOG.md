@@ -1,5 +1,13 @@
 # Changelog
 
+## April 29, 2023
+
+- Updated `README.md`
+- Uploaded my custom Starship prompt (`config/starship/michael.toml`)
+  - Added prompt as a preset in `shell-install.sh` (named `michael`)
+- Uploaded new fonts (Agave and UbuntuMono)
+- Updated `kitty.conf` 
+
 ## April 14, 2023
 
 - `shell-install.sh`
