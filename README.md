@@ -116,10 +116,10 @@ Look at the possible agruments to use in the script by running:
 - (cd into the dotfiles directory if you aren't already there)
 
 ```sh
-./shell-install help
+./shell-install.sh help
 
 # Not putting in an argument will do the same
-./shell-install
+./shell-install.sh
 ```
 
 You can use these following arguments with this script: `all`, `zsh`, `backup`, `fonts`, `overwrite`, or `info`.
@@ -127,7 +127,7 @@ You can use these following arguments with this script: `all`, `zsh`, `backup`, 
 So if you want to run all of them, just do:
 
 ```sh
-./shell-install all
+./shell-install.sh all
 ```
 
 ### Installing manually
