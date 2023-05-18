@@ -8,7 +8,7 @@
 
 
 #### Set directory for distro specific aliases
-DISTRO_ALIAS_DIR="$HOME/.config/zsh/dist-aliases"
+DISTRO_ALIAS_DIR="$HOME/.config/zsh/distro-aliases"
 
 
 #### Uncomment to expand aliases as you type them
