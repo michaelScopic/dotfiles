@@ -23,8 +23,8 @@ fi
 
 #### - Export enviornment vars if needed -
 export PATH=$HOME/.local/bin:$PATH
-export VIEWER=nvim
-export EDITOR=nvim
+#export VIEWER=nvim
+#export EDITOR=nvim
 export BAT_THEME="base16"
 
 #### - Declare vars for ZSH config dirs -
