@@ -83,8 +83,12 @@ alias quit="exit"
 
 
 #### - Distro aliases -
-## Uncomment out the distro that you use
-#source "$DISTRO_ALIAS_DIR/opensuse.zsh"    ## <- For OpenSUSE
-#source "$DISTRO_ALIAS_DIR/debian.zsh"      ## <- For Debian/Ubuntu
-#source "$DISTRO_ALIAS_DIR/archLinux.zsh"   ## <- For Arch Linux
-#source "$DISTRO_ALIAS_DIR/rhel.zsh"        ## <- For Fedora/CentOS/RHEL
+if [[ "$(command -v zypper >/dev/null)" ]]; then
+  source "$DISTRO_ALIAS_DIR/opensuse.zsh"
+elif [[ "$(command -v apt-get >/dev/null)" ]]; then
+  source "$DISTRO_ALIAS_DIR/debian-apt.zsh"
+elif [[ "$(command -v pacman >/dev/null)" ]]; then
+  source "$DISTRO_ALIAS_DIR/archLinux.zsh"
+elif [[ "$(command -v dnf >/dev/null)" ]]; then
+  source "$DISTRO_ALIAS_DIR/rhel.zsh"
+fi
