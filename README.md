@@ -113,7 +113,7 @@ cd dotfiles
 
 Look at the possible agruments to use in the script by running:
 
-- (cd into the dotfiles directory if you aren't already there)
+- (`cd` into the dotfiles directory if you aren't already there)
 
 ```sh
 ./shell-install.sh help
@@ -130,13 +130,19 @@ So if you want to run all of them, just do:
 ./shell-install.sh all
 ```
 
+If you want to have a more minimal install, pass the `--server` option __at the end__ of the command. 
+
+```sh
+./shell-install.sh all --server
+```
+
 ### Installing manually
 
 If you don't want to run this script and only copy what you want, then just browse `config/` and/or `zsh/` and do what you want from there.
 
 ## Getting help
 
-**Discord: `Michael_Scopic.zsh#0102`**
+**Discord: `michael_scopic.zsh`**
 
 If you need help or something does not work as expected, please contact me on Discord.
 
