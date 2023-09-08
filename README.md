@@ -23,7 +23,10 @@ This was also a perfect opportunity to learn Bash/Shell scripting.
 
 ## Disclamer
 
+My code _still_ is a bit buggy (even after a year smh)! Please open an issue and/or DM me on Discord (`michael_scopic.zsh`) to report an issue.  
+
 I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works.
+
 
 ## Features
 
