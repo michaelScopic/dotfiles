@@ -25,8 +25,17 @@ This was also a perfect opportunity to learn Bash/Shell scripting.
 
 My code _still_ is a bit buggy (even after a year smh)! Please open an issue and/or DM me on Discord (`michael_scopic.zsh`) to report an issue.  
 
-I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works.
+I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works (-ish).
 
+## Current bugs/issues
+
+- [ ] Install script will backup `~/.config/zsh` even if you answer 'no' to the prompt. (this one is so confusing idk how to fix this dumbass)
+  - Problematic lines: `492 - 511`
+  - Priority: HIGH
+
+- [ ] Simplify the parsing of arguments passed. I'm fucking stupid so idk about this one.
+  - Problematic lines: `899 - 973`
+  - Priority: LOW
 
 ## Features
 
@@ -49,7 +58,8 @@ Shell script features:
   - _More coming soon? (maybe)_
 
 ## TODO
-
+- [ ] FIX BUGS AAAAAAAAAAAA (this will probably never get completed but it's nice to dream yk)
+    
 - [ ] `shell-install.sh`
 - [x] Deprecate and delete `deploy.sh.bak` and `scripts/`
   - [x] Make everything a function in `shell-install.sh`
