@@ -19,9 +19,9 @@ DISTRO_ALIAS_DIR="$HOME/.config/zsh/distro-aliases"
 ## Determine to use icons
 [ -t 0 ] &&
     ## Use icons if terminal IS NOT a TTY
-    EXA_OPTIONS="--icons --group-directories-first -hFg" ||
+    EXA_OPTS="--icons --group-directories-first -hFg" ||
     ## Don't use icons if terminal IS a TTY
-    EXA_OPTIONS="--group-directories-first -hFg"
+    EXA_OPTS="--group-directories-first -hFg"
 
 ## Set an ssh alias if terminal is kitty
 [ "$TERM" == "xterm-kitty" ] &&
@@ -32,9 +32,9 @@ DISTRO_ALIAS_DIR="$HOME/.config/zsh/distro-aliases"
   alias docker="podman"
 
 #### - File/directories -
-alias ls="exa $EXA_OPTIONS"
-alias la="exa -a $EXA_OPTIONS"
-alias ll="exa -la $EXA_OPTIONS"
+alias ls="exa $EXA_OPTS"
+alias la="exa -a $EXA_OPTS"
+alias ll="exa -la $EXA_OPTS"
 alias rm="rm -iv"
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -83,12 +83,7 @@ alias quit="exit"
 
 
 #### - Distro aliases -
-if [[ "$(command -v zypper >/dev/null)" ]]; then
-  source "$DISTRO_ALIAS_DIR/opensuse.zsh"
-elif [[ "$(command -v apt-get >/dev/null)" ]]; then
-  source "$DISTRO_ALIAS_DIR/debian-apt.zsh"
-elif [[ "$(command -v pacman >/dev/null)" ]]; then
-  source "$DISTRO_ALIAS_DIR/archLinux.zsh"
-elif [[ "$(command -v dnf >/dev/null)" ]]; then
-  source "$DISTRO_ALIAS_DIR/rhel.zsh"
-fi
+#source "$DISTRO_ALIAS_DIR/opensuse.zsh"	## For OpenSUSE TW
+#source "$DISTRO_ALIAS_DIR/debian.zsh"	## For Debian/Ubuntu
+#source "$DISTRO_ALIAS_DIR/archLinux.zsh"	## For Arch Linux
+#source "$DISTRO_ALIAS_DIR/rhel.zsh"		## For Fedora/RHEL

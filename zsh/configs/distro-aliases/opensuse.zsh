@@ -4,7 +4,7 @@
 
 # - Installing/updating -
 alias up="sudo zypper ref && sudo zypper up"
-alias dup="sudo zypper ref && sudo zypper dup"
+alias dup="sudo zypper ref && sudo zypper dup"    ## You might want to refresh repos first to make sure you have the most recent updates
 alias in-pkg="sudo zypper in"
 alias rm-pkg="sudo zypper rm"
 alias zypp-verify="sudo zypper verify"

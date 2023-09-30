@@ -3,7 +3,7 @@
 ###########
 # Written by: michaelScopic (https://github.com/michaelScopic)
 # 
-# Requirements: bash, rsync, coreutils
+# Requirements: bash, coreutils, rev
 ###########
 
 # shellcheck disable=SC2145
@@ -108,8 +108,17 @@ function init() {
   fi
 
   # - Finish up -
-  msg_success "Done initallizing! \n"
+  msg_success "Done initallizing! \n" ; sleep 1
+  
+  echo -e "${bold}---------------------------------------------------------------------------
+${purple} ____        _    __ _ _            ${cyan} ___           _        _ _
+${purple}|  _ \  ___ | |_ / _(_) | ___  ___  ${cyan}|_ _|_ __  ___| |_ __ _| | | ___ _ __
+${purple}| | | |/ _ \| __| |_| | |/ _ \/ __| ${cyan} | || '_ \/ __| __/ _\` | | |/ _\ '__|
+${purple}| |_| | (_) | |_|  _| | |  __/\__ \ ${cyan} | || | | \__ \ || (_| | | |  __/ |
+${purple}|____/ \___/ \__|_| |_|_|\___||___/ ${cyan}|___|_| |_|___/\__\__,_|_|_|\___|_|${reset}
+${bold}---------------------------------------------------------------------------\n\n"
 
+  sleep 2
   return
 }
 
@@ -680,28 +689,6 @@ function backup() {
 
   fi
 
-  # -- Backup neofetch config --
-  msg_info "Attempting to backup neofetch..."
-  sleep 1
-
-  if [ -d "$HOME"/.config/neofetch ] && [ "$(command -v rsync >/dev/null)" ]; then
-    ## If neofetch config dir exists, make a backup
-    mkdir -v "$HOME/.config/neofetch/backups/$BACKUP_FORMAT"
-
-    ## Using rsync bc cp doesn't have a '--exclude' option to prevent the backups dir to copy into itself
-    #cp -rv "$HOME/.config/neofetch" ~/.config/neofetch/backups/ && \
-    rsync -av --exclude='backups' "$HOME/.config/neofetch/" "$HOME/.config/neofetch/backups/$BACKUP_FORMAT/" &&
-      msg_success "A backup of neofetch configs are in:${cyan} ~/.config/neofetch/backups/$BACKUP_FORMAT \n"
-
-    sleep 1
-
-  else
-    ## If neofetch config dir doesn't exist, skip it
-    msg_error "Unable to find '${cyan}~/.config/neofetch/${reset}', Skipping."
-    msg_error "${blue}rsync${reset} is needed to run this backup.\n"
-    sleep 1
-  fi
-
   # -- Backup starship config --
   msg_info "Attempting to backup Starship..."
   sleep 1
@@ -758,7 +745,6 @@ function overwrite() {
 #                         #
 #${purple} Configs affected:${reset}       #
 #${blue}  htop ${reset}                  #
-#${blue}  neofetch ${reset}              #
 #${blue}  kitty ${reset}                 #
 #${blue}  starship ${reset}              #
 ###########################\n"
@@ -789,18 +775,6 @@ function overwrite() {
       sleep 1
     else
       msg_info "Skipping overwriting kitty configs. \n"
-    fi
-
-    ## Copy neofetch
-    read -rp "Do you want to overwrite neofetch config? [Y/n]: " choice
-
-    if [ "${choice,,}" == "y" ] || [ "${choice}" = "" ]; then
-      mkdir -p "$HOME"/.config/neofetch/ 2>/dev/null
-      cp -v config/neofetch/config.conf "$HOME"/.config/neofetch/ &&
-        msg_success "Copied over neofetch configs. \n"
-      sleep 1
-    else
-      msg_info "Skipping overwriting neofetch configs. \n"
     fi
 
     ## Copy starship
@@ -915,7 +889,7 @@ esac
 case $1 in
 init)
   # This just runs init() to test it initalizes correctly.
-  init
+  time init
   echo "Exit code: $?"
   ;;
 

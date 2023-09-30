@@ -2,12 +2,12 @@
 
 These are my dotfiles for my Linux configs and ZSH.
 
-I hope you enjoy!
+I hope you enjoy! :3
 
 ## Table of contents
 
 - [Why?](https://github.com/michaelScopic/dotfiles#why)
-- [Disclamer](https://github.com/michaelScopic/dotfiles#disclamer)
+- [Disclaimer](https://github.com/michaelScopic/dotfiles#disclaimer)
 - [Features](https://github.com/michaelScopic/dotfiles#features)
 - [Todo](https://github.com/michaelScopic/dotfiles#todo)
 - [Progress](https://github.com/michaelScopic/dotfiles#progress)
@@ -19,9 +19,9 @@ I hope you enjoy!
 
 I wanted to showcase my configs in hopes that someone else can enjoy my work (and stealing from other ppl's dots lmao (credits are at the bottom of this file)).
 
-This was also a perfect oppurtunity to learn Bash/Shell scripting.
+This was also a perfect opportunity to learn Bash/Shell scripting.
 
-## Disclamer
+## Disclaimer
 
 I'm _kinda_ experienced in Bash/Shell scripting, but I'm still learning and getting the hang of stuff, so my code probably won't be the sexiest or most efficient, but it works.
 
@@ -43,12 +43,13 @@ Shell script features:
   - openSUSE Tumbleweed
   - Void Linux
   - NixOS/nix-pkgs
-  - _More comming soon? (maybe)_
+  - _More coming soon? (maybe)_
 
 ## TODO
 
-- [ ] `shell-install.sh`
+- [x] `shell-install.sh` _<- The file itself is done, but more improvements will follow_
 - [x] Depricate and delete `deploy.sh.bak` and `scripts/`
+
   - [x] Make everything a function in `shell-install.sh`
   - [x] Make functions for printing info/notes, errors, and success messages
   - [x] Detect if user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
@@ -61,27 +62,22 @@ Shell script features:
 ### `config/htop`
 
 - [x] `htoprc`
-- [x] `README.md`
 
 ### `config/starship`
 
 - [x] `config/starship/rounded.toml`
 - [x] `config/starship/plain-text-symbols.toml`
-- [x] `README.md`
+- [x] `config/starship/michael.toml` _<- My own prompt, based off rxyhn's prompt_
 
 ### `config/neofetch/`
 
-- [x] `config.conf` _<- Neofetch config_
-- [x] `README.md`
+- [x] `config.conf`
 
 ### `config/kitty/`
 
 - [x] `kitty.conf`
 - [x] `themes/` _<- Folder to contain color themes_
-  - [x] `darkdecay.ini`
-  - [x] `decaycs.ini`
-  - [x] `nord.conf` _<- Default theme_
-- [x] `README.md`
+  - [ ] More themes coming soon...
 
 ### `zsh/`
 
@@ -106,10 +102,12 @@ More coming soon...hopefully.
 Clone the repo:
 
 ```sh
-git clone https://github.com/michaelScopic/dotfiles
+git clone --depth=1 https://github.com/michaelScopic/dotfiles
 
 cd dotfiles
 ```
+
+### Script usage
 
 Look at the possible agruments to use in the script by running:
 
@@ -136,13 +134,15 @@ If you don't want to run this script and only copy what you want, then just brow
 
 ## Getting help
 
-**Discord: `Michael_Scopic.zsh#0102`**
+**Discord: `michael_scopic.zsh`**
 
 If you need help or something does not work as expected, please contact me on Discord.
 
 I am almost _always_ online, and I will usually respond very quickly.
 
 - NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially for people I don't know.
+
+You can also open a GitHub issue, but do note that I could respond _very_ late.
 
 ## Credits
 
@@ -153,6 +153,8 @@ Rxyhn's starship prompt is from [rxyhn's dotfiles](https://github.com/rxyhn/dotf
 Rounded starship prompt (`config/starship/rounded.toml`) is from [Syndrizzle's dotfiles](https://github.com/Syndrizzle/hotfiles), and I also tweaked the colors to match with any color scheme.
 
 Plain text starship prompt (`config/starship/plain-text-symbols.toml`) are taken from [Starship's offical prompt presets](https://starship.rs).
+
+My personal starship theme (`config/starship/michael.toml`) is based on rxyhn's prompt.
 
 All fonts in `fonts/` are from [Nerdfonts.com](https://www.nerdfonts.com).
 

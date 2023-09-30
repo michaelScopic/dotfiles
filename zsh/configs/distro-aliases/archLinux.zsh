@@ -11,22 +11,17 @@ alias search-pkg="pacman -Qs"
 
 # - Mirrors -
 alias mirror-update="sudo reflector --verbose --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist"
-alias repo-sync="sudo pacman -Syyy"
 
 # -- Arch functions --
 pacman-keyfix() {
   echo -e "=> Fixing pacman keys... \n"
-
   echo -e "-> Removing '/var/lib/pacman/sync'."
   sudo rm -v /var/lib/pacman/sync
-
   echo -e "-> Removing '/etc/pacman.d/gnupg/'."
   sudo rm -vrf "/etc/pacman.d/gnupg/*"
-
   echo -e "-> Initalizing and populating the pacman keyring."
   sudo pacman-key --init
   sudo pacman-key --populate
-
   echo -e "-> Syncing pacman mirrors."
   sudo pacman -Syy
   echo "=> Done!"

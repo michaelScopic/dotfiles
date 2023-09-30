@@ -160,5 +160,3 @@ ttyctl -f
 
 # - Initialize completion -
 compinit -u -d "$compfile"
-
-

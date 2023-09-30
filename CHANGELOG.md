@@ -1,16 +1,24 @@
 # Changelog
 
+## September 30, 2023
+
+- Added a "titlebar" to the installer (check it out by running the script or just running `./shell-install.sh init`)
+- Removed neofetch configs cuz I don't like them :(
+- Added Dracula and [Kanagawa](https://github.com/rebelot/kanagawa.nvim) theme to Kitty
+- Merged `debian-nala.zsh` -> `debian.zsh`
+
 ## April 29, 2023
 
 - Updated `README.md`
 - Uploaded my custom Starship prompt (`config/starship/michael.toml`)
   - Added prompt as a preset in `shell-install.sh` (named `michael`)
 - Uploaded new fonts (Agave and UbuntuMono)
-- Updated `kitty.conf` 
+- Updated `kitty.conf`
 
 ## April 14, 2023
 
 - `shell-install.sh`
+
   - Added a server preset with `--server`
     - Skips installing kitty
     - Skips installing fonts

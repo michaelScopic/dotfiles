@@ -1,23 +1,23 @@
-#               _
-#     ____ ___ | |__   _ __  ___
-#    |_  // __|| '_ \ | '__|/ __|
-#  _  / / \__ \| | | || |  | (__
-# (_)/___||___/|_| |_||_|   \___|
-#
-# Written by: michaelScopic (https://github.com/michaelScopic)
+####               _
+####     ____ ___ | |__   _ __  ___
+####    |_  // __|| '_ \ | '__|/ __|
+####  _  / / \__ \| | | || |  | (__
+#### (_)/___||___/|_| |_||_|   \___|
+####
+#### Written by: michaelScopic (https://github.com/michaelScopic)
 
-#       -> NOTE FOR NEW USERS: <-
-# Aliases are defined in: ~/.config/zsh/aliases.zsh
-# ZSH settings are set in: ~/.config/zsh/zsh-settings.zsh
-# Functions are defined in: ~/.config/zsh/user-functions.zsh
-# Distro specific aliases are defined in: ~/.config/zsh/distro-aliases/
+####       -> NOTE FOR NEW USERS: <-
+#### Aliases are defined in: ~/.config/zsh/aliases.zsh
+#### ZSH settings are set in: ~/.config/zsh/zsh-settings.zsh
+#### Functions are defined in: ~/.config/zsh/user-functions.zsh
+#### Distro specific aliases are defined in: ~/.config/zsh/distro-aliases/
 
-# - Check if shell is interactive -
+#### - Check if shell is interactive -
 if [[ $- != *i* ]]; then
   return
 fi
 
-# - Default to vim if $EDITOR is unset -
+### - Default to vim if $EDITOR is unset -
 [ -z $EDITOR ] &&
   export EDITOR=vim
 
@@ -35,39 +35,39 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 # --- Start sourcing files --- #
 ################################
 
-# - Source ZSH settings file -
+#### - Source ZSH settings file -
 . "$ZSH_CONFIG/zsh-settings.zsh"
 
-# - Source user aliases -
+#### - Source user aliases -
 . "$ZSH_CONFIG/aliases.zsh"
 
-# - Source user functions -
+#### - Source user functions -
 . "$ZSH_CONFIG/user-functions.zsh"
 
-# - How ZSH autosuggestions should complete -
+#### - How ZSH autosuggestions should complete -
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# - Source plugins -
+#### - Source plugins -
 . "$ZSH_PLUGINS/fsh/fast-syntax-highlighting.plugin.zsh"
 . "$ZSH_PLUGINS/fzf-tab/fzf-tab.plugin.zsh"
 . "$ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 . "$ZSH_PLUGINS/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh"
 . "$ZSH_PLUGINS/colorize/colorize.plugin.zsh"
 
-# - Source custom files -
+#### - Source custom files -
 #. $ZSH_CONFIG/custom/*.zsh
 
-# - Start prompt -
+#### - Start prompt -
 if command -v starship >/dev/null; then
-  # If starship is installed, then start it
+  ## If starship is installed, then start it
   eval "$(starship init zsh)"
 else
-  # If 'starship' isn't installed, fall back to a builtin prompt
+  ## If 'starship' isn't installed, fall back to a builtin prompt
   autoload -U promptinit && promptinit # Initalize/load prompt
   prompt bart
 fi
 
-# - Autostart -
+## - Autostart -
 ## Uncomment stuff you want to start automatically, like merging .Xresources
 #neofetch
 #pfetch
