@@ -20,6 +20,7 @@ I hope you enjoy! :3
 I wanted to showcase my configs in hopes that someone else can enjoy my work (and stealing from other ppl's dots lmao (credits are at the bottom of this file)).
 
 This was also a perfect opportunity to learn Bash/Shell scripting.
+This was also a perfect opportunity to learn Bash/Shell scripting.
 
 ## Disclaimer
 
@@ -44,15 +45,16 @@ Shell script features:
   - Void Linux
   - NixOS/nix-pkgs
   - _More coming soon? (maybe)_
+  - _More coming soon? (maybe)_
 
 ## TODO
-
+- [ ] FIX BUGS AAAAAAAAAAAA (this will probably never get completed but it's nice to dream yk)
+    
 - [x] `shell-install.sh` _<- The file itself is done, but more improvements will follow_
-- [x] Depricate and delete `deploy.sh.bak` and `scripts/`
-
+- [x] Deprecate and delete `deploy.sh.bak` and `scripts/`
   - [x] Make everything a function in `shell-install.sh`
   - [x] Make functions for printing info/notes, errors, and success messages
-  - [x] Detect if user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
+  - [x] Detect if the user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
   - [x] Add fonts and automate installing fonts
   - [x] Add support for NixOS
 
@@ -109,9 +111,9 @@ cd dotfiles
 
 ### Script usage
 
-Look at the possible agruments to use in the script by running:
+Look at the possible arguments to use in the script by running:
 
-- (cd into the dotfiles directory if you aren't already there)
+- (`cd` into the dotfiles directory if you aren't already there)
 
 ```sh
 ./shell-install.sh help
@@ -120,12 +122,18 @@ Look at the possible agruments to use in the script by running:
 ./shell-install.sh
 ```
 
-You can use these following arguments with this script: `all`, `zsh`, `backup`, `fonts`, `overwrite`, or `info`.
+You can use the following arguments with this script: `all`, `zsh`, `backup`, `fonts`, `overwrite`, or `info`.
 
 So if you want to run all of them, just do:
 
 ```sh
 ./shell-install.sh all
+```
+
+If you want to have a more minimal install, pass the `--server` option __at the end__ of the command. 
+
+```sh
+./shell-install.sh all --server
 ```
 
 ### Installing manually
@@ -136,7 +144,7 @@ If you don't want to run this script and only copy what you want, then just brow
 
 **Discord: `michael_scopic.zsh`**
 
-If you need help or something does not work as expected, please contact me on Discord.
+If you need help or if something does not work as expected, please contact me on Discord.
 
 I am almost _always_ online, and I will usually respond very quickly.
 
@@ -152,7 +160,7 @@ Rxyhn's starship prompt is from [rxyhn's dotfiles](https://github.com/rxyhn/dotf
 
 Rounded starship prompt (`config/starship/rounded.toml`) is from [Syndrizzle's dotfiles](https://github.com/Syndrizzle/hotfiles), and I also tweaked the colors to match with any color scheme.
 
-Plain text starship prompt (`config/starship/plain-text-symbols.toml`) are taken from [Starship's offical prompt presets](https://starship.rs).
+Plain text starship prompt (`config/starship/plain-text-symbols.toml`) are taken from [Starship's official prompt presets](https://starship.rs).
 
 My personal starship theme (`config/starship/michael.toml`) is based on rxyhn's prompt.
 
