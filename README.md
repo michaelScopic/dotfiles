@@ -34,7 +34,6 @@ Nord Deep theme + htop
 I wanted to showcase my configs in hopes that someone else can enjoy my work (and stealing from other ppl's dots lmao (credits are at the bottom of this file)).
 
 This was also a perfect opportunity to learn Bash/Shell scripting.
-This was also a perfect opportunity to learn Bash/Shell scripting.
 
 ## Disclaimer
 
