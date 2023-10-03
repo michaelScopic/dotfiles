@@ -2,6 +2,7 @@
 
 ## October 3, 2023
 
+- Added preview pics (finally) :D
 - Deleted `zsh/Archlabs_zsh`, not needed
 - Get rid of `.gitignore` cuz I don't need it anymore
 - Kitty

@@ -4,6 +4,20 @@ These are my dotfiles for my Linux configs and ZSH.
 
 I hope you enjoy! :3
 
+## Previews
+
+Nord Deep theme + neofetch
+
+![Kitty nord deep theme](assets/kitty-2.jpg)
+
+Base16 Ashes theme + neofetch
+
+![Kitty Base16 Ashes theme](assets/kitty-1.jpg)
+
+Nord Deep theme + htop
+
+![Htop preview](assets/htop.jpg)
+
 ## Table of contents
 
 - [Why?](https://github.com/michaelScopic/dotfiles#why)
