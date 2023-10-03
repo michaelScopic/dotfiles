@@ -1,24 +1,37 @@
 # Changelog
 
+## October 3, 2023
+
+- Deleted `zsh/Archlabs_zsh`, not needed
+- Get rid of `.gitignore` cuz I don't need it anymore
+- Kitty
+  - Added `nord-deep`, a darker alternative to Nord. This is now the default theme. Based off `Nord Deep` theme in Visual Studio Code.
+- ZSH
+  - [UNSTESTED] Set `EDITOR` to neovim if it is installed.
+
 ## September 30, 2023
 
-- Added a "titlebar" to the installer (check it out by running the script or just running `./shell-install.sh init`)
-- Removed neofetch configs cuz I don't like them :(
-- Added Dracula and [Kanagawa](https://github.com/rebelot/kanagawa.nvim) theme to Kitty
-- Merged `debian-nala.zsh` -> `debian.zsh`
+- `shell-install.sh`
+  - Added a "titlebar" to the installer (check it out by running the script or just running `./shell-install.sh init`)
+- Configs
+  - Removed neofetch configs cuz I don't like them :(
+- Kitty
+  - Added Dracula and [Kanagawa](https://github.com/rebelot/kanagawa.nvim) theme to Kitty
+- ZSH
+  - Merged `debian-nala.zsh` -> `debian.zsh`
 
 ## April 29, 2023
 
 - Updated `README.md`
 - Uploaded my custom Starship prompt (`config/starship/michael.toml`)
   - Added prompt as a preset in `shell-install.sh` (named `michael`)
-- Uploaded new fonts (Agave and UbuntuMono)
-- Updated `kitty.conf`
+- Kitty
+  - Uploaded new fonts (Agave and UbuntuMono)
+  - Updated `kitty.conf`
 
 ## April 14, 2023
 
 - `shell-install.sh`
-
   - Added a server preset with `--server`
     - Skips installing kitty
     - Skips installing fonts
@@ -27,12 +40,9 @@
     - `msg_warn` just warns user about something
     - `msg_fatal` gives an error to a user and then exits shortly after
   - New help menu
-
 - Renamed directories
-
   - `.config/` -> `config/`
   - `zsh/zsh-stuff/` -> `zsh/configs/`
-
 - `zshrc`
   - Changed how `zsh-autosuggestions` should complete suggestions
 
@@ -57,7 +67,6 @@
 
 - Renamed variables (look in `init()`)
 - Added error handling if certain criteria aren't met:
-
   - Will throw an error if `/etc/os-release` doesn't exist and will throw another error if `$DOTFILES_DIR` is not set.
   - `init()`:
     - Will throw an error if `/etc/os-release` does not exist.
@@ -79,9 +88,7 @@
     - Will throw an error if `$DOTFILES_DIR` is not set.
       - This is fatal, and this function will not continue.
       - This is because function needs to be able to copy files from the dotfiles directory.
-
 - `install_zsh()`
-
   - Fixed typo to make `~/.config/zsh` if it _does not_ already exists.
     - Origianally detected if it _does_ exists, then makes the directory even though it already exists.
 

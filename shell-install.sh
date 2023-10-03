@@ -108,7 +108,7 @@ function init() {
   fi
 
   # - Finish up -
-  msg_success "Done initallizing! \n" ; sleep 1
+  msg_success "Done initallizing! \n" ; sleep 0.3
   
   echo -e "${bold}---------------------------------------------------------------------------
 ${purple} ____        _    __ _ _            ${cyan} ___           _        _ _
@@ -119,7 +119,7 @@ ${purple}|____/ \___/ \__|_| |_|_|\___||___/ ${cyan}|___|_| |_|___/\__\__,_|_|_|
 ${bold}---------------------------------------------------------------------------\n\n"
 
   sleep 2
-  return
+  return 
 }
 
 ######################
@@ -153,7 +153,8 @@ function dependencies() {
     msg_error "Detected OS is ${bold}not${reset} x86_64 Linux."
     msg_error "There is no support for BSD or Darwin (MacOS) hosts."
     msg_error "There is no support for Linux hosts that aren't x86_64 (amd64)."
-    msg_error "You will need to install the dependencies yourself. \n"
+    msg_error "Please manually install the needed dependencies below and re-run this script. \n"
+    msg_error "${blue}Needed dependencies: ${purple}git htop zsh curl wget fzf exa vim grc starship kitty${reset}"
     sleep 3
     return 1
   fi
@@ -182,12 +183,11 @@ function dependencies() {
     if command -v apt-get >/dev/null; then
       # Test if package manager is 'apt-get', for Debian/Ubuntu distros
       msg_info "Found Debian/Ubuntu.\n"
+      sudo apt-get update -y -qq
       sudo apt-get install --no-install-recommends -y git htop neofetch zsh curl wget fzf exa unzip vim grc
-      ## 'rsync' isn't installing when put in the above line, installing it seperately
-      sudo apt-get install -y rsync
 
-      # Installing lsd/exa
-      ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
+      # Installing exa
+      ## exa sometimes isn't in official repos (depending on distro), so just manually install the .deb files
       ## Downside of doing it this way is that the .deb files might not be the most recent ones
       msg_info "Making a temporary build directory..."
       mkdir "${BUILD_DIR}" && cd "${BUILD_DIR}"
@@ -197,7 +197,7 @@ function dependencies() {
         sudo dpkg -i ./*.deb
       # Installing starship
       msg_info "Installing Starship using the offical installer script..."
-      curl -sS https://starship.rs/install.sh >install-starship.sh &&
+      curl -sS https://starship.rs/install.sh > install-starship.sh &&
         chmod +x install-starship.sh &&
         ./install-starship.sh -y
       msg_success "Done installing dependencies! \n"
@@ -206,21 +206,21 @@ function dependencies() {
     elif command -v pacman >/dev/null; then
       # Test if 'pacman' is the package manager, for Arch based distros
       msg_info "Found Arch Linux.\n"
-      sudo pacman -S --noconfirm starship htop neofetch zsh curl wget git htop fzf exa rsync unzip vim grc
+      sudo pacman -S --noconfirm starship htop neofetch zsh curl wget git htop fzf exa unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     elif command -v zypper >/dev/null; then
       # Test if 'zypper' if the pacakge manager, for openSUSE distros
       ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
       msg_info "Found openSUSE.\n"
-      sudo zypper -n install htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+      sudo zypper -n install htop neofetch zsh curl wget git fzf exa starship unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     elif command -v dnf >/dev/null; then
       # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
       ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
       msg_info "Found RHEL/Fedora Linux.\n"
-      sudo dnf install -y htop neofetch zsh curl wget git fzf exa rsync unzip vim grc
+      sudo dnf install -y htop neofetch zsh curl wget git fzf exa unzip vim grc
       # Install starship
       mkdir "${BUILD_DIR}" && cd "${BUILD_DIR}"
       curl -sS https://starship.rs/install.sh >install-starship.sh &&
@@ -233,13 +233,13 @@ function dependencies() {
     elif command -v xbps-install >/dev/null; then
       # Test if 'xbps-install' is present, for Void Linux
       msg_info "Found Void Linux.\n"
-      sudo xbps-install -Suy htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+      sudo xbps-install -Suy htop neofetch zsh curl wget git fzf exa starship unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     elif command -v nix-env >/dev/null; then
       # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
       msg_info "Found NixOS/nixpkgs.\n"
-      sudo nix-env -i htop neofetch-unstable zsh curl wget git fzf exa starship rsync unzip vim grc
+      sudo nix-env -i htop neofetch-unstable zsh curl wget git fzf exa starship unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     else
@@ -279,9 +279,8 @@ function dependencies() {
   if command -v apt-get >/dev/null; then
     # Test if package manager is 'apt-get', for Debian/Ubuntu distros
     msg_info "Found Debian/Ubuntu.\n"
+    sudo apt-get update -y -qq
     sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim grc
-    ## 'rsync' isn't installing when put in the above line, installing it seperately
-    sudo apt-get install -y rsync
 
     # Installing lsd/exa
     ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
@@ -305,21 +304,21 @@ function dependencies() {
   elif command -v pacman >/dev/null; then
     # Test if 'pacman' is the package manager, for Arch based distros
     msg_info "Found Arch Linux.\n"
-    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa rsync unzip vim grc
+    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa unzip vim grc
     msg_success "Done installing dependencies! \n"
 
   elif command -v zypper >/dev/null; then
     # Test if 'zypper' if the pacakge manager, for openSUSE distros
     ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
     msg_info "Found openSUSE.\n"
-    sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+    sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa starship unzip vim grc
     msg_success "Done installing dependencies! \n"
 
   elif command -v dnf >/dev/null; then
     # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
     ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
     msg_info "Found RHEL/Fedora Linux.\n"
-    sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa rsync unzip vim grc
+    sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa unzip vim grc
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
     msg_success "Done installing dependencies! \n"
@@ -327,13 +326,13 @@ function dependencies() {
   elif command -v xbps-install >/dev/null; then
     # Test if 'xbps-install' is present, for Void Linux
     msg_info "Found Void Linux.\n"
-    sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa starship rsync unzip vim grc
+    sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa starship unzip vim grc
     msg_success "Done installing dependencies! \n"
 
   elif command -v nix-env >/dev/null; then
     # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
     msg_info "Found NixOS/nixpkgs.\n"
-    sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa starship rsync unzip vim grc
+    sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa starship unzip vim grc
     msg_success "Done installing dependencies! \n"
 
     # - Show user how to change their default shell in NixOS -
@@ -345,6 +344,11 @@ function dependencies() {
       shell = ${green}pkgs.zsh${reset}; ${bold}# <-- Change shell here${reset}
       packages = with pkgs; [ 
       ];
+    };
+    
+    # You will also need to enable ZSH, you can put this anywhere.
+    programs.zsh = {
+      enable = true;
     };"
     sleep 3
 
@@ -354,9 +358,9 @@ function dependencies() {
     msg_error "You will need to install the dependencies yourself. \n"
     msg_info "Supported package managers are:"
     msg_info "'apt-get', 'pacman', 'zypper', 'dnf', 'xbps-install', and 'nix-env' \n"
-    msg_note "Message me on Discord (${purple}Michael_Scopic.zsh#0102${reset}) if you want to request adding support for another package manager.\n"
+    msg_note "Message me on Discord (${purple}michael_scopic.zsh${reset}) if you want to request adding support for another package manager.\n"
     msg_info "Required packages are:"
-    msg_info "zsh curl wget git fzf exa lsd rsync unzip\n"
+    msg_info "zsh curl wget git fzf exa lsd unzip\n"
     msg_info "Optional packages:"
     msg_info "neofetch kitty vim \n"
 
@@ -749,12 +753,12 @@ function overwrite() {
 #${blue}  starship ${reset}              #
 ###########################\n"
 
-  read -rp "Do you want to continue with overwritting your current configs? [Y\n]: " choice
+  read -n1 -rp "Do you want to continue with overwritting your current configs? [Y\n]: " choice
 
   if [ "${config_overwrite,,}" == "y" ] || [ "${config_overwrite}" = "" ]; then
 
     ## Copy htoprc
-    read -rp "Do you want to overwrite htop config? [Y/n]: " choice
+    read -n1 -rp "Do you want to overwrite htop config? [Y/n]: " choice
 
     if [ "${choice,,}" == "y" ] || [ "${choice}" = "" ]; then
       mkdir -p "$HOME"/.config/htop/ 2>/dev/null
@@ -766,7 +770,7 @@ function overwrite() {
     fi
 
     ## Copy kitty config
-    read -rp "Do you want to overwrite kitty config? [Y/n]: " choice
+    read -n1 -rp "Do you want to overwrite kitty config? [Y/n]: " choice
 
     if [ "${choice,,}" == "y" ] || [ "${choice}" = "" ]; then
       mkdir -p "$HOME"/.config/kitty/ 2>/dev/null

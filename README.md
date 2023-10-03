@@ -48,10 +48,11 @@ Shell script features:
   - _More coming soon? (maybe)_
 
 ## TODO
+
 - [ ] FIX BUGS AAAAAAAAAAAA (this will probably never get completed but it's nice to dream yk)
-    
 - [x] `shell-install.sh` _<- The file itself is done, but more improvements will follow_
 - [x] Deprecate and delete `deploy.sh.bak` and `scripts/`
+
   - [x] Make everything a function in `shell-install.sh`
   - [x] Make functions for printing info/notes, errors, and success messages
   - [x] Detect if the user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
@@ -130,7 +131,7 @@ So if you want to run all of them, just do:
 ./shell-install.sh all
 ```
 
-If you want to have a more minimal install, pass the `--server` option __at the end__ of the command. 
+If you want to have a more minimal install, pass the `--server` option **at the end** of the command.
 
 ```sh
 ./shell-install.sh all --server

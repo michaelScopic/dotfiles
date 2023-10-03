@@ -4,85 +4,60 @@
 #
 # Written by: michaelScopic (https://github.com/michaelScopic)
 
-function init() {
-    # - Set colors -
-    # Normal text
-    reset='\e[0m'
-    # Bold text
-    bold='\e[1m'
-    # Red
-    red='\e[31m'
-    # Green
-    green='\e[32m'
-    # Yellow
-    yellow='\e[33m'
-    # Blue
-    blue='\e[34m'
-    # Cyan
-    cyan='\e[36m'
+# - Set colors -
+reset='\e[0m'
+bold='\e[1m'
+red='\e[31m'
+green='\e[32m'
+yellow='\e[33m'
+blue='\e[34m'
+cyan='\e[36m'
 
-    # - Set 'info', 'error', 'note', 'success' message functions -
-    msg_info() {
-        echo -e "${yellow}${bold}[INFO]${reset} $@ ${reset}"
-    }
-
-    msg_error() {
-        echo -e "${red}${bold}[ERROR]${reset} $@ ${reset}"
-    }
-
-    msg_success() {
-        echo -e "${green}${bold}[SUCCESS]${reset} $@ ${reset}"
-    }
-
-    msg_note() {
-        echo -e "${blue}${bold}[NOTE]${reset} $@ ${reset}"
-    }
-
-    # - Store user's current dir as a var -
-    CURRENT_DIR=$(pwd)
-
-    msg_info "Current directory: ${cyan}$CURRENT_DIR${reset}"
-
-    return
+msg_info() {
+  echo -e "${yellow}${bold}[INFO]${reset} $@ ${reset}"
 }
 
-recompile_chadwm() {
-    msg_info "Attempting to recompile ChadWM...."
+msg_error() {
+  echo -e "${red}${bold}[ERROR]${reset} $@ ${reset}"
+}
 
-    if [ -d "$HOME/.config/chadwm/chadwm" ]; then
-        msg_success "Found '${cyan}~/.config/chadwm/chadwm${reset}'. Proceeding."
-        cd "$HOME/.config/chadwm/chadwm/"
+msg_success() {
+  echo -e "${green}${bold}[SUCCESS]${reset} $@ ${reset}"
+}
 
-        msg_info "Deleting '${cyan}config.h${reset}'..."
-        rm -v config.h && \
-            msg_success "Done."
-        
-        sudo make install
+CURRENT_DIR=$(pwd)
 
-        local exit_code=$?
-        
-        if [[ "$exit_code" -eq "0" ]]; then
-            msg_success "Done recompiling!"
-            msg_note "Quit/relaunch ChadWM if you are currently using it."
-            cd "$CURRENT_DIR"
-            return 0
+msg_info "Current directory: ${cyan}$CURRENT_DIR${reset}"
 
-        else
-            msg_error "!!! ERROR COMPILING !!!"
-            msg_error "${red}Exit code:${reset} $exit_code"
-            cd "$CURRENT_DIR"
-            return $exit_code
 
-        fi
+msg_info "Attempting to recompile ChadWM...."
+
+if [ -d "$HOME/.config/chadwm/chadwm" ]; then
+  msg_success "Found '${cyan}~/.config/chadwm/chadwm${reset}'. Proceeding."
+  cd "$HOME/.config/chadwm/chadwm/"
+
+  msg_info "Deleting '${cyan}config.h${reset}'..."
+  rm -v config.h && \
+    msg_success "Done."
+    sudo make install
+
+    local exit_code=$?
+    if [[ "$exit_code" -eq "0" ]]; then
+      msg_success "Done recompiling!"
+      msg_info "Quit/relaunch ChadWM if you are currently using it."
+      cd "$CURRENT_DIR"
+      exit 0
     else
-        local exit_code=$?
-        msg_error "!!! FATAL !!!"
-        msg_error "Cannot find '${cyan}~/.config/chadwm/chadwm${reset}'."
-        msg_error "${red}Exit code:${reset} $exit_code"
-        return $exit_code
+      msg_error "!!! ERROR COMPILING !!!"
+      msg_error "${red}Exit code:${reset} $exit_code"
+      cd "$CURRENT_DIR"
+      exit $exit_code
     fi
-}
+  else
+    local exit_code=$?
+    msg_error "!!! FATAL !!!"
+    msg_error "Cannot find '${cyan}~/.config/chadwm/chadwm${reset}'."
+    msg_error "${red}Exit code:${reset} $exit_code"
+    exit $exit_code
+fi
 
-init
-recompile_chadwm
-exit
