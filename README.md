@@ -71,7 +71,8 @@ Shell script features:
   - [x] Detect if the user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
   - [x] Add fonts and automate installing fonts
   - [x] Add support for NixOS
-
+  - [ ] Add support for FreeBSD and OpenBSD
+      
 - [ ] Upload a WM configs
   - [ ] Make a script to automate installing the configs/dependencies
 
