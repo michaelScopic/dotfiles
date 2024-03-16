@@ -2,7 +2,7 @@
 
 These are my dotfiles for my Linux configs and ZSH.
 
-I hope you enjoy! :3
+I hope you enjoy!
 
 ## Previews
 
