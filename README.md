@@ -53,26 +53,23 @@ Shell script features:
 - Various distro support
   - Debian/Ubuntu and its derivatives
   - Arch Linux and its derivatives
-  - Fedora (via `dnf`) and its derivative
+  - Fedora (via `dnf`) and its derivatives
   - openSUSE Tumbleweed
   - Void Linux
   - NixOS/nix-pkgs
   - _More coming soon? (maybe)_
-  - _More coming soon? (maybe)_
 
 ## TODO
 
-- [ ] FIX BUGS AAAAAAAAAAAA (this will probably never get completed but it's nice to dream yk)
+- [ ] Fix bugs (this will probably never get completed but it's nice to dream)
 - [x] `shell-install.sh` _<- The file itself is done, but more improvements will follow_
 - [x] Deprecate and delete `deploy.sh.bak` and `scripts/`
-
   - [x] Make everything a function in `shell-install.sh`
   - [x] Make functions for printing info/notes, errors, and success messages
   - [x] Detect if the user is running x86_64 Linux in `dependencies()`, and give an error if both aren't detected
   - [x] Add fonts and automate installing fonts
   - [x] Add support for NixOS
   - [ ] Add support for FreeBSD and OpenBSD
-      
 - [ ] Upload a WM configs
   - [ ] Make a script to automate installing the configs/dependencies
 
@@ -145,7 +142,7 @@ So if you want to run all of them, just do:
 ./shell-install.sh all
 ```
 
-If you want to have a more minimal install, pass the `--server` option **at the end** of the command.
+If you want to have a more minimal install, pass the `--server` option **AT THE END** of the command.
 
 ```sh
 ./shell-install.sh all --server
@@ -160,8 +157,6 @@ If you don't want to run this script and only copy what you want, then just brow
 **Discord: `michael_scopic.zsh`**
 
 If you need help or if something does not work as expected, please contact me on Discord.
-
-I am almost _always_ online, and I will usually respond very quickly.
 
 - NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially for people I don't know.
 
