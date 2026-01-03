@@ -5,7 +5,7 @@
 
 # Pass arguments to apt if you want
 export APT_OPTS=""
-#export APT_OPTS="-y --no-install-recommends" ## Just an example :)
+#export APT_OPTS="-y --no-install-recommends" 
 
 if [ "$(command -v nala >/dev/null)" ]; then
   # - Nala aliases -
@@ -32,5 +32,18 @@ else
   alias show-pkg="apt-cache show"
 fi
 
+#pkg(){
+  ## Work in progress: A universal package manager function
+#  local pkgman
+#  pkgman=$(command -v nala >/dev/null && echo "nala" || echo "apt-get")
+#  case $1 in
+#    in|install) sudo $pkgman install $APT_OPTS ${@:2} ;;
+#    rm|remove) sudo $pkgman remove ${@:2} ;;
+#    up|update) sudo $pkgman update; sudo $pkgman upgrade $APT_OPTS ;;
+#    search) apt-cache search ${@:2} ;;
+#    show) apt-cache show ${@:2} ;;
+#    *) echo "Usage: pkg { install/in | remove/rm | update/up  |search | show } [package_name]" ;;
+#  esac
+#}
 # - Alias to edit this file -
-  alias debian-aliases="$EDITOR ~/.config/zsh/dist-aliases/debian.zsh"
+  alias debian-aliases="$EDITOR ~/.config/zsh/distro-aliases/debian.zsh"

@@ -21,4 +21,4 @@ alias dnf-regen="sudo dnf makecache"
 alias dnf-config="sudo $EDITOR /etc/dnf/dnf.conf"
 
 # - Alias to edit this file -
-alias rhel-aliases="$EDITOR ~/.config/zsh/dist-aliases/rhel.zsh"
+alias rhel-aliases="$EDITOR ~/.config/zsh/distro-aliases/rhel.zsh"

@@ -21,4 +21,4 @@ alias zypp-clean="sudo zypper cc; sudo zypper cl"
 alias zypp-mirrors="sudo mirrorsorcerer -x && sudo zypper ref -f"
 
 # - Alias to edit this file -
-alias opensuse-aliases="$EDITOR ~/.config/zsh/dist-aliases/opensuse.zsh"
+alias opensuse-aliases="$EDITOR ~/.config/zsh/distro-aliases/opensuse.zsh"

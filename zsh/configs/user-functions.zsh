@@ -9,11 +9,11 @@
 ## Automatically run 'ls' after you cd into a dir
 cd() {
   builtin cd "$@" &&
-    command exa --icons --group-directories-first -hFg
+    command exa --icons --group-directories-first -hg --classify=auto
 }
 
 ## Recompile completion and then reload zsh
-src() {
+zsh-src() {
   toload -U zrecompile
   rm -rf "$compfile"*
   compinit -u -d "$compfile"
@@ -23,6 +23,7 @@ src() {
 
 ## Extract different archive formats
 extract() {
+  ## Usage: % extract file.tar.gz | % extract file.zip etc.
   if [ -f $1 ]; then
     case $1 in
     *.tar.bz2) tar xvjf $1 ;;
@@ -37,6 +38,7 @@ extract() {
     *.zip) unzip $1 ;;
     *.Z) uncompress $1 ;;
     *.7z) 7z x $1 ;;
+    *.xz) unxz $1 ;;
     *) echo "Not sure how to decompress this: '$1'" ;;
     esac
   else

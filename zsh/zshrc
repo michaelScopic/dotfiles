@@ -13,24 +13,28 @@
 #### Distro specific aliases are defined in: ~/.config/zsh/distro-aliases/
 
 #### - Check if shell is interactive -
+## No clue if this does anything important
 if [[ $- != *i* ]]; then
   return
 fi
 
-### - Default to vim if $EDITOR is unset -
+#### - Default to vim if $EDITOR is unset -
 [ -z $EDITOR ] &&
   export EDITOR=vim
 
-#### - Export enviornment vars if needed -
-export PATH=$HOME/.local/bin:$PATH
-
-## Set EDITOR to nvim if it's installed
+#### Set EDITOR to nvim if it's installed
 [ "$(command -v nvim >/dev/null)" ] &&
   export EDITOR=nvim
 
+#### - Export enviornment vars if needed -
+export PATH=$HOME/.local/bin:$PATH
+## Include cargo bin path if it exists
+if [ -d "$HOME/.cargo/bin" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
 export BAT_THEME="base16"
 
-#### - Declare vars for ZSH config dirs -
+## - Declare vars for ZSH config dirs -
 export ZSH_CONFIG="$HOME/.config/zsh"
 export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 
@@ -39,7 +43,7 @@ export ZSH_PLUGINS="$HOME/.config/zsh/plugins"
 ################################
 
 #### - Source ZSH settings file -
-. "$ZSH_CONFIG/zsh-settings.zsh"
+. "$ZSH_CONFIG/settings.zsh"
 
 #### - Source user aliases -
 . "$ZSH_CONFIG/aliases.zsh"

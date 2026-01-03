@@ -31,19 +31,16 @@ pkg-full-up() {
   echo -e "=> Updating pacman...\n"
   sudo pacman -Syu
   echo -e "-> Pacman exit code: $? \n"
-
-  if [ "$(command -v yay >/dev/null)" ]; then
-    echo -e "=> Updating yay...\n"
-    yay -Syu
-    echo -e "-> Yay exit code: $? \n"
-  fi
-
   if [ "$(command -v paru >/dev/null)" ]; then
     echo -e "=> Updating paru...\n"
     paru -Syu
     echo -e "-> Paru exit code: $? \n"
+  elif [ "$(command -v yay >/dev/null)" ]; then
+    echo -e "=> Updating yay...\n"
+    yay -Syu
+    echo -e "-> Yay exit code: $? \n"
   fi
 }
 
 # - Alias to edit this file -
-alias arch-aliases="$EDITOR ~/.config/zsh/dist-aliases/archLinux.zsh"
+alias arch-aliases="$EDITOR ~/.config/zsh/distro-aliases/archLinux.zsh"

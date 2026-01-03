@@ -17,11 +17,7 @@ DISTRO_ALIAS_DIR="$HOME/.config/zsh/distro-aliases"
 
 #### - Dynamic settings -
 ## Determine to use icons
-[ -t 0 ] &&
-    ## Use icons if terminal IS NOT a TTY
-    EXA_OPTS="--icons --group-directories-first -hFg" ||
-    ## Don't use icons if terminal IS a TTY
-    EXA_OPTS="--group-directories-first -hFg"
+EZA_OPTS="--icons --group-directories-first -hg --classify=auto" 
 
 ## Set an ssh alias if terminal is kitty
 [ "$TERM" == "xterm-kitty" ] &&
@@ -32,9 +28,9 @@ DISTRO_ALIAS_DIR="$HOME/.config/zsh/distro-aliases"
   alias docker="podman"
 
 #### - File/directories -
-alias ls="exa $EXA_OPTS"
-alias la="exa -a $EXA_OPTS"
-alias ll="exa -la $EXA_OPTS"
+alias ls="eza $EZA_OPTS"
+alias la="eza -a $EZA_OPTS"
+alias ll="eza -la $EZA_OPTS"
 alias rm="rm -iv"
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -71,7 +67,7 @@ alias net-restart="sudo nmcli net off && sudo nmcli net on"
 
 #### - Misc. -
 alias diff="diff --color=auto"
-alias nut="clear; neofetch"
+alias nut="clear; fastfetch"  ## Farewell neofetch 
 alias free="free -mth"
 alias du="du -h"
 alias df="df -h"
@@ -80,7 +76,7 @@ alias reload-sh="exec zsh"
 alias exit="echo 'Goodbye!'; sleep 0.2; exit"
 alias e="exit"
 alias quit="exit"
-
+alias bye="exit"
 
 #### - Distro aliases -
 #source "$DISTRO_ALIAS_DIR/opensuse.zsh"	## For OpenSUSE TW

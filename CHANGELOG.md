@@ -1,5 +1,10 @@
 # Changelog
 
+## something, 2026
+Wow I haven't touched this in awhile
+- Trying to clean up code
+- Fix prompt answer checking (eg: will continue with something even if you say no)
+
 ## October 3, 2023
 
 - Added preview pics (finally) :D

@@ -78,9 +78,10 @@ function init() {
   DOTFILES_DIR=$(realpath "$0" | rev | cut -d '/' -f 2- | rev)
   BACKUP_FORMAT=$(date +%F_%I-%M-%S-%p)
 
-  echo -e "-> Current directory: ${cyan}$CURRENT_DIR${reset}"
-  echo -e "-> Dotfiles directory: ${cyan}$DOTFILES_DIR${reset}"
-  echo -e "-> Backup format: ${cyan}$BACKUP_FORMAT${reset}"
+  echo -e """-> Current directory: ${cyan}$CURRENT_DIR${reset}
+  -> Dotfiles directory: ${cyan}$DOTFILES_DIR${reset}
+  -> Backup format: ${cyan}$BACKUP_FORMAT${reset}
+  """
 
   msg_note "A temporary directory will be made in '${cyan}$BUILD_DIR${reset}' if needed."
 
@@ -146,7 +147,7 @@ function info() {
 # --- Install dependencies --- #
 ################################
 function dependencies() {
-  # Test if host is running Linux AND the cpu is x86_64 (amd64) based
+  # Test if host is running Linux AND the cpu is x86_64 (amd64) based (Sometimes other arches have different packages/names)
   if [[ $(uname -s) != "Linux" ]] || [[ $(uname -m) != "x86_64" ]]; then
     # If host is not Linux based and CPU is not x86_64, then print an error.
     # BSD or Darwin hosts or hosts that are not x86 will encounter this.
@@ -154,7 +155,7 @@ function dependencies() {
     msg_error "There is no support for BSD or Darwin (MacOS) hosts."
     msg_error "There is no support for Linux hosts that aren't x86_64 (amd64)."
     msg_error "Please manually install the needed dependencies below and re-run this script. \n"
-    msg_error "${blue}Needed dependencies: ${purple}git htop zsh curl wget fzf exa vim grc starship kitty${reset}"
+    msg_error "${blue}Needed dependencies: ${purple}git htop zsh curl wget fzf eza vim grc starship kitty${reset}"
     sleep 3
     return 1
   fi
@@ -174,7 +175,7 @@ function dependencies() {
     #  ${cyan} curl ${reset}                                   #
     #  ${cyan} wget ${reset}                                   #
     #  ${cyan} fzf ${reset}                                    #
-    #  ${cyan} exa ${reset}                                    #
+    #  ${cyan} eza ${reset}                                    #
     #  ${cyan} vim ${reset}                                    #
     #  ${cyan} grc ${reset}                                    #
     #  ${cyan} starship ${reset}                               #
@@ -184,17 +185,18 @@ function dependencies() {
       # Test if package manager is 'apt-get', for Debian/Ubuntu distros
       msg_info "Found Debian/Ubuntu.\n"
       sudo apt-get update -y -qq
-      sudo apt-get install --no-install-recommends -y git htop neofetch zsh curl wget fzf exa unzip vim grc
+      sudo apt-get install --no-install-recommends -y git htop fastfetch zsh curl wget fzf eza unzip vim grc
 
-      # Installing exa
-      ## exa sometimes isn't in official repos (depending on distro), so just manually install the .deb files
+      # Installing eza
+      ## eza sometimes isn't in official repos (depending on distro), so just manually install the .deb files
       ## Downside of doing it this way is that the .deb files might not be the most recent ones
       msg_info "Making a temporary build directory..."
-      mkdir "${BUILD_DIR}" && cd "${BUILD_DIR}"
-      # Get the exa .deb files
-      wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null &&
+      ## I don't think we need this anymore, but keeping it just in case
+      #mkdir "${BUILD_DIR}" && cd "${BUILD_DIR}"
+      ## Get the eza .deb files
+      #wget https://github.com/ogham/eza/releases/download/v0.10.1/eza-linux-x86_64-v0.10.1.zip &>/dev/null &&
         # Install the .deb files
-        sudo dpkg -i ./*.deb
+      #  sudo dpkg -i ./*.deb
       # Installing starship
       msg_info "Installing Starship using the offical installer script..."
       curl -sS https://starship.rs/install.sh > install-starship.sh &&
@@ -206,21 +208,21 @@ function dependencies() {
     elif command -v pacman >/dev/null; then
       # Test if 'pacman' is the package manager, for Arch based distros
       msg_info "Found Arch Linux.\n"
-      sudo pacman -S --noconfirm starship htop neofetch zsh curl wget git htop fzf exa unzip vim grc
+      sudo pacman -S --noconfirm starship htop fastfetch zsh curl wget git htop fzf eza unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     elif command -v zypper >/dev/null; then
       # Test if 'zypper' if the pacakge manager, for openSUSE distros
       ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
       msg_info "Found openSUSE.\n"
-      sudo zypper -n install htop neofetch zsh curl wget git fzf exa starship unzip vim grc
+      sudo zypper -n install htop fastfetch zsh curl wget git fzf eza starship unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     elif command -v dnf >/dev/null; then
       # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
       ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
       msg_info "Found RHEL/Fedora Linux.\n"
-      sudo dnf install -y htop neofetch zsh curl wget git fzf exa unzip vim grc
+      sudo dnf install -y htop fastfetch zsh curl wget git fzf eza unzip vim grc
       # Install starship
       mkdir "${BUILD_DIR}" && cd "${BUILD_DIR}"
       curl -sS https://starship.rs/install.sh >install-starship.sh &&
@@ -233,13 +235,13 @@ function dependencies() {
     elif command -v xbps-install >/dev/null; then
       # Test if 'xbps-install' is present, for Void Linux
       msg_info "Found Void Linux.\n"
-      sudo xbps-install -Suy htop neofetch zsh curl wget git fzf exa starship unzip vim grc
+      sudo xbps-install -Suy htop fastfetch zsh curl wget git fzf eza starship unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     elif command -v nix-env >/dev/null; then
       # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
       msg_info "Found NixOS/nixpkgs.\n"
-      sudo nix-env -i htop neofetch-unstable zsh curl wget git fzf exa starship unzip vim grc
+      sudo nix-env -i htop fastfetch-unstable zsh curl wget git fzf eza starship unzip vim grc
       msg_success "Done installing dependencies! \n"
 
     else
@@ -265,12 +267,12 @@ function dependencies() {
     #  ${cyan} git ${reset}                                    #
     #  ${cyan} kitty ${reset}                                  #
     #  ${cyan} htop ${reset}                                   # 
-    #  ${cyan} neofetch ${reset}                               #
+    #  ${cyan} fastfetch ${reset}                               #
     #  ${cyan} zsh ${reset}                                    #
     #  ${cyan} curl ${reset}                                   #
     #  ${cyan} wget ${reset}                                   #
     #  ${cyan} fzf ${reset}                                    #
-    #  ${cyan} exa ${reset}                                    #
+    #  ${cyan} eza ${reset}                                    #
     #  ${cyan} vim ${reset}                                    #
     #  ${cyan} grc ${reset}                                    #
     #  ${cyan} starship ${reset}                               #
@@ -280,16 +282,16 @@ function dependencies() {
     # Test if package manager is 'apt-get', for Debian/Ubuntu distros
     msg_info "Found Debian/Ubuntu.\n"
     sudo apt-get update -y -qq
-    sudo apt-get install -y git kitty htop neofetch zsh curl wget fzf exa unzip vim grc
+    sudo apt-get install -y git kitty htop fastfetch zsh curl wget fzf eza unzip vim grc
 
-    # Installing lsd/exa
-    ## LSD/exa sometimes isnt in official repos (depending on distro), so just manually install the .deb files
+    # Installing lsd/eza
+    ## LSD/eza sometimes isnt in official repos (depending on distro), so just manually install the .deb files
     ## Downside of doing it this way is that the .deb files might not be the most recent ones
     msg_info "Making a temporary build directory..."
     mkdir "$BUILD_DIR"
     cd "$BUILD_DIR"
-    # Get the lsd and exa .deb files
-    wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip &>/dev/null &&
+    # Get the lsd and eza .deb files
+    wget https://github.com/ogham/eza/releases/download/v0.10.1/eza-linux-x86_64-v0.10.1.zip &>/dev/null &&
       # Install the .deb files
       sudo dpkg -i ./*.deb &&
       cd "$repoDir"
@@ -304,21 +306,21 @@ function dependencies() {
   elif command -v pacman >/dev/null; then
     # Test if 'pacman' is the package manager, for Arch based distros
     msg_info "Found Arch Linux.\n"
-    sudo pacman -S --noconfirm starship kitty htop neofetch zsh curl wget git htop fzf exa unzip vim grc
+    sudo pacman -S --noconfirm starship kitty htop fastfetch zsh curl wget git htop fzf eza unzip vim grc
     msg_success "Done installing dependencies! \n"
 
   elif command -v zypper >/dev/null; then
     # Test if 'zypper' if the pacakge manager, for openSUSE distros
     ## NOTE: some of these packages might not be present/up to date on openSUSE Leap.
     msg_info "Found openSUSE.\n"
-    sudo zypper -n install kitty htop neofetch zsh curl wget git fzf exa starship unzip vim grc
+    sudo zypper -n install kitty htop fastfetch zsh curl wget git fzf eza starship unzip vim grc
     msg_success "Done installing dependencies! \n"
 
   elif command -v dnf >/dev/null; then
     # Test if 'dnf' is the package manager, for RHEL based systems, like Fedora
     ## NOTE: some of these packages might not be present in offical repos in some server focused distros (eg: CentOS, Rocky, Alma)
     msg_info "Found RHEL/Fedora Linux.\n"
-    sudo dnf install -y kitty htop neofetch zsh curl wget git fzf exa unzip vim grc
+    sudo dnf install -y kitty htop fastfetch zsh curl wget git fzf eza unzip vim grc
     # Install starship
     curl -sS https://starship.rs/install.sh | sh
     msg_success "Done installing dependencies! \n"
@@ -326,18 +328,18 @@ function dependencies() {
   elif command -v xbps-install >/dev/null; then
     # Test if 'xbps-install' is present, for Void Linux
     msg_info "Found Void Linux.\n"
-    sudo xbps-install -Suy kitty htop neofetch zsh curl wget git fzf exa starship unzip vim grc
+    sudo xbps-install -Suy kitty htop fastfetch zsh curl wget git fzf eza starship unzip vim grc
     msg_success "Done installing dependencies! \n"
 
   elif command -v nix-env >/dev/null; then
     # Test if 'nix-env' is present, for NixOS or systems that have the Nix package manager
     msg_info "Found NixOS/nixpkgs.\n"
-    sudo nix-env -i kitty htop neofetch-unstable zsh curl wget git fzf exa starship unzip vim grc
+    sudo nix-env -i kitty htop fastfetch-unstable zsh curl wget git fzf eza starship unzip vim grc
     msg_success "Done installing dependencies! \n"
 
     # - Show user how to change their default shell in NixOS -
     msg_note "You might need to edit '${cyan}/etc/nixos/configuration.nix${reset}' and change your default shell to zsh."
-    echo -e "#--- Example (/etc/nixos/configuration.nix) --- 
+    echo -e "#--- ezample (/etc/nixos/configuration.nix) --- 
     users.users.alice = {
       isNormalUser = true;
       extraGroups = [ \"wheel\" ];
@@ -358,11 +360,11 @@ function dependencies() {
     msg_error "You will need to install the dependencies yourself. \n"
     msg_info "Supported package managers are:"
     msg_info "'apt-get', 'pacman', 'zypper', 'dnf', 'xbps-install', and 'nix-env' \n"
-    msg_note "Message me on Discord (${purple}michael_scopic.zsh${reset}) if you want to request adding support for another package manager.\n"
+    msg_note "Message me on Discord (${purple}michael_scopic${reset}) if you want to request adding support for another package manager.\n"
     msg_info "Required packages are:"
-    msg_info "zsh curl wget git fzf exa lsd unzip\n"
+    msg_info "zsh curl wget git fzf eza unzip\n"
     msg_info "Optional packages:"
-    msg_info "neofetch kitty vim \n"
+    msg_info "fastfetch kitty vim \n"
 
     sleep 2
     return 1
@@ -384,43 +386,50 @@ function install_fonts() {
 
   read -rp "Do you want to install fonts? [Y/n]: " choice
 
-  if [ "${choice,,}" == "n" ]; then
+  if [ "${choice,,}" != "y" ]; then
     msg_info "Answered 'no'. Will NOT install fonts..."
     return 0
   fi
 
-  msg_note "Installing fonts into '${cyan}~/.fonts/${reset}'"
-  cd "$DOTFILES_DIR"
-
-  sleep 2
-  if [ ! -d "$HOME/.fonts" ]; then
-    # Check if '~/.fonts' exist. If it doesn't exist, create it
-    msg_info "'${cyan}~/.fonts${reset}' does not exist yet, fixing that."
-    mkdir -v "$HOME/.fonts"
+  read -rp "Install fonts system-wide (requires sudo)? [y/N]: " choice 
+  if [ "${choice,,}" == "y" ]; then
+    # If user answered yes, set font destination to system fonts dir
+    msg_info "Installing fonts system-wide into '${cyan}$/usr/local/share/fonts${reset}'"
+    sudo mkdir -p "/usr/local/share/fonts" &&
+      sudo cp -rv "$DOTFILES_DIR/fonts/"* /usr/local/share/fonts/ ||
+      {
+        msg_error "Could not copy fonts to '${cyan}/usr/local/share/fonts/${reset}'."
+        msg_error "Command that failed: '${blue}sudo cp -rv $DOTFILES_DIR/fonts/* /usr/local/share/fonts/${reset}' \n"
+        return 1
+      }
+  else
+    # If user answered no, set font destination to user's .fonts dir
+    msg_info "Installing fonts into '${cyan}~/.fonts${reset}'"
+    if [ ! -d "$HOME/.fonts" ]; then
+      # Check if '~/.fonts' exist. If it doesn't exist, create it
+      msg_info "'${cyan}~/.fonts${reset}' does not exist yet, fixing that."
+      mkdir -v "$HOME/.fonts"
+      cp -rv "$DOTFILES_DIR/fonts/"* "$HOME/.fonts/" ||
+        {
+          msg_error "Could not copy fonts to '${cyan}~/.fonts/${reset}'."
+          msg_error "Command that failed: '${blue}cp -rv $DOTFILES_DIR/fonts/* $HOME/.fonts/${reset}' \n"
+          return 1
+        }
+    fi
   fi
 
-  if [ ! "$(cp -rv fonts/* "$HOME/.fonts")" ]; then
-    # If copy failed, then tell user
-    msg_error "Exit code: $?"
-    ## ^ Shellcheck will warn about refering to "$?", this is fine.
-    msg_error "Could not copy fonts to '${cyan}~/.fonts/${reset}'."
-    msg_error "Command that failed: '${blue}cp -rv fonts/* $HOME/.fonts${reset}' \n"
-    return 1
+  # If copy was successful, then tell user then refresh font cache
+  msg_success "Copied fonts! Reloading font cache..."
+  msg_info "Running: '${purple}fc-cache -rv${reset}'"
+
+  if command -v fc-cache >/dev/null; then
+    # If 'fc-cache' is a command, then reload fonts cache
+    fc-cache -rv &&
+    msg_success "Finished reloading fonts."
   else
-    # If copy was successful, then tell user then refresh font cache
-    msg_success "Copied fonts! Reloading font cache..."
-    msg_info "Running: '${purple}fc-cache -rv${reset}'"
-
-    if command -v fc-cache >/dev/null; then
-      # If 'fc-cache' is a command, then reload fonts cache
-      fc-cache -rv &&
-        msg_success "Finished reloading fonts."
-    else
-      # If it is not a command, give an error
-      msg_error "'${purple}fc-cache${reset}' is not a command... Unable to refresh your fonts. Please log out and log back in again."
-      return 1
-    fi
-
+    # If it is not a command, give an error
+    msg_error "'${purple}fc-cache${reset}' is not a command... Unable to refresh your fonts. Please log out and log back in again."
+    return 1
   fi
 }
 
@@ -646,7 +655,7 @@ function backup() {
   # following files/directories: # 
   #   '${cyan}~/.config/htop/${reset}'          #
   #   '${cyan}~/.config/kitty/${reset}'         #
-  #   '${cyan}~/.config/neofetch/${reset}'      #  
+  #   '${cyan}~/.config/fastfetch/${reset}'      #  
   #   '${cyan}~/.config/starship.toml${reset}'  #
   ################################\n"
 

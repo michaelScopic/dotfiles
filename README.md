@@ -2,7 +2,18 @@
 
 These are my dotfiles for my Linux configs and ZSH.
 
-I hope you enjoy!
+Intended to be an opinionated (yet neutral) config that just works out of the box, while being easily customizable and easy to understand.
+
+Goals/philosiphy:
+  - Shouldn't get in the way of your work
+  - Be familar and comfortable
+  - Easily customizble and extendable/modular
+  - Easy to learn/low learning curve (nothing so complex that users have to bend their backs to learn)
+  - Promote ease of work, quality of life, and convenience
+  - Have sensible defaults that works with most users
+
+
+Please enjoy.
 
 ## Previews
 
@@ -104,7 +115,6 @@ Shell script features:
   - [x] Aliases
   - [x] User functions
   - [x] ZSH settings
-- [x] `ArchLabs_zshrc`
 - [x] `zshrc`
 
 More coming soon...hopefully.
@@ -152,15 +162,19 @@ If you want to have a more minimal install, pass the `--server` option **AT THE 
 
 If you don't want to run this script and only copy what you want, then just browse `config/` and/or `zsh/` and do what you want from there.
 
-## Getting help
+Just keep in mind all the configs expect the correct needed directories and dependencies.
 
-**Discord: `michael_scopic.zsh`**
+# Getting help
+
+**Discord: `michael_scopic`**
 
 If you need help or if something does not work as expected, please contact me on Discord.
 
 - NOTE: If you do contact me, please tell me that you found me from GitHub. I am extremely paranoid of who messages me, especially for people I don't know.
 
-You can also open a GitHub issue, but do note that I could respond _very_ late.
+You can also open a GitHub issue, but do note that I could respond _very_ late (I'm not active here).
+
+Also please leave feedback and help me improve the script/configs.
 
 ## Credits
 
@@ -176,4 +190,4 @@ My personal starship theme (`config/starship/michael.toml`) is based on rxyhn's 
 
 All fonts in `fonts/` are from [Nerdfonts.com](https://www.nerdfonts.com).
 
-The original `zshrc` and `zsh/configs/zsh-settings.zsh` are based on the `.zshrc` provided by ArchLabs.
+The original `zshrc` and `zsh/configs/zsh-settings.zsh` are based on the `.zshrc` provided by ArchLabs (RIP).
