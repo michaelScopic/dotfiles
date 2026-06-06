@@ -1,6 +1,6 @@
 # ARCHIVED - DEVELOPMENT CONTINUED ON CODEBURG.ORG
 
-https://codeburg.org/michaelScopic/dotfiles
+https://codeberg.org/michaelScopic/dotfiles
 
 # My Linux dotfiles
 
