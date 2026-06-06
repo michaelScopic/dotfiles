@@ -1,3 +1,7 @@
+# ARCHIVED - DEVELOPMENT CONTINUED ON CODEBURG.ORG
+
+https://codeburg.org/michaelScopic/dotfiles
+
 # My Linux dotfiles
 
 These are my dotfiles for my Linux configs and ZSH.
